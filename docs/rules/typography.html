@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Typography · Sleak</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 06: Typography. ≈ 55ch · 7–12 words." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">06</span><span>type</span></div>
+      <h1>Typography</h1>
+      <span class="formula">≈ 55ch · 7–12 words</span>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="wrap">
+      <div class="demo" id="demo-typography">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
+          <div class="demo-stage"><p id="ty-para"><b>Typography sets the measure.</b> Line length is characters per line; comfortable reading sits between forty-five and seventy-five, where the eye finds each new line without hunting for its start or snapping back too soon.</p></div>
+          <div class="demo-controls"><div class="ctl"><label>Measure <output id="ty-co"></output></label><input id="ty-ch" type="range" min="24" max="96" value="58"></div></div>
+        <div class="demo-note" id="ty-note"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h1>Typography</h1>
+<p>Readable type comes from <strong>line length</strong>, <strong>alignment</strong>, and <strong>size matched to device and viewing distance</strong>. Not from picking a trendy font and calling it done.</p>
+<h2>Purpose</h2>
+<p>Catch typography that looks fine in a mockup but fails in use: full-width centered paragraphs, desktop body text at mobile sizes, or lines so long the eye loses its place.</p>
+<h2>Line length (7–12 words)</h2>
+<p><strong>Aim for 7–12 words per line</strong> for comfortable reading of body copy and long subtitles.</p>
+<p>Long lines fatigue the eye; very short lines break rhythm. This band keeps scan speed high without losing flow.</p>
+<h3>Measure in practice</h3>
+<p>Word count depends on typeface and language. Use <strong>max-width</strong> as the control:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Approx. width</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7–12 words (English body)</td>
+<td><strong><code>42ch</code>–<code>65ch</code></strong> (start near <strong><code>55ch</code></strong>)</td>
+</tr>
+<tr>
+<td>Narrow sidebar / caption</td>
+<td><strong><code>35ch</code>–<code>45ch</code></strong></td>
+</tr>
+<tr>
+<td>Wide marketing hero (short line)</td>
+<td>Still cap line length; don't span the viewport</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-css">.prose {
+  max-width: 55ch;
+}
+</code></pre>
+<p><strong>Audit:</strong> Pick a representative body paragraph. Count words on a full line at the target viewport. Outside 7–12 → adjust <code>max-width</code> (or font size if the container is fixed).</p>
+<p>Headings can break the rule if they're short phrases. <strong>Paragraphs and subtitles</strong> should not.</p>
+<h2>Center-aligned text</h2>
+<p>Centered type is for <strong>short, ceremonial lines</strong>, not paragraphs.</p>
+<h3>Rules</h3>
+<ol>
+<li><strong>Do not exceed 3 lines</strong> of center-aligned text in one block.</li>
+<li>Keep copy <strong>short</strong>: headlines, labels, one-line stats, brief hero lines.</li>
+<li><strong>Constrain width</strong> to about <strong>half</strong> the content column (or <strong><code>35ch</code>–<code>45ch</code></strong>) so lines don't sprawl.</li>
+<li>Longer content → <strong>left-align</strong> (or start-align) with normal paragraph width (7–12 words per line).</li>
+</ol>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>OK centered</th>
+<th>Not centered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hero headline (1–2 lines)</td>
+<td>Feature descriptions (4+ lines)</td>
+</tr>
+<tr>
+<td>Section title + one subtitle</td>
+<td>Pricing fine print</td>
+</tr>
+<tr>
+<td>Empty-state title + one helper line</td>
+<td>Legal body text</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-css">.hero__title {
+  text-align: center;
+  max-width: 45ch;
+  margin-inline: auto;
+}
+
+.hero__body {
+  text-align: start;
+  max-width: 55ch;
+  margin-inline: auto;
+}
+</code></pre>
+<p><strong>Weak pattern:</strong> full-width centered paragraph wrapping to 6+ lines. <strong>Fix:</strong> shorten, split, or switch to start-aligned prose.</p>
+<h2>Font size and viewing distance</h2>
+<p>Typography must <strong>adapt to device and distance from the eyes</strong>. The same pixel size is not the same visual size across contexts.</p>
+<h3>Viewing distance (rule of thumb)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Context</th>
+<th>Typical distance</th>
+<th>Type treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Phone</strong></td>
+<td>Hand length (~30–40 cm)</td>
+<td>Smaller UI labels can go down to ~<strong>11–12px</strong> for metadata; body <strong>≥16px</strong> on web</td>
+</tr>
+<tr>
+<td><strong>Laptop / desktop</strong></td>
+<td>Arm length (~50–70 cm)</td>
+<td>Body <strong>16–18px</strong>; avoid body below <strong>14px</strong>; <strong>8px</strong> only for non-critical chrome, never long reading text</td>
+</tr>
+<tr>
+<td><strong>TV / large display</strong></td>
+<td>~2 m</td>
+<td>Much larger type; scale with <strong>rem</strong>, viewport units, or platform TV guidelines</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>8px on mobile</strong> may work for dense captions, badges, or tab bar labels when contrast is strong and copy is minimal. <strong>8px on desktop</strong> for anything the user reads → <strong>High</strong> failure.</p>
+<p>Think in <strong>angular size</strong> (how large the letter subtends at the eye), not raw pixels. farther screen → larger type for the same legibility.</p>
+<h3>Responsive scaling</h3>
+<p>Size up for farther viewing; don't ship one global <code>font-size</code> for all breakpoints.</p>
+<pre><code class="language-css">:root {
+  font-size: 100%; /* 16px base on most browsers */
+}
+
+@media (min-width: 768px) {
+  :root {
+    font-size: 106.25%; /* ~17px base */
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    font-size: 112.5%; /* ~18px base for arm-length reading */
+  }
+}
+</code></pre>
+<p>Prefer <strong><code>rem</code></strong> for text so user zoom and root scaling propagate. Use <strong><code>clamp()</code></strong> when type should track viewport smoothly:</p>
+<pre><code class="language-css">.hero__title {
+  font-size: clamp(1.75rem, 1rem + 2.5vw, 3rem);
+}
+</code></pre>
+<h3>By role, not one size everywhere</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Phone</th>
+<th>Desktop</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Body</td>
+<td>16–17px</td>
+<td>16–18px</td>
+<td>7–12 words per line via width</td>
+</tr>
+<tr>
+<td>Secondary / meta</td>
+<td>12–14px</td>
+<td>13–14px</td>
+<td>Short strings only</td>
+</tr>
+<tr>
+<td>Captions / legal</td>
+<td>11–12px min</td>
+<td>12–14px min</td>
+<td>Check WCAG contrast</td>
+</tr>
+<tr>
+<td>TV body</td>
+<td>,</td>
+<td>,</td>
+<td>Often 24px+ at 1080p; follow platform HIG</td>
+</tr>
+</tbody>
+</table></div>
+<p>Match the project's type scale if one exists. Extend it per breakpoint; don't fork a second system.</p>
+<h2>Accessibility</h2>
+<ul>
+<li>Meet <strong>WCAG contrast</strong> for every size you use; smaller type needs stricter pairing.</li>
+<li>Respect <strong>user font scaling</strong> (browser zoom, iOS Dynamic Type, Android font size). Avoid px-locked layouts that clip when text grows.</li>
+<li><strong><code>prefers-reduced-motion</code>:</strong> unrelated to size, but don't solve readability with motion.</li>
+<li><strong>Line height:</strong> body ~<strong>1.5–1.6</strong>; tight center-aligned headlines ~<strong>1.1–1.2</strong> with fewer lines.</li>
+</ul>
+<h2>Common mistakes</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Mistake</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Body spans full viewport width</td>
+<td><code>max-width: 55ch</code> (7–12 words)</td>
+</tr>
+<tr>
+<td>5-line centered marketing paragraph</td>
+<td>≤3 lines centered, or start-align</td>
+</tr>
+<tr>
+<td>Centered block at 100% width</td>
+<td><code>max-width: 45ch</code>; ~half column</td>
+</tr>
+<tr>
+<td>14px body on large desktop monitor</td>
+<td>Raise base <code>rem</code> at <code>md</code>/<code>lg</code> breakpoints</td>
+</tr>
+<tr>
+<td>8px helper text on desktop forms</td>
+<td>≥12–14px or demote to icon + tooltip</td>
+</tr>
+<tr>
+<td>Same font-size token on phone and TV</td>
+<td>Breakpoint or context-specific scale</td>
+</tr>
+<tr>
+<td>Long lines in cards in a grid</td>
+<td>Cap card text width; align start</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Audit</h2>
+<ol>
+<li><strong>Line length:</strong> sample body at target breakpoint; count words per line (7–12?).</li>
+<li><strong>Center align:</strong> any centered block &gt;3 lines? → <strong>High</strong> for body-like copy.</li>
+<li><strong>Center width:</strong> centered text near full container width? → <strong>Medium</strong>.</li>
+<li><strong>Desktop size:</strong> any reading text &lt;14px on desktop? → <strong>High</strong> (except deliberate dense UI with strong contrast and short strings).</li>
+<li><strong>Distance fit:</strong> phone layout on desktop without larger type? → <strong>Medium</strong> when readability suffers.</li>
+</ol>
+<h2>Do / Don't</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cap prose at ~55ch for 7–12 words</td>
+<td>Full-bleed paragraphs</td>
+</tr>
+<tr>
+<td>Center ≤3 short lines in a narrow measure</td>
+<td>Center long paragraphs</td>
+</tr>
+<tr>
+<td>Scale root or role sizes by breakpoint / device</td>
+<td>One px size for all screens</td>
+</tr>
+<tr>
+<td>16px+ body on phone web</td>
+<td>8px body anywhere</td>
+</tr>
+<tr>
+<td>Larger type for TV / far viewing</td>
+<td>Desktop sizes on a 2 m display</td>
+</tr>
+<tr>
+<td><code>rem</code> + user scaling</td>
+<td>Fixed px that breaks zoom</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Notes</h2>
+<ul>
+<li><strong>Design tools:</strong> Figma auto-layout max width in <code>ch</code> or fixed px equivalent to 55ch at body size.</li>
+<li><strong>iOS / Android:</strong> use Dynamic Type / sp; map semantic styles (body, headline) not single hard-coded px.</li>
+<li><strong>Data-heavy UI:</strong> tables may use smaller type for cells; still respect minimums and contrast; don't use table density as an excuse for unreadable defaults on desktop.</li>
+</ul>
+      </article>
+      <nav class="pager">
+        <a class="prev" href="contrast.html"><span class="dir">Previous rule</span><span class="ttl">05 · Contrast</span></a><a class="next" href="layout-spacing.html"><span class="dir">Next rule</span><span class="ttl">07 · Layout & spacing</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>

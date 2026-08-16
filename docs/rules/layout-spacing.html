@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Layout & spacing · Sleak</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 07: Layout & spacing. 0 full-bleed dividers." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">07</span><span>layout</span></div>
+      <h1>Layout & spacing</h1>
+      <span class="formula">0 full-bleed dividers</span>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="wrap">
+      <div class="demo" id="demo-layout-spacing">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
+          <div class="demo-stage"><div id="ls-stage" data-sep="space"><div class="ls-sec"><div class="ls-h">Features</div><div class="ls-b">Everything you need to ship intentional UI.</div></div><div class="ls-sec"><div class="ls-h">Pricing</div><div class="ls-b">Simple plans that scale with your team.</div></div><div class="ls-sec"><div class="ls-h">FAQ</div><div class="ls-b">Answers to the questions teams ask most.</div></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Section separation</label><div class="seg"><button type="button" data-sep="space">Space + surface</button><button type="button" data-sep="rules">Full-bleed rule</button></div></div><div class="ctl"><label>Breathing room <output id="ls-go"></output></label><input id="ls-gap" type="range" min="8" max="48" value="28"></div></div>
+        <div class="demo-note" id="ls-note"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h1>Layout &amp; spacing</h1>
+<p>Catch layout patterns that feel templated, including the habit of slicing every section with edge-to-edge lines.</p>
+<h2>Core (see dedicated references)</h2>
+<ul>
+<li>Nested rounded containers → <a href="concentric-radius.html">concentric-radius.md</a></li>
+</ul>
+<h2>Purpose</h2>
+<p>Fix grid, rhythm, and separation choices that read as generic dashboard / landing-page boilerplate.</p>
+<h2>Avoid full-bleed section dividers</h2>
+<p><strong>Do not slice a landing page into strips</strong> with full-bleed lines between sections. A full-width <code>&lt;hr&gt;</code>, a <code>border-bottom</code> on a 100%-width section wrapper, or any viewport-wide rule between hero / features / pricing / footer is the template tell.</p>
+<p><strong>Scope:</strong> this rule is about <strong>section-level</strong> dividers on a page. A 1px separator <strong>inside</strong> a dense list or data table is fine, often clearer than gaps, as long as it stays inset to that component's own content box. Don't read this as "never draw a line."</p>
+<h3>Rule</h3>
+<ul>
+<li><strong>Between page sections:</strong> no divider by default; separate with <strong>spacing</strong> (margin/padding) or a <strong>surface tier</strong>.</li>
+<li><strong>If a section line is truly needed:</strong> <strong>inset</strong> it, width matches the content column, never the viewport or a card's outer edge.</li>
+<li><strong>Inside lists / tables:</strong> a hairline row separator is allowed (and often better than gaps), inset to the list's content box.</li>
+<li><strong>Never</strong> stack full-bleed rules between every section on a page.</li>
+</ul>
+<h3>Why it weakens the layout</h3>
+<ul>
+<li>Template layouts use horizontal rules as cheap structure</li>
+<li>Lines at 100% width fight rounded containers and concentric radius</li>
+<li>Edge-to-edge rules make marketing pages look like wireframes with borders turned on</li>
+</ul>
+<h3>Alternatives</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Instead of…</th>
+<th>Use…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full-width <code>&lt;hr&gt;</code> between sections</td>
+<td>Section spacing (<code>gap</code>, <code>padding-block</code>)</td>
+</tr>
+<tr>
+<td>List-row line <strong>bleeding to the viewport</strong> edge</td>
+<td>Inset the row hairline to the list's content box (lines between rows are fine)</td>
+</tr>
+<tr>
+<td>Line between sidebar and main</td>
+<td>Background shift or whitespace, not a 1px wall</td>
+</tr>
+<tr>
+<td>Divider under every heading</td>
+<td>Heading margin-bottom only</td>
+</tr>
+<tr>
+<td>Grid of cards with lines between</td>
+<td>Gap between cards; card surface defines the block</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Inset divider (when a line is justified)</h3>
+<p>Align to the <strong>content inset</strong>, not the container edge:</p>
+<pre><code class="language-css">/* Bad, full bleed */
+.section { border-bottom: 1px solid var(--border); }
+
+/* Good, inset to content padding */
+.section__divider {
+  height: 1px;
+  margin-inline: var(--padding); /* or max-width + mx-auto on inner rule */
+  background: var(--border);
+}
+</code></pre>
+<p>In a padded card (<code>padding: 16px</code>), the divider sits <strong>inside</strong> the padding, same inset as text, not under the rounded border.</p>
+<h3>Exceptions</h3>
+<ul>
+<li><strong>Data tables / dense admin lists</strong>, row separators may be inset within the table, still avoid bleeding past the table's content box when the table itself is inset.</li>
+<li><strong>Explicit design system</strong>, if the product already uses full-width dividers consistently, match the system; don't introduce a new pattern mid-page.</li>
+<li><strong>Accessibility</strong>, <code>&lt;hr&gt;</code> with semantic meaning ( thematic break in prose ) is OK in long-form content; not as a default section decorator on landing pages.</li>
+</ul>
+<h3>Audit</h3>
+<p>Count <strong>full-bleed section</strong> rules on the page (row separators inset within a list or table don't count):</p>
+<ul>
+<li><strong>0–1</strong>, good (prefer 0)</li>
+<li><strong>One between every section</strong>, <strong>Medium/High</strong>; replace with spacing or a surface tier</li>
+<li><strong>Inside rounded cards at full bleed</strong>, <strong>High</strong>; breaks radius harmony</li>
+</ul>
+<h2>Common mistakes</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tell</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;hr&gt;</code> after hero, features, pricing, footer</td>
+<td>Remove; increase section <code>padding-block</code></td>
+</tr>
+<tr>
+<td>List row hairline bleeding past the list's content box</td>
+<td>Inset the row <code>border-b</code> to the list padding (a line between rows is fine)</td>
+</tr>
+<tr>
+<td>Divider + eyebrow + heading</td>
+<td>Drop divider and eyebrow; keep spacing + H2</td>
+</tr>
+<tr>
+<td>Lines at viewport width inside max-width layout</td>
+<td>Inset to <code>max-width</code> content column</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Fixes</h2>
+<ol>
+<li>Remove the rule element or <code>border-*</code> on full-width wrappers.</li>
+<li>Increase vertical spacing between sections (often 1.5–3× current gap is enough).</li>
+<li>If separation is still unclear, use <strong>surface change</strong> (background tier) not a line.</li>
+<li>When a line remains, wrap content in a padded inner; draw the rule <strong>inside</strong> that inset.</li>
+</ol>
+<h2>Do / Don't</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Separate with whitespace and type hierarchy</td>
+<td>Default to <code>&lt;hr&gt;</code> between blocks</td>
+</tr>
+<tr>
+<td>Inset dividers to content padding</td>
+<td>Span lines corner to corner</td>
+</tr>
+<tr>
+<td>Let card gaps and backgrounds define groups</td>
+<td>Grid of boxes + full-width rules</td>
+</tr>
+<tr>
+<td>Match divider inset to text alignment</td>
+<td>Bleed dividers through rounded parents</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Notes</h2>
+<ul>
+<li>Pairs with <a href="concentric-radius.html">concentric-radius.md</a>: full-bleed lines often ignore nested corner geometry.</li>
+<li>Pairs with <a href="section-eyebrows.html">section-eyebrows.md</a>: template pages combine eyebrows + full-width dividers, remove both.</li>
+</ul>
+      </article>
+      <nav class="pager">
+        <a class="prev" href="typography.html"><span class="dir">Previous rule</span><span class="ttl">06 · Typography</span></a><a class="next" href="components.html"><span class="dir">Next rule</span><span class="ttl">08 · Cards & buttons</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>

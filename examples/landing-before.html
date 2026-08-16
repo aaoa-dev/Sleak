@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flowstack, Project clarity for product teams</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      color: #1e1b2e;
+      background: #ffffff;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* Announcement bar */
+    .announce {
+      text-align: center; padding: 11px 16px; font-size: .82rem; font-weight: 600;
+      background: linear-gradient(90deg, #6d28d9, #9333ea, #c026d3);
+      color: #fff;
+    }
+    .announce a { color: #fde68a; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #ece9f5;
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; color: #6d28d9; letter-spacing: -.02em; }
+    .brand-mark { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, #7c3aed, #c026d3); box-shadow: 0 4px 12px rgba(124,58,237,.4); }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { color: #6b6684; text-decoration: none; font-size: .92rem; font-weight: 500; transition: all .3s ease; }
+    .nav-links a:hover { color: #7c3aed; }
+    .nav-cta {
+      background: linear-gradient(135deg, #7c3aed, #9333ea); color: #fff; border: none;
+      padding: 11px 22px; border-radius: 999px; font-weight: 600; font-size: .9rem; cursor: pointer;
+      box-shadow: 0 6px 18px rgba(124,58,237,.35); transition: all .3s ease;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(124,58,237,.45); }
+    @media (max-width: 760px){ .nav-links a { display: none; } }
+
+    /* Hero */
+    .hero {
+      text-align: center; padding: 88px 0 72px;
+      background: radial-gradient(ellipse 100% 80% at 50% -10%, rgba(147,51,234,.28), transparent 70%), #faf9ff;
+      border-bottom: 1px solid #ece9f5;
+    }
+    .hero .pill {
+      display: inline-flex; align-items: center; gap: 6px; padding: 7px 16px; border-radius: 999px;
+      background: rgba(124,58,237,.1); color: #7c3aed; font-size: .72rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.08;
+      max-width: 920px; margin: 0 auto 22px;
+      background: linear-gradient(135deg, #4c1d95, #7c3aed, #c026d3);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero .sub {
+      font-size: 1.18rem; color: #6b6684; max-width: 720px; margin: 0 auto 34px;
+    }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 15px 30px; border-radius: 14px; font-weight: 600; font-size: 1rem; cursor: pointer; border: none;
+      font-family: inherit; transition: all .35s cubic-bezier(.34,1.56,.64,1); text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn .icon { width: 1.15em; height: 1.15em; flex: none; }
+    .btn-primary { background: linear-gradient(135deg, #7c3aed, #9333ea); color: #fff; box-shadow: 0 10px 30px rgba(124,58,237,.4); }
+    .btn-primary:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 16px 40px rgba(124,58,237,.5); }
+    .btn-secondary { background: #fff; color: #7c3aed; border: 2px solid #ddd6fe; }
+    .btn-secondary:hover { border-color: #7c3aed; transform: translateY(-2px); }
+    .hero-note { margin-top: 18px; font-size: .82rem; color: #9c98b0; }
+
+    .stats {
+      display: flex; justify-content: center; gap: 56px; flex-wrap: wrap;
+      margin-top: 56px; padding-top: 36px; border-top: 1px solid #ece9f5;
+    }
+    .stats strong { display: block; font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg,#7c3aed,#c026d3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stats span { font-size: .84rem; color: #9c98b0; }
+
+    /* Sections */
+    section.block { padding: 84px 0; border-bottom: 1px solid #f0eef8; }
+    .head { text-align: center; margin-bottom: 52px; }
+    .eyebrow {
+      display: inline-block; font-size: .74rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: #9333ea; margin-bottom: 14px;
+    }
+    .head h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; letter-spacing: -.03em; color: #2e2a45; margin-bottom: 14px; }
+    .head p { color: #6b6684; max-width: 640px; margin: 0 auto; font-size: 1.05rem; }
+
+    /* Logos */
+    .logos-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px 48px; opacity: .75; }
+    .logos-row span { font-weight: 800; font-size: 1.1rem; color: #a8a4bd; letter-spacing: .02em; }
+
+    /* Feature grid */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 900px){ .grid-3 { grid-template-columns: 1fr; } }
+    .fcard {
+      background: linear-gradient(180deg, #faf9ff, #ffffff);
+      border: 1px solid #ece9f5; border-radius: 20px; padding: 32px;
+      transition: all .4s cubic-bezier(.34,1.56,.64,1);
+    }
+    .fcard:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 24px 48px rgba(124,58,237,.16); border-color: #ddd6fe; }
+    .ficon {
+      width: 52px; height: 52px; border-radius: 14px; margin-bottom: 20px;
+      background: linear-gradient(135deg, #7c3aed, #c026d3); display: grid; place-items: center;
+      color: #fff; font-size: 1.4rem; box-shadow: 0 8px 20px rgba(124,58,237,.3);
+    }
+    .fcard h3 { font-size: 1.25rem; font-weight: 700; color: #2e2a45; margin-bottom: 10px; }
+    .fcard p { font-size: .95rem; color: #6b6684; margin-bottom: 18px; }
+    .fcard .link { color: #7c3aed; font-weight: 600; font-size: .9rem; text-decoration: none; }
+    .fcard .link:hover { text-decoration: underline; }
+
+    /* Bento grid, every rounded layer set to 1.5rem (non-concentric), container included */
+    .bento-wrap { background: linear-gradient(180deg,#f5f3ff,#faf9ff); border: 1px solid #ece9f5; border-radius: 1.5rem; padding: 1rem; }
+    .bento { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 150px; gap: 16px; }
+    @media (max-width: 820px){ .bento { grid-template-columns: 1fr; grid-auto-rows: auto; } .bento-card { grid-column: auto !important; grid-row: auto !important; } }
+    .bento-card {
+      background: linear-gradient(180deg,#faf9ff,#fff); border: 1px solid #ece9f5;
+      border-radius: 1.5rem; padding: 1rem;
+      display: flex; flex-direction: column; gap: 12px;
+      transition: all .4s cubic-bezier(.34,1.56,.64,1);
+    }
+    .bento-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 40px rgba(124,58,237,.16); }
+    .b-board { grid-column: span 2; grid-row: span 2; }
+    .b-int { grid-column: span 2; }
+    .bento-media {
+      flex: 1; border-radius: 1.5rem;
+      background: linear-gradient(135deg,#ede9fe,#fae8ff); padding: 14px;
+      display: flex; flex-direction: column; gap: 8px; justify-content: center;
+    }
+    .bento-media .bar { height: 10px; border-radius: 1.5rem; background: rgba(124,58,237,.28); }
+    .bento-media .bar.w1{ width: 80%; } .bento-media .bar.w2{ width: 55%; } .bento-media .bar.w3{ width: 68%; }
+    .bento-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; height: 100%; }
+    .bento-cols .col { background: rgba(255,255,255,.6); border-radius: 1.5rem; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+    .bento-cols .chip { height: 14px; border-radius: 1.5rem; background: rgba(124,58,237,.32); }
+    .bento-label { text-align: left; padding: 0 .25rem; }
+    .bento-label h3 { font-size: 1.05rem; font-weight: 700; color: #2e2a45; margin-bottom: 2px; }
+    .bento-label p { font-size: .82rem; color: #6b6684; line-height: 1.45; }
+
+    /* Use cases */
+    .use-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    @media (max-width: 900px){ .use-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 540px){ .use-grid { grid-template-columns: 1fr; } }
+    .use-card {
+      background: #fff; border: 1px solid #ece9f5; border-radius: 18px; padding: 26px; text-align: center;
+      transition: all .35s ease;
+    }
+    .use-card:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(124,58,237,.14); }
+    .use-icon { width: 48px; height: 48px; border-radius: 14px; margin: 0 auto 16px; background: linear-gradient(135deg,#7c3aed,#ec4899); }
+    .use-card h3 { font-size: 1.1rem; font-weight: 700; color: #2e2a45; margin-bottom: 8px; }
+    .use-card p { font-size: .88rem; color: #6b6684; }
+
+    /* Steps */
+    .steps { max-width: 760px; margin: 0 auto; display: grid; gap: 20px; }
+    .step {
+      display: flex; gap: 22px; align-items: flex-start;
+      background: linear-gradient(180deg,#faf9ff,#fff); border: 1px solid #ece9f5; border-radius: 18px; padding: 28px;
+    }
+    .step-num {
+      flex-shrink: 0; width: 46px; height: 46px; border-radius: 50%;
+      background: linear-gradient(135deg,#7c3aed,#9333ea); color: #fff; font-weight: 800; font-size: 1.2rem;
+      display: grid; place-items: center; box-shadow: 0 8px 18px rgba(124,58,237,.3);
+    }
+    .step h3 { font-size: 1.15rem; font-weight: 700; color: #2e2a45; margin-bottom: 6px; }
+    .step p { font-size: .92rem; color: #6b6684; }
+
+    /* Testimonials */
+    .tcard {
+      background: linear-gradient(160deg,#faf9ff,#fdf4ff); border: 1px solid #ece9f5; border-radius: 20px; padding: 32px;
+      transition: all .35s ease;
+    }
+    .tcard:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(124,58,237,.16); }
+    .tcard .stars { color: #f59e0b; font-size: 1rem; margin-bottom: 14px; }
+    .tcard blockquote { font-size: 1rem; color: #3a3552; line-height: 1.65; margin-bottom: 20px; }
+    .tcard .who { display: flex; align-items: center; gap: 12px; }
+    .tcard .avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg,#7c3aed,#ec4899); }
+    .tcard cite { font-style: normal; font-weight: 700; font-size: .9rem; color: #2e2a45; }
+    .tcard .role { font-size: .8rem; color: #9c98b0; }
+
+    /* Compare */
+    .compare-wrap { max-width: 780px; margin: 0 auto; border: 1px solid #ece9f5; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 32px rgba(124,58,237,.08); }
+    .compare { width: 100%; border-collapse: collapse; text-align: center; }
+    .compare thead { background: linear-gradient(90deg,#f5f3ff,#fdf4ff); }
+    .compare th, .compare td { padding: 18px 16px; border-bottom: 1px solid #f0eef8; font-size: .92rem; color: #6b6684; }
+    .compare th { font-weight: 700; color: #2e2a45; }
+    .compare th:last-child, .compare td:last-child { background: rgba(124,58,237,.04); }
+    .compare tbody td:first-child { text-align: left; font-weight: 500; color: #3a3552; }
+    .compare .yes { color: #7c3aed; font-weight: 800; font-size: 1.15rem; }
+    .compare .no { color: #cbc7da; font-size: 1.1rem; }
+
+    /* Integrations */
+    .int-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; max-width: 820px; margin: 0 auto; }
+    @media (max-width: 760px){ .int-grid { grid-template-columns: repeat(3, 1fr); } }
+    .int {
+      aspect-ratio: 1; border: 1px solid #ece9f5; border-radius: 16px; background: #fff;
+      display: grid; place-items: center; font-size: .8rem; font-weight: 600; color: #6b6684;
+      transition: all .3s ease;
+    }
+    .int:hover { transform: translateY(-4px) scale(1.04); border-color: #ddd6fe; box-shadow: 0 12px 24px rgba(124,58,237,.12); color: #7c3aed; }
+
+    /* Security band */
+    .sec-band {
+      text-align: center; padding: 84px 24px;
+      background: radial-gradient(circle at 50% 0%, rgba(147,51,234,.18), transparent 60%), #faf9ff;
+      border-bottom: 1px solid #f0eef8;
+    }
+    .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 32px; }
+    .badge {
+      padding: 13px 22px; border-radius: 999px; font-size: .82rem; font-weight: 700; color: #6d28d9;
+      background: #fff; border: 1px solid #ddd6fe; box-shadow: 0 4px 12px rgba(124,58,237,.08);
+      transition: all .3s ease;
+    }
+    .badge:hover { transform: scale(1.06); box-shadow: 0 8px 20px rgba(124,58,237,.16); }
+
+    /* Pricing */
+    .pricing { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 780px; margin: 0 auto; }
+    @media (max-width: 640px){ .pricing { grid-template-columns: 1fr; } }
+    .plan { background: #fff; border: 1px solid #ece9f5; border-radius: 22px; padding: 36px; text-align: center; }
+    .plan.hot {
+      background: linear-gradient(165deg, #f5f3ff, #fdf4ff);
+      border: 2px solid #a78bfa; transform: scale(1.03); box-shadow: 0 20px 48px rgba(124,58,237,.2); position: relative;
+    }
+    .plan.hot::before {
+      content: "Most popular"; position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg,#7c3aed,#9333ea); color: #fff; font-size: .68rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; padding: 6px 16px; border-radius: 999px;
+    }
+    .plan h3 { font-size: 1.2rem; font-weight: 700; color: #2e2a45; }
+    .plan .amt { font-size: 3rem; font-weight: 800; color: #2e2a45; margin: 16px 0 4px; letter-spacing: -.03em; }
+    .plan .amt small { font-size: 1rem; font-weight: 500; color: #9c98b0; }
+    .plan ul { list-style: none; margin: 24px 0; text-align: left; }
+    .plan li { padding: 8px 0 8px 28px; position: relative; font-size: .92rem; color: #6b6684; }
+    .plan li::before { content: "✓"; position: absolute; left: 0; color: #7c3aed; font-weight: 800; }
+    .plan .btn { width: 100%; }
+
+    /* Resources */
+    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 900px){ .blog-grid { grid-template-columns: 1fr; } }
+    .blog-card {
+      background: #fff; border: 1px solid #ece9f5; border-radius: 20px; overflow: hidden;
+      transition: all .35s ease;
+    }
+    .blog-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(124,58,237,.14); }
+    .blog-thumb { height: 140px; background: linear-gradient(135deg,#7c3aed,#c026d3); }
+    .blog-card:nth-child(2) .blog-thumb { background: linear-gradient(135deg,#9333ea,#ec4899); }
+    .blog-card:nth-child(3) .blog-thumb { background: linear-gradient(135deg,#6d28d9,#7c3aed); }
+    .blog-body { padding: 24px; }
+    .blog-tag { display: inline-block; font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #9333ea; margin-bottom: 10px; }
+    .blog-card h3 { font-size: 1.05rem; font-weight: 700; color: #2e2a45; margin-bottom: 8px; line-height: 1.4; }
+    .blog-card p { font-size: .88rem; color: #6b6684; margin-bottom: 16px; }
+    .blog-card .link { color: #7c3aed; font-weight: 600; font-size: .88rem; text-decoration: none; }
+
+    /* FAQ */
+    .faq { max-width: 760px; margin: 0 auto; display: grid; gap: 16px; }
+    .faq-item { background: linear-gradient(180deg,#faf9ff,#fff); border: 1px solid #ece9f5; border-radius: 16px; padding: 26px 28px; }
+    .faq-item h4 { font-size: 1.05rem; font-weight: 700; color: #2e2a45; margin-bottom: 8px; }
+    .faq-item p { font-size: .92rem; color: #6b6684; }
+
+    /* Final CTA */
+    .cta-band {
+      text-align: center; padding: 96px 24px;
+      background: linear-gradient(135deg, #6d28d9, #9333ea, #c026d3); color: #fff;
+    }
+    .cta-band .eyebrow { color: #e9d5ff; }
+    .cta-band h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -.03em; margin-bottom: 16px; }
+    .cta-band p { max-width: 620px; margin: 0 auto 32px; font-size: 1.1rem; opacity: .92; }
+    .cta-band .btn-primary { background: #fff; color: #7c3aed; box-shadow: 0 12px 32px rgba(0,0,0,.2); }
+    .cta-band .btn-primary:hover { box-shadow: 0 18px 44px rgba(0,0,0,.28); }
+    .cta-band .btn-secondary { background: transparent; color: #fff; border-color: rgba(255,255,255,.5); }
+
+    /* Footer */
+    footer { padding: 64px 0 40px; background: #faf9ff; border-top: 1px solid #f0eef8; }
+    .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+    @media (max-width: 760px){ .foot-grid { grid-template-columns: 1fr 1fr; } }
+    .foot-brand .brand { margin-bottom: 12px; }
+    .foot-brand p { font-size: .88rem; color: #9c98b0; max-width: 280px; }
+    .foot-grid h5 { font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #9333ea; margin-bottom: 16px; }
+    .foot-grid a { display: block; font-size: .88rem; color: #6b6684; text-decoration: none; margin-bottom: 10px; transition: color .3s ease; }
+    .foot-grid a:hover { color: #7c3aed; }
+    .foot-copy { text-align: center; font-size: .82rem; color: #9c98b0; padding-top: 32px; border-top: 1px solid #f0eef8; }
+  </style>
+</head>
+<body>
+  <p class="announce">🎉 New: AI-powered standup summaries are here! <a href="#">Learn more</a> and unlock seamless team velocity today.</p>
+
+  <header>
+    <div class="wrap nav">
+      <div class="brand"><span class="brand-mark"></span> Flowstack</div>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#customers">Customers</a>
+        <a href="#faq">FAQ</a>
+        <button class="nav-cta" type="button">Get started</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="pill">✨ Welcome to Flowstack</span>
+      <h1>Empower your team to ship seamlessly</h1>
+      <p class="sub">
+        The all-in-one platform that helps modern teams collaborate effortlessly, leverage
+        powerful workflows, and journey toward robust outcomes in today's fast-paced landscape.
+      </p>
+      <div class="hero-btns">
+        <button class="btn btn-primary" type="button">Get started free <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></button>
+        <button class="btn btn-secondary" type="button"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Book a demo</button>
+      </div>
+      <p class="hero-note">Free 14-day trial · No credit card required · Cancel anytime</p>
+      <div class="stats">
+        <div><strong>10k+</strong><span>Happy teams worldwide</span></div>
+        <div><strong>99.9%</strong><span>Industry-leading uptime</span></div>
+        <div><strong>4.9★</strong><span>Rated on G2</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="customers">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Trusted by</p>
+        <h2>Leading innovators</h2>
+        <p>Join thousands of forward-thinking companies who trust Flowstack to power their digital transformation every single day.</p>
+      </div>
+      <div class="logos-row">
+        <span>Meridian</span><span>Northline</span><span>Helix</span><span>Parcel</span><span>Studio K</span><span>Acme Co</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="features">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Features</p>
+        <h2>Everything you need</h2>
+        <p>A comprehensive suite that empowers innovative teams to deliver robust solutions with confidence and ease.</p>
+      </div>
+      <div class="grid-3">
+        <div class="fcard">
+          <div class="ficon">◆</div>
+          <h3>Live ownership</h3>
+          <p>Every task shows its owner and due date in real time, so nothing slips through the cracks.</p>
+          <a class="link" href="#">Learn more →</a>
+        </div>
+        <div class="fcard">
+          <div class="ficon">◆</div>
+          <h3>Linked specs</h3>
+          <p>Attach PRDs and docs directly to tickets so context lives where the work happens.</p>
+          <a class="link" href="#">Learn more →</a>
+        </div>
+        <div class="fcard">
+          <div class="ficon">◆</div>
+          <h3>Morning digest</h3>
+          <p>A daily Slack summary of what's blocked, shipped, and at risk, read in ninety seconds.</p>
+          <a class="link" href="#">Learn more →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Overview</p>
+        <h2>One place for the whole delivery loop</h2>
+        <p>Board, specs, digest, and rollups, in a single workspace your team actually opens.</p>
+      </div>
+      <div class="bento-wrap">
+      <div class="bento">
+        <div class="bento-card b-board">
+          <div class="bento-media">
+            <div class="bento-cols">
+              <div class="col"><div class="chip"></div><div class="chip"></div></div>
+              <div class="col"><div class="chip"></div></div>
+              <div class="col"><div class="chip"></div><div class="chip"></div></div>
+            </div>
+          </div>
+          <div class="bento-label"><h3>Board</h3><p>Tasks, owners, and status in one view.</p></div>
+        </div>
+        <div class="bento-card">
+          <div class="bento-media"><div class="bar w1"></div><div class="bar w2"></div><div class="bar w3"></div></div>
+          <div class="bento-label"><h3>Slack digest</h3><p>Daily summary of blocked and shipped.</p></div>
+        </div>
+        <div class="bento-card">
+          <div class="bento-media"><div class="bar w2"></div><div class="bar w1"></div></div>
+          <div class="bento-label"><h3>Roadmap</h3><p>Quarters and milestones.</p></div>
+        </div>
+        <div class="bento-card b-int">
+          <div class="bento-media"><div class="bar w1"></div><div class="bar w3"></div></div>
+          <div class="bento-label"><h3>Integrations</h3><p>Slack, GitHub, Figma, Jira.</p></div>
+        </div>
+        <div class="bento-card">
+          <div class="bento-media"><div class="bar w2"></div><div class="bar w3"></div></div>
+          <div class="bento-label"><h3>Audit trail</h3><p>Every change, who and when.</p></div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Use cases</p>
+        <h2>Built for every role</h2>
+        <p>Whether you're a product leader, engineer, designer, or executive, Flowstack empowers your unique workflow with tools tailored to how you work.</p>
+      </div>
+      <div class="use-grid">
+        <div class="use-card"><div class="use-icon"></div><h3>Product</h3><p>Roadmaps and delivery boards that show blockers by squad.</p></div>
+        <div class="use-card"><div class="use-icon"></div><h3>Engineering</h3><p>Sprint boards linked to your GitHub pull requests and specs.</p></div>
+        <div class="use-card"><div class="use-icon"></div><h3>Design</h3><p>Design QA checklists tied directly to your Figma frames.</p></div>
+        <div class="use-card"><div class="use-icon"></div><h3>Leadership</h3><p>Weekly rollups of what shipped, slipped, and needs attention.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">How it works</p>
+        <h2>Get started in minutes</h2>
+        <p>In just a few simple steps you'll be up and running with a platform designed to help you succeed from day one.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><h3>Create a workspace</h3><p>Import from Jira or start blank. Your first board is ready in about ten minutes.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h3>Invite your team</h3><p>Send a link or sync from Google Workspace. Assign admin, member, or viewer roles.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h3>Run your first sprint</h3><p>Move tasks, attach specs, and ship. The digest replaces your daily standup doc.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Testimonials</p>
+        <h2>What customers say</h2>
+        <p>Don't just take our word for it. Hear from teams who've transformed their workflow with Flowstack.</p>
+      </div>
+      <div class="grid-3">
+        <div class="tcard">
+          <div class="stars">★★★★★</div>
+          <blockquote>"We cut status meetings from five per week to one. The board is now our single source of truth."</blockquote>
+          <div class="who"><div class="avatar"></div><div><cite>Jane Doe</cite><div class="role">VP Product, Meridian</div></div></div>
+        </div>
+        <div class="tcard">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Specs linked to tickets finally stuck. Engineering stopped asking where the PRD lived."</blockquote>
+          <div class="who"><div class="avatar"></div><div><cite>Marcus Lee</cite><div class="role">Eng Lead, Northline</div></div></div>
+        </div>
+        <div class="tcard">
+          <div class="stars">★★★★★</div>
+          <blockquote>"We onboarded twelve people in a single day and nobody filed a 'how do I use this' ticket."</blockquote>
+          <div class="who"><div class="avatar"></div><div><cite>Sara Kim</cite><div class="role">Founder, Studio K</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Compare</p>
+        <h2>Why teams switch</h2>
+        <p>See how Flowstack stacks up against the spreadsheets and status docs your team has outgrown.</p>
+      </div>
+      <div class="compare-wrap">
+        <table class="compare">
+          <thead>
+            <tr><th>Capability</th><th>Spreadsheets</th><th>Flowstack</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Live ownership</td><td class="no">✕</td><td class="yes">✓</td></tr>
+            <tr><td>Linked specs</td><td class="no">✕</td><td class="yes">✓</td></tr>
+            <tr><td>Slack digest</td><td class="no">✕</td><td class="yes">✓</td></tr>
+            <tr><td>Audit trail</td><td class="no">✕</td><td class="yes">✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Integrations</p>
+        <h2>Connect your stack</h2>
+        <p>Flowstack integrates with all the tools you already use and love.</p>
+      </div>
+      <div class="int-grid">
+        <div class="int">Slack</div><div class="int">GitHub</div><div class="int">Figma</div>
+        <div class="int">Jira</div><div class="int">Notion</div><div class="int">Linear</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec-band">
+    <div class="wrap">
+      <p class="eyebrow">Security</p>
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.03em;color:#2e2a45;margin-bottom:14px;">Enterprise-grade trust</h2>
+      <p style="max-width:600px;margin:0 auto;color:#6b6684;font-size:1.05rem;">Industry-leading security so you can move forward with confidence. Your data is protected with robust safeguards at every layer.</p>
+      <div class="badges">
+        <span class="badge">SOC 2 Type II</span>
+        <span class="badge">GDPR Ready</span>
+        <span class="badge">SSO / SAML</span>
+        <span class="badge">256-bit Encryption</span>
+        <span class="badge">EU Hosting</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="pricing">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Pricing</p>
+        <h2>Plans for every stage</h2>
+        <p>Choose the plan that's right for you. Every plan includes our core features and dedicated support.</p>
+      </div>
+      <div class="pricing">
+        <div class="plan">
+          <h3>Starter</h3>
+          <p class="amt">$19<small>/mo</small></p>
+          <ul><li>Up to 5 members</li><li>3 active projects</li><li>Email support</li></ul>
+          <button class="btn btn-secondary" type="button">Get started</button>
+        </div>
+        <div class="plan hot">
+          <h3>Pro</h3>
+          <p class="amt">$49<small>/mo</small></p>
+          <ul><li>Unlimited projects</li><li>Slack digest</li><li>Priority support</li></ul>
+          <button class="btn btn-primary" type="button"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12l1-9z"/></svg> Get started</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Resources</p>
+        <h2>Latest from the blog</h2>
+        <p>Helpful guides and thought leadership to empower your team on the path to robust, seamless success.</p>
+      </div>
+      <div class="blog-grid">
+        <div class="blog-card"><div class="blog-thumb"></div><div class="blog-body"><span class="blog-tag">Guide</span><h3>Run your first sprint on Flowstack</h3><p>A step-by-step walkthrough from setup to shipping, in about forty-five minutes.</p><a class="link" href="#">Read article →</a></div></div>
+        <div class="blog-card"><div class="blog-thumb"></div><div class="blog-body"><span class="blog-tag">Product</span><h3>What's new in Flowstack this quarter</h3><p>Digest scheduling, two-way Jira sync, and everything else we shipped in March.</p><a class="link" href="#">Read article →</a></div></div>
+        <div class="blog-card"><div class="blog-thumb"></div><div class="blog-body"><span class="blog-tag">Case study</span><h3>How Meridian shipped 2× faster</h3><p>How a forty-person product org replaced five status meetings with one board.</p><a class="link" href="#">Read article →</a></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">FAQ</p>
+        <h2>Common questions</h2>
+        <p>Everything you need to know about getting started with Flowstack.</p>
+      </div>
+      <div class="faq">
+        <div class="faq-item"><h4>Is there a free trial?</h4><p>Yes, 14 days on the Pro plan, with no credit card required for the sandbox workspace.</p></div>
+        <div class="faq-item"><h4>Can I cancel anytime?</h4><p>Absolutely. Export your data as CSV or JSON at any point before you close your account.</p></div>
+        <div class="faq-item"><h4>Do you offer enterprise plans?</h4><p>We do, with SSO, audit logs, and dedicated support. Contact our team for a custom quote.</p></div>
+        <div class="faq-item"><h4>Is my data secure?</h4><p>Yes. We're SOC 2 Type II certified, with encryption at rest and in transit, and EU hosting available.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <p class="eyebrow">Get started today</p>
+      <h2>Ready to transform your workflow?</h2>
+      <p>Join thousands of teams who've already unlocked seamless collaboration. Start your journey today and empower your team to ship faster than ever.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary" type="button">Get started free <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></button>
+        <button class="btn btn-secondary" type="button"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Contact sales</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <div class="brand"><span class="brand-mark"></span> Flowstack</div>
+          <p>Project clarity for modern product teams. Ship with confidence, every sprint.</p>
+        </div>
+        <div><h5>Product</h5><a href="#">Features</a><a href="#">Pricing</a><a href="#">Integrations</a><a href="#">Changelog</a></div>
+        <div><h5>Company</h5><a href="#">About</a><a href="#">Careers</a><a href="#">Blog</a><a href="#">Contact</a></div>
+        <div><h5>Legal</h5><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Security</a><a href="#">Status</a></div>
+      </div>
+      <p class="foot-copy">© 2026 Flowstack. Built with ❤️ for product teams everywhere.</p>
+    </div>
+  </footer>
+</body>
+</html>

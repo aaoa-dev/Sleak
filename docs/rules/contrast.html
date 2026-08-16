@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Contrast · Sleak</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 05: Contrast. WCAG 4.5 + APCA Lc 75." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">05</span><span>a11y</span></div>
+      <h1>Contrast</h1>
+      <span class="formula">WCAG 4.5 + APCA Lc 75</span>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h1>Contrast</h1>
+<p>Text must be readable and UI elements must be visible against whatever sits behind them. Check contrast <strong>two ways</strong>, mathematical and perceptual, because each catches failures the other misses.</p>
+<h2>Purpose</h2>
+<p>Catch color pairs that look fine in a mockup but fail in use: mid-tone gray on white, tinted text on a tinted surface, low-contrast placeholder and disabled states, borders and icons that vanish, and focus rings you can't see. Applies to text <strong>and</strong> non-text UI (borders, icons, controls, focus indicators, chart marks).</p>
+<p>This pairs with <a href="intentional-accent.html">color.md</a> (retinting hue to the accent should not lower contrast, always re-check) and <a href="typography.html">typography.md</a> (smaller type needs more contrast).</p>
+<h2>Check both ways (core of this rule)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>What it is</th>
+<th>Catches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mathematical (WCAG 2.x)</strong></td>
+<td>Luminance-ratio, <code>(L1 + 0.05) / (L2 + 0.05)</code>. The compliance floor.</td>
+<td>Objective, legally referenced pass/fail; required for a11y conformance</td>
+</tr>
+<tr>
+<td><strong>Perceptual (APCA)</strong></td>
+<td>Lightness-contrast (Lc) from WCAG 3 draft; accounts for <strong>polarity</strong>, font size, and weight</td>
+<td>Readability the ratio misses, dark mode, thin fonts, mid-tones, light-on-dark</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Rule:</strong> a pair <strong>passes only when it clears the WCAG AA floor <em>and</em> the APCA target for its role.</strong> WCAG is the legal minimum; APCA is whether a human can actually read it. They disagree often enough that one alone is not enough:</p>
+<ul>
+<li>WCAG <strong>passes</strong> pairs that read poorly (many light-on-dark and saturated combinations).</li>
+<li>WCAG <strong>fails</strong> some pairs that are genuinely readable (over-penalizes certain dark-mode text).</li>
+<li>APCA models real perception but is <strong>not</strong> yet the conformance standard.</li>
+</ul>
+<p>Use WCAG for the compliance gate, APCA to tune what's actually legible. When they conflict, satisfy WCAG AA <strong>and</strong> treat a weak APCA score as a real readability problem to fix.</p>
+<h2>Check the rendered pixels, not the tokens (mandatory)</h2>
+<p><strong>Computing contrast from CSS variables or the palette table is not a contrast check.</strong> It tells you what a pair <em>should</em> be, not what the browser actually paints. The number that matters is the <strong>rendered foreground on the rendered background</strong>, after the cascade, inheritance, specificity, opacity, gradients, and overlays have all resolved.</p>
+<p>A pair verified in the abstract can still fail on screen when:</p>
+<ul>
+<li><strong>A more specific selector overrides the color.</strong> e.g. <code>.nav-links a { color: var(--muted) }</code> (specificity 0,1,1) beats <code>.btn-primary { color:#fff }</code> (0,1,0), so a "white on accent" button renders <strong>dark text on the accent fill</strong>, a hard fail, even though the token pair was 6.4:1. This exact bug shipped once because only the token math was checked.</li>
+<li><code>color: inherit</code> / a parent color pulls a different value than the token you measured.</li>
+<li>The element sits on a <strong>different background than assumed</strong> (a <code>.tint</code> section, a gradient, an image, a hover surface).</li>
+<li>Opacity on the text or an ancestor lowers the effective contrast.</li>
+</ul>
+<h3>The rule</h3>
+<ol>
+<li><strong>Render the page</strong> (real browser, the actual viewport and theme). Never sign off on contrast from CSS reading alone.</li>
+<li><strong>Screenshot it</strong>, then sample the <strong>actual pixel colors</strong> of the foreground and the background directly behind it (devtools eyedropper, a color picker on the screenshot, or devtools' built-in contrast readout).</li>
+<li><strong>Run WCAG + APCA on those sampled pixels</strong>, not on the token definitions.</li>
+<li>Do this for every state and theme (hover, focus, disabled, dark mode) and for text over gradients/images at the worst point.</li>
+</ol>
+<p>If you claimed a pair passes but never rendered it, you have not checked contrast, you have checked intent. Look at it.</p>
+<h2>Mathematical thresholds (WCAG 2.2, AA)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Content</th>
+<th>Min ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Body / normal text (&lt; 18.66px bold or &lt; 24px)</td>
+<td><strong>4.5 : 1</strong></td>
+</tr>
+<tr>
+<td>Large text (≥ 24px, or ≥ 18.66px bold)</td>
+<td><strong>3 : 1</strong></td>
+</tr>
+<tr>
+<td>Non-text: UI component boundaries, icons, form borders, focus indicators, graph/chart marks</td>
+<td><strong>3 : 1</strong></td>
+</tr>
+<tr>
+<td>AAA body / AAA large</td>
+<td>7 : 1 / 4.5 : 1</td>
+</tr>
+</tbody>
+</table></div>
+<p>Measured between the foreground and the <strong>actual</strong> background it sits on (including tints, gradients test the worst point, and any overlay).</p>
+<pre><code class="language-js">// WCAG relative luminance + ratio
+const lin = c =&gt; { c /= 255; return c &lt;= 0.03928 ? c/12.92 : ((c+0.055)/1.055)**2.4; };
+const L = ([r,g,b]) =&gt; 0.2126*lin(r) + 0.7152*lin(g) + 0.0722*lin(b);
+const ratio = (fg, bg) =&gt; {
+  const a = L(fg), b = L(bg);
+  return (Math.max(a,b) + 0.05) / (Math.min(a,b) + 0.05);
+}; // e.g. ratio([255,255,255],[124,58,237]) → 4.5+ passes AA large
+</code></pre>
+<h2>Perceptual thresholds (APCA, Lc)</h2>
+<p>APCA returns a signed <strong>Lc</strong> value; use its absolute magnitude. Direction matters, computing dark-on-light vs light-on-dark are not symmetric, so run it in the actual polarity.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Lc (abs)</th>
+<th>Cleared for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>90</strong></td>
+<td>Preferred for body text; required for thin (≤ 300) or very small text</td>
+</tr>
+<tr>
+<td><strong>75</strong></td>
+<td>Minimum for normal body text (~16px / 400)</td>
+</tr>
+<tr>
+<td><strong>60</strong></td>
+<td>Larger or medium-weight content text (~24px/400, ~16px/600)</td>
+</tr>
+<tr>
+<td><strong>45</strong></td>
+<td>Large / bold headlines (~36px+, or 24px bold)</td>
+</tr>
+<tr>
+<td><strong>30</strong></td>
+<td>Non-text elements, large UI, incidental/placeholder, disabled boundary</td>
+</tr>
+<tr>
+<td><strong>15</strong></td>
+<td>Absolute floor for <em>any</em> discernible difference; below this is invisible</td>
+</tr>
+</tbody>
+</table></div>
+<p>Compute with the reference algorithm (<code>apca-w3</code> / <code>apcach</code>), not by hand:</p>
+<pre><code class="language-js">import { APCAcontrast, sRGBtoY } from 'apca-w3';
+const Lc = APCAcontrast(sRGBtoY([124,58,237]), sRGBtoY([255,255,255]));
+// |Lc| ≥ 75 for body; ≥ 45 for large/bold headlines
+</code></pre>
+<h2>Non-text elements</h2>
+<p>Readability isn't only text. Require <strong>≥ 3:1 WCAG (≈ Lc 30+ APCA)</strong> against adjacent color for:</p>
+<ul>
+<li>Icons and glyphs that carry meaning (not purely decorative)</li>
+<li>Input borders, card outlines, and dividers that must be seen to parse layout</li>
+<li><strong>Focus indicators</strong>, the ring must clear 3:1 against both the component and the page</li>
+<li>Toggle/checkbox/radio boundaries in every state</li>
+<li>Chart/graph series, bars, lines, and their gridlines (see [dataviz] if present)</li>
+<li>Selected / active states that rely on color alone</li>
+</ul>
+<p>Purely decorative shapes with no informational role are exempt, but confirm they're truly decorative.</p>
+<h2>States people forget</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>State</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Placeholder text</strong></td>
+<td>Often too light; still needs ≥ 4.5:1 if it conveys the only label. Don't use placeholder as the label.</td>
+</tr>
+<tr>
+<td><strong>Disabled</strong></td>
+<td>WCAG exempts disabled controls, but keep them <strong>perceivable</strong> (Lc 15–30) so users see they exist</td>
+</tr>
+<tr>
+<td><strong>Hover / active</strong></td>
+<td>Re-check, hover often lightens the surface and drops text contrast</td>
+</tr>
+<tr>
+<td><strong>On gradients / images</strong></td>
+<td>Test the <strong>lightest and darkest</strong> point under the text; add a scrim if either fails</td>
+</tr>
+<tr>
+<td><strong>Accent text on tint</strong></td>
+<td>Accent-colored text on an <code>--accent-soft</code> tint frequently fails; use full-strength text color instead</td>
+</tr>
+<tr>
+<td><strong>Dark mode</strong></td>
+<td>Recompute; a pair that passes in light mode is a different ratio inverted</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Workflow</h2>
+<ol>
+<li><strong>Render and screenshot first.</strong> Open the built page in a real browser; sample the <strong>actual painted</strong> foreground/background pixels (see "Check the rendered pixels" above). Token math alone is not a check.</li>
+<li><strong>List real pairs.</strong> For each text and meaningful non-text element, note foreground + the exact background behind it (resolve tints, overlays, gradients to concrete colors).</li>
+<li><strong>Run WCAG ratio.</strong> Fail AA → <strong>High</strong>, fix before ship.</li>
+<li><strong>Run APCA.</strong> Below the role's Lc target → readability issue even if WCAG passed; fix or bump size/weight.</li>
+<li><strong>Fix by lightness, not hue.</strong> Adjust <code>L</code> (lightness) to gain contrast; keep hue aligned to accent (see <a href="intentional-accent.html">color.md</a>). Don't desaturate to a clashing gray.</li>
+<li><strong>Re-check every state and both themes.</strong> Hover, disabled, focus, dark mode.</li>
+<li><strong>Prefer size/weight when a brand color can't move.</strong> Larger or heavier text lowers the required ratio and Lc.</li>
+</ol>
+<h2>Audit</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contrast signed off from CSS tokens without rendering the page</td>
+<td><strong>High</strong>, not a check; render and re-verify</td>
+</tr>
+<tr>
+<td>Rendered text color ≠ the token you measured (cascade/specificity override)</td>
+<td><strong>High</strong></td>
+</tr>
+<tr>
+<td>Body text below WCAG 4.5:1 (or APCA Lc 75)</td>
+<td><strong>High</strong></td>
+</tr>
+<tr>
+<td>Meaningful icon / border / focus ring below 3:1</td>
+<td><strong>High</strong></td>
+</tr>
+<tr>
+<td>Passes WCAG but APCA under target (reads poorly, common in dark mode / mid-tones)</td>
+<td><strong>Medium</strong>, fix readability</td>
+</tr>
+<tr>
+<td>Placeholder used as the only label, low contrast</td>
+<td><strong>Medium</strong></td>
+</tr>
+<tr>
+<td>Disabled state invisible (Lc &lt; 15)</td>
+<td><strong>Low/Medium</strong></td>
+</tr>
+<tr>
+<td>Text on gradient/image with no scrim, fails at one end</td>
+<td><strong>High</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2>Common mistakes</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tell</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>#999</code> gray on white body text</td>
+<td>Darken to clear 4.5:1 / Lc 75</td>
+</tr>
+<tr>
+<td>Accent-color label on accent tint background</td>
+<td>Use <code>--text</code>; reserve accent for the action</td>
+</tr>
+<tr>
+<td>Light-on-dark "passes" WCAG but looks muddy</td>
+<td>Check APCA; raise foreground lightness</td>
+</tr>
+<tr>
+<td>Focus ring same hue/lightness as border</td>
+<td>Distinct ring ≥ 3:1 vs page and component</td>
+</tr>
+<tr>
+<td>Placeholder as the label</td>
+<td>Real <code>&lt;label&gt;</code>; placeholder is a hint only</td>
+</tr>
+<tr>
+<td>Only checked light mode</td>
+<td>Recompute the inverted pair for dark mode</td>
+</tr>
+<tr>
+<td>Text over hero image, no overlay</td>
+<td>Scrim/gradient so the worst pixel still passes</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Do / Don't</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gate on WCAG AA <strong>and</strong> APCA Lc for the role</td>
+<td>Ship on one method alone</td>
+</tr>
+<tr>
+<td>Test against the real resolved background</td>
+<td>Assume the base surface color</td>
+</tr>
+<tr>
+<td>Gain contrast via lightness, keep accent hue</td>
+<td>Desaturate into a clashing neutral</td>
+</tr>
+<tr>
+<td>Give focus rings and borders their own 3:1</td>
+<td>Rely on a faint 1px line no one can see</td>
+</tr>
+<tr>
+<td>Re-check hover, disabled, focus, dark mode</td>
+<td>Check the default state only</td>
+</tr>
+<tr>
+<td>Bump size/weight when a brand color is fixed</td>
+<td>Force an unreadable brand color at 12px</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Notes</h2>
+<ul>
+<li><strong>Tooling:</strong> WCAG ratio, any contrast checker or the snippet above. APCA, <code>apca-w3</code> / <code>apcach</code>, or the online APCA calculator. Automate in CI where possible.</li>
+<li><strong>WCAG 2 vs 3:</strong> WCAG 2.x (ratio) is the current conformance standard; APCA is the WCAG 3 draft direction. Report against 2.x for compliance, use APCA to catch real-world readability gaps.</li>
+<li><strong>Color-blindness:</strong> contrast ≠ color independence. Don't encode meaning by hue alone; pair with text, icon, or shape.</li>
+</ul>
+      </article>
+      <nav class="pager">
+        <a class="prev" href="accent-hue-blacks.html"><span class="dir">Previous rule</span><span class="ttl">04 · Accent-hue blacks</span></a><a class="next" href="typography.html"><span class="dir">Next rule</span><span class="ttl">06 · Typography</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>

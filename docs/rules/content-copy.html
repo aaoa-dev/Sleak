@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Content & copy · Sleak</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 10: Content & copy. verb + object." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">10</span><span>copy</span></div>
+      <h1>Content & copy</h1>
+      <span class="formula">verb + object</span>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="wrap">
+      <div class="demo" id="demo-content-copy">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="co-ui"><div class="co-h" data-sharp="Add Sleak to your agent" data-fluff="Unlock the full potential of your design workflow"></div><div class="co-p" data-sharp="Point any coding agent at SKILL.md. It applies the rules as it builds." data-fluff="Our comprehensive solution empowers teams to seamlessly leverage best-in-class synergies at scale."></div><button class="co-btn" data-sharp="Copy install command" data-fluff="Get started today"></button></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Copy style</label><div class="seg"><button type="button" data-copy="sharp">Verb + object</button><button type="button" data-copy="fluff">Vague + padded</button></div></div></div>
+        <div class="demo-note" id="co-note"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h1>Content &amp; copy</h1>
+<p>UI strings, labels, headings, errors, empty states, and onboarding text.</p>
+<p>Inspired by the same anti-fluff logic as <a href="https://github.com/ayghri/i-have-adhd">i-have-adhd</a> (action-first, no buried answers) and <a href="https://github.com/JuliusBrussee/caveman">caveman</a> (drop filler, keep substance). Applied to <strong>product copy</strong>, not agent chat.</p>
+<h2>Purpose</h2>
+<p>Catch copy that buries the action: preamble-heavy, vague, overly polite, or marketing-generic. Fix it so users know what to do in one scan.</p>
+<h2>What weak product copy gets wrong</h2>
+<ol>
+<li><strong>Answer buried</strong>, context before action; user scrolls to find the button.</li>
+<li><strong>Vague time and effort</strong>, "quick," "simple," "just a few steps" mean nothing.</li>
+<li><strong>Preamble and closers</strong>, welcomes, recaps, and "let us know" padding.</li>
+<li><strong>Uniform politeness</strong>, "Please," "Kindly," "We'd love to" on every label.</li>
+<li><strong>Filler and hedging</strong>, "really," "simply," "might," "could potentially."</li>
+<li><strong>Generic SaaS voice</strong>, seamless, empower, leverage, journey, delve, robust.</li>
+</ol>
+<h2>Rules</h2>
+<h3>1. Lead with the action</h3>
+<p>Headlines, CTAs, and empty states start with what the user can do, not context.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Bad</th>
+<th>Good</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Welcome to your dashboard! Here you can manage all your projects.</td>
+<td><strong>Create project</strong></td>
+</tr>
+<tr>
+<td>We're excited to help you get started on your journey.</td>
+<td><strong>Add your first item</strong></td>
+</tr>
+<tr>
+<td>This page allows you to configure your notification preferences.</td>
+<td><strong>Notification settings</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Primary button = verb + object. Not "Get started" when "Import CSV" is the real action.</p>
+<h3>2. One job per string</h3>
+<p>Each label, line, or toast does one thing. No "and then" in a single sentence.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Bad</th>
+<th>Good</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enter your email address so we can send you a verification link and keep you updated.</td>
+<td><strong>Email</strong> + helper: "We'll send a sign-in link."</td>
+</tr>
+</tbody>
+</table></div>
+<p>Split headline / helper / CTA instead of one paragraph.</p>
+<h3>3. Number multi-step flows</h3>
+<p>Wizards, onboarding, and setup: numbered steps, one bounded action each.</p>
+<pre><code>1. Connect bank account
+2. Verify identity
+3. Set payout schedule
+</code></pre>
+<p>Not: "First you'll connect your account, then we'll verify you, and finally you can set up payouts."</p>
+<h3>4. End with one next step</h3>
+<p>Success screens, empty states, and confirmations name <strong>one</strong> follow-up, not three options and a recap.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Bad</th>
+<th>Good</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>You're all set! Feel free to explore the app or check out our docs.</td>
+<td><strong>Next:</strong> Invite a teammate</td>
+</tr>
+</tbody>
+</table></div>
+<h3>5. No preamble, recap, or closer</h3>
+<p>Forbidden in UI copy:</p>
+<ul>
+<li><strong>Openers:</strong> "Welcome to…", "We're thrilled…", "Let's get started…"</li>
+<li><strong>Recaps:</strong> "You've successfully completed… which means you can now…"</li>
+<li><strong>Closers:</strong> "Happy to help", "Let us know if you need anything", "Hope this helps"</li>
+</ul>
+<p>Errors and confirmations state fact + fix. Then stop.</p>
+<h3>6. Matter-of-fact errors</h3>
+<p>No performative sympathy. State cause and fix like <a href="https://github.com/ayghri/i-have-adhd">i-have-adhd</a> rule 8.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Bad</th>
+<th>Good</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Oops! Something went wrong.</td>
+<td><strong>Payment failed:</strong> Card declined. Try another card.</td>
+</tr>
+<tr>
+<td>Uh oh, we couldn't save your changes.</td>
+<td><strong>Not saved:</strong> No connection. Check network and retry.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Keep exact error codes and field names when the product exposes them.</p>
+<h3>7. Specific beats vague</h3>
+<p>Replace fuzzy promises with concrete units when time, count, or scope matters.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Bad</th>
+<th>Good</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>This only takes a moment.</td>
+<td><strong>About 2 minutes</strong></td>
+</tr>
+<tr>
+<td>Upload your files quickly and easily.</td>
+<td><strong>Upload up to 10 files (PDF, 25 MB each)</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>If you don't know the number, omit the claim, don't fake specificity.</p>
+<h3>8. Cap visible lists at five</h3>
+<p>Feature lists, plan comparisons, bullet benefits: max five visible items. Split <strong>Do now</strong> vs <strong>Later</strong> or <strong>Included</strong> vs <strong>Add-on</strong>.</p>
+<p>Rank by user priority, not marketing completeness.</p>
+<h3>9. Drop filler; keep meaning</h3>
+<p>Apply <a href="https://github.com/JuliusBrussee/caveman">caveman</a>-style compression to microcopy, not broken grammar on critical paths.</p>
+<p><strong>Drop:</strong> just, really, simply, actually, basically, kindly, please (when not legally required), "we're here to help."</p>
+<p><strong>Never drop:</strong> not, never, no, only, except, negation changes behavior.</p>
+<p><strong>Keep exact:</strong> product names, API terms, units, numbers, legal required text.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Bad</th>
+<th>Good</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Please simply enter your email address below.</td>
+<td><strong>Email</strong></td>
+</tr>
+<tr>
+<td>We couldn't possibly process your request at this time.</td>
+<td><strong>Can't process request.</strong> Try again in a few minutes.</td>
+</tr>
+</tbody>
+</table></div>
+<h3>10. No generic marketing voice</h3>
+<p>Avoid unless the brand explicitly uses them:</p>
+<ul>
+<li>seamless, robust, cutting-edge, innovative, empower, leverage, unlock, journey</li>
+<li>"In today's fast-paced world…"</li>
+<li>"Designed with you in mind"</li>
+<li>Triple synonym stacks ("fast, reliable, and secure")</li>
+</ul>
+<p>Write like the product team talks internally, then tighten once.</p>
+<h2>Common mistakes</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Example</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Welcome wall</td>
+<td>"Welcome to Acme! Your all-in-one solution for…"</td>
+<td>Page title + primary CTA only</td>
+</tr>
+<tr>
+<td>Fake enthusiasm</td>
+<td>"We're so excited to have you here!"</td>
+<td>Remove; show the first task</td>
+</tr>
+<tr>
+<td>Vague CTA</td>
+<td>Get started · Learn more · Continue</td>
+<td>Verb + object: <strong>Import contacts</strong>, <strong>Open settings</strong></td>
+</tr>
+<tr>
+<td>Label + essay</td>
+<td>Long placeholder tooltips</td>
+<td>Label + one-line helper max</td>
+</tr>
+<tr>
+<td>Symmetric feature trio</td>
+<td>Three identical cards with icon + buzzword + sentence</td>
+<td>Vary layout or cut to what matters</td>
+</tr>
+<tr>
+<td>Lorem-adjacent</td>
+<td>Generic benefit copy with no product facts</td>
+<td>Name real limits, steps, or outcomes</td>
+</tr>
+<tr>
+<td>Apologetic errors</td>
+<td>Oops / Something went wrong</td>
+<td><strong>What failed</strong> + <strong>what to do</strong></td>
+</tr>
+<tr>
+<td>Permission theater</td>
+<td>"Would you like to…?" for required flows</td>
+<td>Direct: <strong>Allow notifications</strong> + Skip</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Fixes (quick pass)</h2>
+<ol>
+<li>Delete the first sentence if it only introduces the page.</li>
+<li>Delete the last sentence if it only offers help or recaps success.</li>
+<li>Replace every "Get started" with the actual first action.</li>
+<li>Replace error titles with <code>[Thing] failed</code> or <code>[Field] invalid</code>.</li>
+<li>Cut any word that doesn't change user behavior.</li>
+<li>Read only the <strong>headline + primary button</strong>, if intent isn't clear, rewrite.</li>
+</ol>
+<h2>Do / Don't</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Verb-first buttons</td>
+<td>"Submit" when "Pay $49" is clearer</td>
+</tr>
+<tr>
+<td>Headline = task or object</td>
+<td>Headline = welcome or mission statement</td>
+</tr>
+<tr>
+<td>Helper text ≤ one line</td>
+<td>Paragraph under every field</td>
+</tr>
+<tr>
+<td>Numbered setup steps</td>
+<td>Prose walkthrough in a modal</td>
+</tr>
+<tr>
+<td>Concrete limits and times</td>
+<td>"Quick," "easy," " hassle-free"</td>
+</tr>
+<tr>
+<td>Errors: fact + fix</td>
+<td>Errors: apology + mystery</td>
+</tr>
+<tr>
+<td>Match existing brand voice</td>
+<td>Default SaaS landing-page tone</td>
+</tr>
+<tr>
+<td>Preserve legal and a11y requirements</td>
+<td>Compress away required warnings</td>
+</tr>
+</tbody>
+</table></div>
+<h2>When to break the rules</h2>
+<ol>
+<li><strong>Marketing landing pages</strong>, longer copy OK if scannable (headers, short blocks). Still no fake warmth or filler closers.</li>
+<li><strong>Legal / compliance</strong>, required disclaimers stay verbatim; tighten surrounding copy only.</li>
+<li><strong>Brand voice is intentionally warm</strong>, warmth in word choice, not preamble walls or empty enthusiasm.</li>
+<li><strong>Accessibility</strong>, don't sacrifice clarity for brevity; helper text and <code>aria-label</code> may need more words than visible UI.</li>
+</ol>
+<h2>Pre-send check</h2>
+<p>Before shipping copy, verify:</p>
+<ol>
+<li>First visible line = action, object, or status, not welcome.</li>
+<li>Primary CTA names the real next step.</li>
+<li>No opener/closer that could be deleted with zero information loss.</li>
+<li>Errors state cause + fix without "Oops."</li>
+<li>Lists ≤ 5 items or explicitly split.</li>
+<li>No hedge/filler words unless they carry real uncertainty.</li>
+</ol>
+<p>If the user reads <strong>only the title and primary button</strong>, they know what this screen is for.</p>
+<h2>Notes</h2>
+<ul>
+<li><strong>i18n:</strong> Short English doesn't always shorten other languages; rules apply to structure (action first), not word count.</li>
+<li><strong>Agent vs UI:</strong> These rules target strings in the interface. Agent response style is out of scope unless the product IS a chat UI, then apply the same rules to bot messages.</li>
+</ul>
+      </article>
+      <nav class="pager">
+        <a class="prev" href="motion.html"><span class="dir">Previous rule</span><span class="ttl">09 · Motion budget</span></a><a class="next empty" aria-hidden="true"><span class="dir">next</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>

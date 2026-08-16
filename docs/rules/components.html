@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Cards & buttons · Sleak</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 08: Cards & buttons. icon side ≈ ½ text side." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">08</span><span>components</span></div>
+      <h1>Cards & buttons</h1>
+      <span class="formula">icon side ≈ ½ text side</span>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="wrap">
+      <div class="demo" id="demo-components">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
+          <div class="demo-stage"><button id="cp-btn"></button><div class="cp-guide" id="cp-guide"></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Icon position</label><div class="seg"><button type="button" data-icon="left">Left</button><button type="button" data-icon="right">Right</button><button type="button" data-icon="none">None</button></div></div></div>
+        <div class="demo-note" id="cp-note"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h1>Components</h1>
+<p>Cards, buttons, navigation, forms, lists, and interaction patterns that match how users expect content to behave.</p>
+<h2>Core (see dedicated references)</h2>
+<ul>
+<li>Nested rounded UI → <a href="concentric-radius.html">concentric-radius.md</a></li>
+<li>Section kickers / overlines → <a href="section-eyebrows.html">section-eyebrows.md</a></li>
+</ul>
+<h2>Purpose</h2>
+<p>Catch component patterns that look polished but behave wrong: decorative cards with tiny click targets, nested controls that fight each other, or actions hidden behind a single small button.</p>
+<h2>Clickable cards (content behavior)</h2>
+<p><strong>If a card contains a button to open or access its content, the whole card should be clickable, not just the button.</strong></p>
+<p>Users read the card as one unit. A title, image, summary, and "View" button on the same surface implies the entire block goes somewhere. Making only the button work forces precise aiming and reads as unfinished implementation.</p>
+<h3>Rule</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Card has <strong>one</strong> primary action (open detail, read article, go to project)</td>
+<td><strong>Entire card</strong> is the hit target</td>
+</tr>
+<tr>
+<td>Button label mirrors card intent ("View", "Open", "Read more", "Go to…")</td>
+<td>Card + button share <strong>one</strong> navigation action</td>
+</tr>
+<tr>
+<td>Card is <strong>presentational only</strong> (no destination)</td>
+<td>No fake button; no pointer cursor on the shell</td>
+</tr>
+<tr>
+<td>Card has <strong>multiple</strong> actions (open + bookmark + menu)</td>
+<td>Primary path = whole card or dominant region; secondary controls stay separate, clearly clickable</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Implementation</h3>
+<p><strong>Prefer one interactive element</strong>, not a button floating inside a dead div.</p>
+<pre><code class="language-html">&lt;!-- Good: whole card is the link --&gt;
+&lt;a href=&quot;/projects/alpha&quot; class=&quot;card&quot;&gt;
+  &lt;img alt=&quot;&quot; src=&quot;…&quot; /&gt;
+  &lt;h3&gt;Project Alpha&lt;/h3&gt;
+  &lt;p&gt;Summary text&lt;/p&gt;
+  &lt;span class=&quot;card__cta&quot;&gt;View project&lt;/span&gt;
+&lt;/a&gt;
+</code></pre>
+<p>The CTA can look like a button but is part of the link. One tab stop, one <code>click</code> target.</p>
+<p><strong>Stretched link</strong> (card stays semantic, link covers surface):</p>
+<pre><code class="language-html">&lt;article class=&quot;card&quot;&gt;
+  &lt;h3&gt;Project Alpha&lt;/h3&gt;
+  &lt;p&gt;Summary text&lt;/p&gt;
+  &lt;a href=&quot;/projects/alpha&quot; class=&quot;card__link&quot;&gt;
+    &lt;span class=&quot;sr-only&quot;&gt;View Project Alpha&lt;/span&gt;
+  &lt;/a&gt;
+  &lt;span class=&quot;card__cta&quot; aria-hidden=&quot;true&quot;&gt;View project&lt;/span&gt;
+&lt;/article&gt;
+</code></pre>
+<pre><code class="language-css">.card { position: relative; }
+.card__link::before {
+  content: &quot;&quot;;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.card__cta { position: relative; z-index: 1; pointer-events: none; }
+</code></pre>
+<p><strong>Avoid:</strong> <code>&lt;div class="card"&gt;…&lt;button&gt;View&lt;/button&gt;&lt;/div&gt;</code> with no handler on the card shell.</p>
+<p><strong>Never:</strong> <code>&lt;a&gt;&lt;button&gt;View&lt;/button&gt;&lt;/a&gt;</code> (invalid nesting, broken accessibility).</p>
+<h3>Secondary actions on the same card</h3>
+<p>If the card opens content <strong>and</strong> has a kebab menu or favorite toggle:</p>
+<ul>
+<li>Primary: stretched link or card click → detail view</li>
+<li>Secondary: icon buttons <strong>above</strong> the stretched layer (<code>z-index</code>, <code>pointer-events: auto</code>) with their own handlers</li>
+<li>Stop propagation on secondary clicks so they don't trigger navigation</li>
+</ul>
+<p>Document which region does what. Don't hide the only action behind a 32px label.</p>
+<h3>Visual feedback</h3>
+<p>When the whole card is clickable:</p>
+<ul>
+<li><strong>Hover/focus</strong> on the card shell (background, border, shadow), not only on the faux button</li>
+<li><strong>Cursor:</strong> <code>pointer</code> on the card</li>
+<li><strong>Focus ring</strong> around the card (or the covering link), visible for keyboard users</li>
+<li>Match <a href="concentric-radius.html">concentric-radius.md</a> on the interactive boundary</li>
+</ul>
+<h3>Common mistakes</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Mistake</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Large card, only "Read more" clicks</td>
+<td>Wrap card in one link or stretched link</td>
+</tr>
+<tr>
+<td>Button as sole hit target on tile grid</td>
+<td>Full tile clickable; CTA is visual affordance</td>
+</tr>
+<tr>
+<td><code>onClick</code> on button only in React</td>
+<td><code>onClick</code> on card/link wrapper, or <code>&lt;Link&gt;</code> wraps card</td>
+</tr>
+<tr>
+<td>Entire card clickable but no hover state</td>
+<td>Card-level hover/focus styles</td>
+</tr>
+<tr>
+<td>Card link + inner button both navigate</td>
+<td>One primary control; style span as button</td>
+</tr>
+<tr>
+<td>Secondary icon triggers navigation</td>
+<td><code>stopPropagation</code> + separate button semantics</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Audit</h3>
+<p>For each content card with a "View / Open / Read" pattern:</p>
+<ol>
+<li>Click the <strong>padding</strong> away from the button. Does it navigate? If no → <strong>High</strong></li>
+<li>Tab to the card. One focus stop for the primary action? If multiple for one destination → <strong>Medium</strong></li>
+<li>Screen reader: is the destination clear (<code>aria-label</code> or visible heading in link name)?</li>
+</ol>
+<h3>Exceptions</h3>
+<ul>
+<li><strong>Explicit multi-action cards</strong> (e.g. pricing tier with "Contact sales" vs "Start trial" as two real choices): not one destination; don't force whole-card single link</li>
+<li><strong>Selectable cards</strong> (checkbox/radio choose one): whole card toggles selection, not navigation</li>
+<li><strong>Drag handles or reorder</strong>: primary interaction is drag, not navigation; don't stretch a link over the card</li>
+</ul>
+<h2>Do / Don't</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One primary hit target per navigational card</td>
+<td>Decorative card chrome + lone small button</td>
+</tr>
+<tr>
+<td>Stretched link or wrapping <code>&lt;a&gt;</code></td>
+<td>Dead div + isolated button</td>
+</tr>
+<tr>
+<td>Card-level hover and focus</td>
+<td>Button-only hover in a large tile</td>
+</tr>
+<tr>
+<td>Separate controls for secondary actions</td>
+<td>Nested <code>&lt;button&gt;</code> inside <code>&lt;a&gt;</code></td>
+</tr>
+<tr>
+<td><code>sr-only</code> link text when heading isn't enough</td>
+<td>Empty or "Click here" link names</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Notes</h2>
+<ul>
+<li>Pairs with <a href="content-copy.html">content-copy.md</a>: CTA label should name the action; card heading often becomes the link name</li>
+<li>Pairs with <a href="motion.html">motion.md</a>: subtle card hover is OK; don't spring every tile (see motion budget)</li>
+<li>Platform: iOS/Android often use full-row/cell tap natively; web cards should match that expectation</li>
+</ul>
+<h2>Buttons</h2>
+<p>A button's padding is <strong>not</strong> one uniform box. It follows the content: an icon needs equal space on every side, while text needs more room on its open end than it does next to an icon.</p>
+<h3>Rule 1, icons sit in a square</h3>
+<p>An icon always gets the <strong>same padding on all sides</strong>, top, bottom, and its outer (edge-facing) side are equal, so the icon occupies a <strong>square container</strong> against whichever edge it's on.</p>
+<ul>
+<li>The <strong>vertical padding</strong> (top/bottom) defines that square.</li>
+<li>The icon's <strong>outer horizontal padding equals the vertical padding</strong>, completing the square.</li>
+</ul>
+<h3>Horizontal padding is uneven</h3>
+<p>The two horizontal sides of a button are usually <strong>not</strong> equal:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Side</th>
+<th>Padding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Icon side</strong> (edge nearest the icon)</td>
+<td>= vertical padding (completes the square)</td>
+</tr>
+<tr>
+<td><strong>Text side</strong> (open end past the label)</td>
+<td>≈ <strong>2×</strong> the icon side</td>
+</tr>
+</tbody>
+</table></div>
+<p>So the <strong>icon-side padding is about half the text-side padding</strong>. Text wants a larger end inset to breathe; an icon already framed by a square of space does not.</p>
+<pre><code> leading icon + text                     text + trailing icon
+┌─────────────────────────┐             ┌─────────────────────────┐
+│ ▢   Label            │             │            Label   ▢ │
+│ p  gap      2p       │             │ 2p       gap      p  │
+└─────────────────────────┘             └─────────────────────────┘
+   p  = vertical padding (icon's square: p on top, bottom, outer side)
+   2p = text-side padding  →  icon side is half the text side
+</code></pre>
+<h3>Icon-only</h3>
+<p>Equal padding on all four sides → a square (or circular) button. Same square rule applied to every edge.</p>
+<pre><code>┌──────┐
+│  ▢  │   padding = p on every side
+└──────┘
+</code></pre>
+<h3>Text-only</h3>
+<p>No icon, so <strong>both</strong> horizontal sides use the larger text inset (symmetric); vertical padding as usual.</p>
+<h3>Exception, fill-container buttons</h3>
+<p>When a button <strong>stretches to fill its container</strong> (full-width / block), the uneven rule does not apply, <strong>center the content</strong> (icon + label as one group) with symmetric horizontal padding. The width now comes from the container, not the content, so lopsided padding would only push the group off-center.</p>
+<h3>Implementation</h3>
+<pre><code class="language-css">.btn {
+  --pad-y: 0.65rem;                     /* vertical padding = the icon's square inset */
+  --pad-text: calc(var(--pad-y) * 2);   /* text-side padding ≈ 2× the icon side */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;                          /* space between icon and label (not padding) */
+  line-height: 1;                       /* REQUIRED: let the icon define height, not the text
+                                           line box, otherwise the vertical gap exceeds --pad-y
+                                           and the icon square breaks (see gotcha below) */
+  padding: var(--pad-y) var(--pad-text);/* text-only: symmetric horizontal */
+}
+.btn .icon { flex: none; width: 1.25em; height: 1.25em; display: grid; place-items: center; }
+
+/* leading icon → icon side collapses to the square inset */
+.btn:has(.icon:first-child) { padding-left: var(--pad-y); }
+/* trailing icon → icon side collapses to the square inset */
+.btn:has(.icon:last-child)  { padding-right: var(--pad-y); }
+
+/* icon-only → square: equal padding on all sides */
+.btn.is-icon-only { padding: var(--pad-y); }
+
+/* fill container → center content, symmetric padding */
+.btn.is-block { width: 100%; justify-content: center; padding-inline: var(--pad-text); }
+</code></pre>
+<p>No <code>:has()</code> support? Set the icon side explicitly with a modifier class instead: <code>.btn--icon-left { padding-left: var(--pad-y); }</code> / <code>.btn--icon-right { padding-right: var(--pad-y); }</code>.</p>
+<p><strong>Gotcha, line-height inflates the vertical gap.</strong> The square only holds if the <strong>icon</strong>, not the text line box, defines the button's content height. A button that inherits <code>line-height: 1.6</code> makes the flex line taller than the icon, so the icon is centered with <em>extra</em> vertical space (<code>--pad-y</code> <strong>plus</strong> the leftover) while the icon-side horizontal padding stays exactly <code>--pad-y</code>, more space above/below the icon than beside it, and the "square" is broken. Set <strong><code>line-height: 1</code></strong> on the button (padding provides the height) so the top/bottom gap collapses to <code>--pad-y</code> and matches the icon side. <strong>Verify by measuring the rendered pixels</strong> (icon-to-edge top ≈ bottom ≈ outer side), not by reading the CSS, this asymmetry is invisible in the source.</p>
+<h3>Common mistakes</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tell</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Icon crammed against the edge / uneven space around it</td>
+<td>Equal padding all sides; icon in a square</td>
+</tr>
+<tr>
+<td>Same left and right padding on an icon+text button</td>
+<td>Icon side = vertical padding; text side ≈ 2×</td>
+</tr>
+<tr>
+<td>Icon-only button that isn't square</td>
+<td>Equal padding every side (or fixed square)</td>
+</tr>
+<tr>
+<td>Full-width button with content shoved left</td>
+<td>Center the group; symmetric padding</td>
+</tr>
+<tr>
+<td>Different icon box sizes across buttons</td>
+<td>One icon size token; consistent square</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Audit</h3>
+<ol>
+<li><strong>Icon square, measured on the rendered pixels</strong> (not the CSS): is the icon's top ≈ bottom ≈ outer-side gap? Unequal (usually vertical &gt; outer, from <code>line-height</code>, set <code>line-height: 1</code>) → <strong>Medium</strong>. Reading the source hides this; screenshot and measure.</li>
+<li><strong>Uneven horizontals:</strong> on an icon+text button, is the text side ≈ 2× the icon side? Equal both sides → <strong>Medium</strong>.</li>
+<li><strong>Fill state:</strong> full-width button, is the content centered with symmetric padding? Off-center → <strong>Medium</strong>.</li>
+</ol>
+<h3>Do / Don't</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frame every icon in an equal-padded square</td>
+<td>Let icon padding drift per side</td>
+</tr>
+<tr>
+<td>Icon side ≈ half the text side</td>
+<td>Symmetric padding on an icon+text button</td>
+</tr>
+<tr>
+<td>Center content when the button fills its container</td>
+<td>Keep lopsided padding on a block button</td>
+</tr>
+<tr>
+<td>One icon-size + <code>--pad-y</code> token driving all buttons</td>
+<td>Hand-tune padding per button</td>
+</tr>
+</tbody>
+</table></div>
+      </article>
+      <nav class="pager">
+        <a class="prev" href="layout-spacing.html"><span class="dir">Previous rule</span><span class="ttl">07 · Layout & spacing</span></a><a class="next" href="motion.html"><span class="dir">Next rule</span><span class="ttl">09 · Motion budget</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>

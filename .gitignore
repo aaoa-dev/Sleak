@@ -1,0 +1,9 @@
+# Claude Code local (per-user) settings, not part of the skill
+.claude/settings.local.json
+
+# OS / editor cruft
+.DS_Store
+
+# Python bytecode (from scripts/)
+__pycache__/
+*.pyc

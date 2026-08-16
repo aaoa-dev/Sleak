@@ -1,0 +1,403 @@
+<title>Sleak</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --accent-h: 340;  /* raspberry, brand #f05 is hsl(340 100% 50%) */
+    /* Neutrals share the accent hue (accent-hue blacks) */
+    --paper:    hsl(var(--accent-h) 10% 96%);
+    --surface:  hsl(var(--accent-h) 22% 100%);
+    --surface-2:hsl(var(--accent-h) 14% 93%);
+    --ink:      hsl(var(--accent-h) 20% 12%);
+    --muted:    hsl(var(--accent-h) 9% 38%);
+    --faint:    hsl(var(--accent-h) 11% 45%);   /* WCAG AA on paper (4.8:1) */
+    --line:     hsl(var(--accent-h) 16% 87%);
+    --accent:   hsl(var(--accent-h) 100% 50%);   /* #f05 raspberry (brand) */
+    --accent-btn: hsl(var(--accent-h) 100% 50%); /* #f05, brand color kept exact (white text ≈ 3.9:1, an intentional brand override of AA) */
+    --accent-soft: hsl(var(--accent-h) 100% 55% / 0.12);
+    --shadow: 0 1px 2px hsl(var(--accent-h) 30% 20% / .05), 0 12px 30px hsl(var(--accent-h) 30% 20% / .08);
+
+    --r-card: 16px;
+    --pad-card: 4px;
+    --r-inner: calc(var(--r-card) - var(--pad-card));   /* concentric */
+    --ease: cubic-bezier(.22, 1, .36, 1);
+
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, sans-serif;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:    hsl(var(--accent-h) 16% 8%);
+      --surface:  hsl(var(--accent-h) 13% 12%);
+      --surface-2:hsl(var(--accent-h) 12% 15%);
+      --ink:      hsl(var(--accent-h) 14% 93%);
+      --muted:    hsl(var(--accent-h) 9% 64%);
+      --faint:    hsl(var(--accent-h) 9% 58%);
+      --line:     hsl(var(--accent-h) 12% 22%);
+      --accent:   hsl(var(--accent-h) 100% 66%);
+      --accent-soft: hsl(var(--accent-h) 95% 62% / 0.16);
+      --shadow: 0 1px 2px hsl(0 0% 0% / .3), 0 14px 34px hsl(0 0% 0% / .4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:    hsl(var(--accent-h) 16% 8%);
+    --surface:  hsl(var(--accent-h) 13% 12%);
+    --surface-2:hsl(var(--accent-h) 12% 15%);
+    --ink:      hsl(var(--accent-h) 14% 93%);
+    --muted:    hsl(var(--accent-h) 9% 64%);
+    --faint:    hsl(var(--accent-h) 9% 52%);
+    --line:     hsl(var(--accent-h) 12% 22%);
+    --accent:   hsl(var(--accent-h) 80% 66%);
+    --accent-soft: hsl(var(--accent-h) 70% 60% / 0.14);
+    --shadow: 0 1px 2px hsl(0 0% 0% / .3), 0 14px 34px hsl(0 0% 0% / .4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; } }
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.54;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .wrap { width: min(1080px, 100% - 2.5rem); margin-inline: auto; }
+  a { color: inherit; }
+  ::selection { background: var(--accent-soft); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+  /* utility mono label, content (a measurement/tag), used sparingly, not a per-section eyebrow */
+  .tag { font-family: var(--mono); font-size: .72rem; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
+  .kbd { font-family: var(--mono); font-size: .82em; background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; padding: .08em .4em; }
+
+  /* Buttons, one accent, icon in a square (line-height:1 keeps it square), pill */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    font: inherit; font-weight: 600; font-size: .95rem; line-height: 1; cursor: pointer;
+    padding: .75rem 1.5rem; border-radius: 999px; border: 1px solid transparent; text-decoration: none;
+    transition: background-color 140ms var(--ease), border-color 140ms var(--ease), color 140ms var(--ease), transform 140ms var(--ease);
+    white-space: nowrap;
+  }
+  .btn .ic { flex: none; width: 1.05em; height: 1.05em; }
+  .btn-primary { background: var(--accent-btn); color: #fff; padding-right: .75rem; } /* trailing icon → icon side = vertical inset (square); text side stays ~2× */
+  .btn-primary:active { transform: scale(.98); }
+  .btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line); }
+  @media (hover:hover) { .btn-ghost:hover { background: var(--surface-2); } .btn-primary:hover { background: hsl(var(--accent-h) 100% 42%); } }
+
+  /* Header */
+  header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 82%, transparent); backdrop-filter: blur(14px) saturate(1.1); border-bottom: 1px solid transparent; }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+  .brand { display: flex; align-items: center; gap: .55rem; font-family: var(--mono); font-weight: 700; font-size: 1.05rem; letter-spacing: -.01em; text-decoration: none; color: var(--ink); }
+  .brand .dot { width: 12px; height: 12px; border-radius: 999px; background: var(--accent-btn); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .nav-links { display: flex; align-items: center; gap: 1.6rem; }
+  .nav-links a:not(.btn) { font-size: .9rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 140ms var(--ease); }
+  @media (hover:hover){ .nav-links a:not(.btn):hover { color: var(--ink); } }
+  @media (max-width: 720px){ .nav-links a:not(.btn){ display: none; } }
+
+  /* Hero */
+  .hero { padding: clamp(3rem, 7vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem); }
+  .hero-grid { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  @media (min-width: 900px){ .hero-grid { grid-template-columns: 1.05fr .95fr; } }
+  h1 { font-size: clamp(2.3rem, 1.2rem + 4vw, 3.9rem); line-height: 1.02; letter-spacing: -.035em; font-weight: 820; text-wrap: balance; }
+  h1 .em { color: var(--accent); }
+  .lede { margin-top: 1.4rem; max-width: 40ch; font-size: 1.12rem; color: var(--muted); }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+  .hero-meta { margin-top: 1.6rem; font-family: var(--mono); font-size: .78rem; color: var(--faint); display: flex; gap: 1.2rem; flex-wrap: wrap; }
+
+  /* Hero diagram, the annotated concentric corner (the page's thesis, drawn) */
+  .diagram { align-self: center; }
+  .diagram svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .diagram .cardline { fill: var(--surface); stroke: var(--line); stroke-width: 2; }
+  .diagram .media { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+  .diagram .txt { fill: var(--ink); }
+  .diagram .txt-mut { fill: var(--muted); }
+  .diagram .acc { fill: var(--accent); }
+  .diagram .barfill { fill: var(--muted); }
+  .diagram .anno { stroke: var(--accent); fill: none; stroke-width: 1.6; }
+  .diagram .anno-fill { fill: var(--accent); }
+  .diagram .guide { stroke: var(--accent); stroke-width: 1; stroke-dasharray: 3 4; opacity: .55; }
+  .diagram .mono { font-family: var(--mono); }
+  /* Slider is a high-frequency interaction → the diagram updates instantly, no transition */
+  /* Indent to match the SVG card (x=40 of 440 → 9.09% inset each side), so the track aligns with the card width */
+  .slider { margin-top: 1.4rem; margin-inline: 9.09%; display: flex; flex-direction: column; gap: .55rem; }
+  .slider label { font-family: var(--mono); font-size: .74rem; letter-spacing: .03em; color: var(--muted); text-transform: uppercase; display: flex; justify-content: space-between; align-items: baseline; }
+  .slider output { color: var(--accent); font-variant-numeric: tabular-nums; }
+  .slider input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 999px; background: var(--line); cursor: pointer; }
+  .slider input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--accent-btn); border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--line); }
+  .slider input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--accent-btn); border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--line); }
+  .slider input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+
+  /* Section scaffolding */
+  section { padding: clamp(3rem, 6vw, 5rem) 0; }
+  .sec-head { max-width: 60ch; margin-bottom: 2.4rem; }
+  .sec-head h2 { font-size: clamp(1.6rem, 1rem + 2vw, 2.3rem); line-height: normal; letter-spacing: -.03em; font-weight: 780; text-wrap: balance; margin-bottom: .333em; } /* heading→body = ⅓ of heading size */
+  .sec-head p { margin-top: 0; color: var(--muted); max-width: 56ch; }
+  .prose { max-width: 62ch; color: var(--muted); font-size: 1.06rem; }
+  .prose strong { color: var(--ink); font-weight: 650; }
+
+  /* Audience */
+  .aud { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .aud-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); padding: 1.5rem; }
+  .aud-card h3 { font-size: 1.08rem; letter-spacing: -.01em; margin: .1rem 0 .5rem; }
+  .aud-card p { font-size: .93rem; color: var(--muted); }
+  .aud-card .who { font-family: var(--mono); font-size: .72rem; color: var(--muted); letter-spacing: .03em; text-transform: uppercase; }
+
+  /* Rules spec grid */
+  .rules { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 560px){ .rules { grid-template-columns: 1fr; } }
+  .rule { position: relative; isolation: isolate; overflow: hidden; background: var(--surface); padding: 1.35rem 1.4rem; display: flex; flex-direction: column; gap: .45rem; text-decoration: none; color: inherit; transition: background-color 140ms var(--ease); }
+  @media (hover:hover){ .rule:hover { background: var(--surface-2); } .rule:hover h3 { color: var(--accent); } }
+  .rule h3 { transition: color 140ms var(--ease); }
+  .rule .rn { position: absolute; left: -1rem; bottom: -2rem; z-index: -1; line-height: 1; font-family: var(--mono); font-weight: 950; font-size: 120px; color: var(--faint); opacity: .06; pointer-events: none; }
+  .rule h3 { font-size: 1.04rem; letter-spacing: -.01em; }
+  .rule p { font-size: .9rem; color: var(--muted); }
+  .rule .formula { margin-top: auto; font-family: var(--mono); font-size: .8rem; color: var(--accent); background: var(--accent-soft); border-radius: 8px; padding: .35rem .55rem; align-self: flex-start; }
+
+  /* Process, real 4-step sequence, numbering earns its place */
+  .steps { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); counter-reset: s; }
+  .step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); padding: 1.4rem; }
+  .step::before { counter-increment: s; content: counter(s, decimal-leading-zero); font-family: var(--mono); font-size: .85rem; color: var(--muted); }
+  .step h3 { margin: .6rem 0 .35rem; font-size: 1.02rem; letter-spacing: -.01em; }
+  .step p { font-size: .9rem; color: var(--muted); }
+
+  /* Why, creator note, a contained quote card sized to its content (no empty half) */
+  .why { width: fit-content; max-width: 100%; margin-inline: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: clamp(1.8rem, 4vw, 3rem); box-shadow: var(--shadow); }
+  .why blockquote { max-width: 42ch; font-size: clamp(1.25rem, .95rem + 1.1vw, 1.6rem); line-height: 1.42; letter-spacing: -.015em; font-weight: 500; }
+  .why blockquote .em { color: var(--accent); }
+  .why .sig { margin-top: 1.5rem; font-family: var(--mono); font-size: .8rem; color: var(--muted); }
+
+  /* Install, concentric: outer card, inner code surface */
+  .install { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); padding: var(--pad-card); box-shadow: var(--shadow); }
+  /* Terminal panel stays dark in both themes (a code surface, not a themed surface) */
+  .install-in { background: hsl(var(--accent-h) 22% 10%); border-radius: var(--r-inner); padding: 1.1rem 1.2rem; display: flex; align-items: center; gap: 1rem; justify-content: space-between; flex-wrap: wrap; }
+  .install code { font-family: var(--mono); font-size: .84rem; color: hsl(var(--accent-h) 14% 93%); line-height: 1.5; }
+  .install code .c { color: hsl(var(--accent-h) 9% 58%); }
+  .copy { font: inherit; font-family: var(--mono); font-size: .78rem; font-weight: 600; cursor: pointer; color: #fff; background: var(--accent-btn); border: none; border-radius: 8px; padding: .5rem .8rem; transition: background-color 140ms var(--ease); white-space: nowrap; }
+  @media (hover:hover){ .copy:hover { background: hsl(var(--accent-h) 100% 42%); } }
+  .install-note { margin-top: 1rem; font-size: .88rem; color: var(--muted); }
+
+  /* Footer */
+  footer { padding: 3rem 0 3.5rem; margin-top: 2rem; }
+  .foot { display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: baseline; justify-content: space-between; color: var(--muted); font-size: .86rem; }
+  .foot .brand { font-size: .95rem; }
+
+  .theme-toggle { font: inherit; background: var(--surface); border: 1px solid var(--line); color: var(--muted); width: 34px; height: 34px; border-radius: 999px; cursor: pointer; display: grid; place-items: center; }
+  @media (hover:hover){ .theme-toggle:hover { color: var(--ink); } }
+</style>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="#rules">Rules</a>
+      <a href="#how">How it works</a>
+      <a href="#why">Why</a>
+      <a class="btn btn-primary" href="#get">Get the skill
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      </a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Ship UI that looks <span class="em">decided</span>, not defaulted</h1>
+        <p class="lede">A design-decision skill: ten checkable rules that make a screen look decided, not default. One accent. Concentric corners. Verified contrast. Nothing arbitrary.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#rules">Browse the rules
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="#how">How it works</a>
+        </div>
+        <div class="hero-meta">
+          <span>10 rules</span><span>·</span><span>9 references</span><span>·</span><span>1 checklist</span>
+        </div>
+      </div>
+
+      <div class="diagram">
+        <!-- Live spec drawing. Card radius R drives everything: the nested media is
+             concentric (R − padding), the last baseline starts at the corner centre,
+             and the red circle (r = R) stays tangent to the left and bottom edges. -->
+        <svg viewBox="0 0 440 336" role="img" aria-label="A card whose corner radius, concentric inner panel, and text baseline all update as you move the radius slider.">
+          <rect id="d-card" class="cardline" x="40" y="16" width="360" height="230" rx="36"/>
+          <rect id="d-media" class="media" x="58" y="34" width="324" height="120" rx="18"/>
+          <rect class="barfill" x="74" y="52" width="150" height="9" rx="4" opacity="0.55"/>
+          <rect class="barfill" x="74" y="68" width="96" height="9" rx="4" opacity="0.3"/>
+          <text id="d-title" class="txt mono" x="76" y="186" font-size="16" font-weight="700">Title goes here</text>
+          <text id="d-sub" class="txt-mut mono" x="76" y="210" font-size="13">Sub-title here</text>
+          <path id="d-guides" class="guide" d="M40 210 H76 M76 210 V246"/>
+          <circle id="d-circle" class="anno" cx="76" cy="210" r="36"/>
+          <circle id="d-dot" class="anno-fill" cx="76" cy="210" r="3.5"/>
+          <text id="d-rh" class="acc mono" x="47" y="205" font-size="10">R</text>
+          <text id="d-rv" class="acc mono" x="81" y="238" font-size="10">R</text>
+          <text class="txt-mut mono" x="40" y="288" font-size="12.5">parent − padding = child</text>
+          <text class="acc mono" x="40" y="311" font-size="12.5">baseline = corner centre (R, R)</text>
+        </svg>
+        <div class="slider">
+          <label for="d-range">Corner radius <output id="d-out">36 px</output></label>
+          <input id="d-range" type="range" min="0" max="40" step="1" value="36" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="what">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Most UI fails on small decisions, not big ones</h2>
+        <p class="prose">A radius reused at every level. Accent on every icon. Text crowding a corner. A button whose label reads dark on its own fill. Invisible in the code, obvious on screen, and the reason a layout looks <strong>assembled from defaults</strong>. Sleak names each one, attaches a number you check, and gives the smallest fix.</p>
+      </div>
+  </section>
+
+  <section id="who">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>For models, designers, and engineers</h2>
+        <p>The rules are craft, not tooling. One guide, whoever holds the pixels.</p>
+      </div>
+      <div class="aud">
+        <article class="aud-card">
+          <div class="who">AI models &amp; agents</div>
+          <h3>Applied while it builds</h3>
+          <p>Load it as a skill. Claude Code, Cursor, Codex, Kimi, any <span class="kbd">AGENTS.md</span> tool reads the rules and applies them as it builds. Generated UI stops looking generated.</p>
+        </article>
+        <article class="aud-card">
+          <div class="who">New designers</div>
+          <h3>The details seniors apply by reflex</h3>
+          <p>Concentric radius, accent restraint, line length, contrast, each a short reference with the reasoning and a before/after. The judgment becomes learnable, not osmosis.</p>
+        </article>
+        <article class="aud-card">
+          <div class="who">Engineers</div>
+          <h3>Ship screens without a designer on call</h3>
+          <p>Checkable items and paste-ready CSS. Run the audit, fix by category, ship. The build reads as crafted, not defaulted.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Ten rules, each with a measurement you can check</h2>
+        <p>Each maps to a reference with the full logic, CSS, and an audit. The mono line is what you verify.</p>
+      </div>
+      <div class="rules">
+        <a class="rule" href="rules/concentric-radius.html"><span class="rn">01</span><h3>Concentric radius</h3><p>Nested corners share one curve axis; padding is the gap between them.</p><span class="formula">parent − padding = child</span></a>
+        <a class="rule" href="rules/section-eyebrows.html"><span class="rn">02</span><h3>Section eyebrows</h3><p>Kickers weaken when repeated; the heading carries the section.</p><span class="formula">≤ 1 per page · hero: none</span></a>
+        <a class="rule" href="rules/intentional-accent.html"><span class="rn">03</span><h3>Intentional accent</h3><p>Full accent pulls the eye to the one primary task, not decoration.</p><span class="formula">1 focal point / view</span></a>
+        <a class="rule" href="rules/accent-hue-blacks.html"><span class="rn">04</span><h3>Accent-hue blacks</h3><p>Tinted darks take the accent's hue, so nothing clashes.</p><span class="formula">sat &gt; 0 → hue = accent</span></a>
+        <a class="rule" href="rules/contrast.html"><span class="rn">05</span><h3>Contrast</h3><p>Readable by the math and by perception, checked on the render, not the token.</p><span class="formula">WCAG 4.5 + APCA Lc 75</span></a>
+        <a class="rule" href="rules/typography.html"><span class="rn">06</span><h3>Typography</h3><p>Line length, alignment, and size matched to viewing distance.</p><span class="formula">≈ 55ch · 7–12 words</span></a>
+        <a class="rule" href="rules/layout-spacing.html"><span class="rn">07</span><h3>Layout &amp; spacing</h3><p>Separate with space and surface tiers, not edge-to-edge rules.</p><span class="formula">0 full-bleed dividers</span></a>
+        <a class="rule" href="rules/components.html"><span class="rn">08</span><h3>Cards &amp; buttons</h3><p>Whole cards click; icons sit in a square with uneven horizontal padding.</p><span class="formula">icon side ≈ ½ text side</span></a>
+        <a class="rule" href="rules/motion.html"><span class="rn">09</span><h3>Motion budget</h3><p>Default to none; one expressive moment; vary the recipe.</p><span class="formula">≤ 150ms · ease-out</span></a>
+        <a class="rule" href="rules/content-copy.html"><span class="rn">10</span><h3>Content &amp; copy</h3><p>Lead with the action; drop the fluff; be specific.</p><span class="formula">verb + object</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>How a pass runs</h2>
+        <p>A fixed order, the audit step is never skipped, and the verify step reads the rendered pixels, not the source.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>Context</h3><p>Pin the product, audience, and constraints. Match the existing system first.</p></div>
+        <div class="step"><h3>Audit</h3><p>Scan against the checklist. Flag issues by category and severity, High before ship.</p></div>
+        <div class="step"><h3>Fix</h3><p>Apply the smallest change that fixes the decision. Each reference has the CSS.</p></div>
+        <div class="step"><h3>Verify</h3><p>Re-run the checklist on the rendered output. Contrast and geometry hide in the gap between source and screen.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="wrap">
+      <div class="why">
+        <blockquote>“Good design decisions are usually <span class="em">invisible in the code and obvious on the screen.</span> I wrote Sleak to make them legible, name each rule, attach a number you can check, and let a person or a model apply it the same way every time.”</blockquote>
+        <div class="sig">,  why I built it</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="get">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Add it to your agent</h2>
+        <p>Point any coding agent at the guide. It reads <span class="kbd">SKILL.md</span> on demand and applies the rules while it works.</p>
+      </div>
+      <div class="install">
+        <div class="install-in">
+          <code id="cmd"><span class="c"># any AGENTS.md-aware agent (Codex, Kimi, …)</span><br>echo "Follow the Sleak design guide at ./sleak/SKILL.md" &gt;&gt; AGENTS.md</code>
+          <button class="copy" id="copy" type="button">Copy</button>
+        </div>
+      </div>
+      <p class="install-note">Skills-folder agents (Claude Code, Cursor): symlink the repo into <span class="kbd">~/.claude/skills/sleak</span> or <span class="kbd">.cursor/skills/sleak</span>. Humans: start at <span class="kbd">SKILL.md</span> or open any reference directly.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle, persists to the [data-theme] attribute the artifact host respects
+  (function () {
+    var root = document.documentElement, btn = document.getElementById('tt');
+    btn.addEventListener('click', function () {
+      var dark = matchMedia('(prefers-color-scheme: dark)').matches;
+      var cur = root.getAttribute('data-theme') || (dark ? 'dark' : 'light');
+      root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+    });
+  })();
+  // Copy install line
+  (function () {
+    var btn = document.getElementById('copy');
+    btn.addEventListener('click', function () {
+      var text = 'echo "Follow the Sleak design guide at ./sleak/SKILL.md" >> AGENTS.md';
+      navigator.clipboard && navigator.clipboard.writeText(text).then(function () {
+        var old = btn.textContent; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = old; }, 1400);
+      });
+    });
+  })();
+  // Live radius slider, R drives the card corner, the concentric media, the baseline, and the circle
+  (function () {
+    var card = document.getElementById('d-card'); if (!card) return;
+    var media = document.getElementById('d-media'), title = document.getElementById('d-title'),
+        sub = document.getElementById('d-sub'), guides = document.getElementById('d-guides'),
+        circle = document.getElementById('d-circle'), dot = document.getElementById('d-dot'),
+        rh = document.getElementById('d-rh'), rv = document.getElementById('d-rv'),
+        out = document.getElementById('d-out'), range = document.getElementById('d-range');
+    var L = 40, BOTTOM = 246, PAD = 18;
+    function set(R) {
+      var ti = Math.max(R, PAD);              // text inset, never crowds past the content padding
+      var tx = L + ti, ty = BOTTOM - ti;      // text baseline start
+      var ccx = L + R, ccy = BOTTOM - R;      // corner-radius circle centre (tracks R all the way to 0)
+      card.setAttribute('rx', R);
+      media.setAttribute('rx', Math.max(0, R - PAD));
+      circle.setAttribute('cx', ccx); circle.setAttribute('cy', ccy); circle.setAttribute('r', R);
+      dot.setAttribute('cx', tx); dot.setAttribute('cy', ty);
+      sub.setAttribute('x', tx); sub.setAttribute('y', ty);
+      title.setAttribute('x', tx); title.setAttribute('y', ty - 24);
+      guides.setAttribute('d', 'M' + L + ' ' + ccy + ' H' + ccx + ' M' + ccx + ' ' + ccy + ' V' + BOTTOM);
+      rh.setAttribute('x', L + R / 2 - 4); rh.setAttribute('y', ccy - 5);
+      rv.setAttribute('x', ccx + 5); rv.setAttribute('y', ccy + R / 2 + 4);
+      var vis = R >= 12 ? '1' : '0'; rh.style.opacity = vis; rv.style.opacity = vis;
+      out.textContent = R + ' px';
+    }
+    range.addEventListener('input', function () { set(+range.value); });
+    set(+range.value); // sync on load
+  })();
+</script>

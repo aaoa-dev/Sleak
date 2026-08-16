@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Section eyebrows · Sleak</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 02: Section eyebrows. ≤ 1 per page · hero: none." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">02</span><span>core</span></div>
+      <h1>Section eyebrows</h1>
+      <span class="formula">≤ 1 per page · hero: none</span>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="wrap">
+      <div class="demo" id="demo-section-eyebrows">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
+          <div class="demo-stage"><div id="se-stage"></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Sections on page <output id="se-co"></output></label><input id="se-count" type="range" min="1" max="5" value="3"></div><div class="ctl"><label>Eyebrows</label><div class="seg"><button type="button" id="se-eye" aria-pressed="true">Toggle eyebrows</button></div></div></div>
+        <div class="demo-note" id="se-note"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h1>Section eyebrows</h1>
+<p>Small label above a section heading, uppercase tag, tinted pill, "Features · About · Pricing", decorative line, or category kicker.</p>
+<p>Useful on <strong>one</strong> section. Weak layouts repeat them on <strong>every</strong> section, landing-page template immediately.</p>
+<h2>Purpose</h2>
+<p>Limit or remove section eyebrows so hierarchy comes from the heading itself, not repeated template chrome.</p>
+<h2>What an eyebrow is</h2>
+<pre><code>┌─────────────────┐
+│  FEATURES       │  ← eyebrow (kicker, overline, section label)
+│  Built for teams│  ← real heading
+│  Lorem ipsum…   │
+└─────────────────┘
+</code></pre>
+<p>Also appears as: colored pill, dot + label, ",  Section , ", small caps with letter-spacing, gradient text above H2.</p>
+<h2>Rules</h2>
+<h3>1. Default: none</h3>
+<p>Most sections need <strong>heading + body</strong> only. No eyebrow.</p>
+<h3>2. Max one per page (usually zero)</h3>
+<p>If the page already has clear structure (nav, layout, spacing), eyebrows add noise. Allow <strong>at most one</strong> eyebrow on a full marketing page, and only when it carries information the heading cannot.</p>
+<h3>3. Never eyebrow-stack</h3>
+<p>Do not give every section its own kicker ("Why us", "How it works", "Testimonials", "FAQ"). That pattern is generic SaaS layout.</p>
+<h3>4. Hero: almost never</h3>
+<p>The hero does <strong>not</strong> need an eyebrow. The headline is the hook.</p>
+<p><strong>Only plausible hero case:</strong> a time-sensitive release callout, e.g. "Latest update" or "v2.0 out now", and even then prefer:</p>
+<ul>
+<li>a compact <strong>badge on the announcement itself</strong>, or</li>
+<li>metadata in the headline line</li>
+</ul>
+<p>, not a standalone eyebrow above the main title.</p>
+<h3>5. When an eyebrow is justified</h3>
+<p>Use only if it adds <strong>fact</strong>, not <strong>category</strong>:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>OK (rare)</th>
+<th>Not OK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Now in beta" (status)</td>
+<td>"Features" ( repeats nav )</td>
+</tr>
+<tr>
+<td>"Dec 2026" (date-bound)</td>
+<td>"Why choose us" ( empty category )</td>
+</tr>
+<tr>
+<td>"Customer story" (format)</td>
+<td>"Testimonials" ( section name )</td>
+</tr>
+<tr>
+<td>Regulatory label required by context</td>
+<td>"Our solution" ( filler )</td>
+</tr>
+</tbody>
+</table></div>
+<p>If the eyebrow text could be the H2, delete the eyebrow and promote the idea into the heading, or delete both and write a better H2.</p>
+<h2>Common mistakes</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tell</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eyebrow on every <code>&lt;section&gt;</code></td>
+<td>Remove all; rewrite headings if needed</td>
+</tr>
+<tr>
+<td>Hero eyebrow "Welcome" / "Introducing"</td>
+<td>Delete</td>
+</tr>
+<tr>
+<td>Eyebrow duplicates nav item</td>
+<td>Delete</td>
+</tr>
+<tr>
+<td>Eyebrow + H2 say the same thing</td>
+<td>Keep H2 only</td>
+</tr>
+<tr>
+<td>Pill + icon + uppercase on all blocks</td>
+<td>Remove decorative kickers</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Fixes</h2>
+<ol>
+<li><strong>Delete</strong> the eyebrow element.</li>
+<li><strong>Merge</strong> any useful fact into the heading or a single badge (not above the H1).</li>
+<li><strong>Replace</strong> category kickers with specific headings ("Import CSV in seconds" not eyebrow "Features" + H2 "Powerful tools").</li>
+<li>On long pages, use <strong>spacing and type scale</strong> for section breaks, not repeated eyebrows.</li>
+</ol>
+<h2>Do / Don't</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Let H2/H3 carry section identity</td>
+<td>Label every section with a kicker</td>
+</tr>
+<tr>
+<td>Use one status badge when timing matters</td>
+<td>Stack "New" + eyebrow + headline in hero</td>
+</tr>
+<tr>
+<td>Break sections with whitespace and hierarchy</td>
+<td>Use eyebrows as section dividers</td>
+</tr>
+<tr>
+<td>Write specific headings</td>
+<td>Use generic category eyebrows</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Audit</h2>
+<p>Count eyebrows on the page:</p>
+<ul>
+<li><strong>0</strong>, default, good</li>
+<li><strong>1</strong>, verify it carries non-duplicate fact</li>
+<li><strong>2+</strong>, <strong>High</strong> severity; remove until ≤ 1</li>
+</ul>
+<p>Hero eyebrow (except rare release badge) → <strong>High</strong>.</p>
+      </article>
+      <nav class="pager">
+        <a class="prev" href="concentric-radius.html"><span class="dir">Previous rule</span><span class="ttl">01 · Concentric radius</span></a><a class="next" href="intentional-accent.html"><span class="dir">Next rule</span><span class="ttl">03 · Intentional accent</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>

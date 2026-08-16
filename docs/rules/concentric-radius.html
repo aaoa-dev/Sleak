@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Concentric radius · Sleak</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 01: Concentric radius. parent − padding = child." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">01</span><span>core</span></div>
+      <h1>Concentric radius</h1>
+      <span class="formula">parent − padding = child</span>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="wrap">
+      <div class="demo" id="demo-concentric-radius">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="cc-parent" id="cc-parent" style="padding:16px"><div class="cc-child" id="cc-child">inner</div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Parent radius <output id="cc-ro"></output></label><input id="cc-r" type="range" min="0" max="40" value="28"></div><div class="ctl"><label>Padding <output id="cc-po"></output></label><input id="cc-p" type="range" min="0" max="32" value="16"></div><div class="ctl"><label>Contrast</label><div class="seg"><button type="button" id="cc-same" aria-pressed="false">Force equal radii (wrong)</button></div></div></div>
+        <div class="demo-note" id="cc-note"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h1>Concentric corner radius</h1>
+<p>Nested rounded corners must share a <strong>single curve axis</strong>. The gap between parent and child (padding or margin) determines how the radii relate.</p>
+<p>This is a core Sleak rule. Defaulting to identical radii on every layer breaks the geometry and reads as template UI.</p>
+<h2>The formulas</h2>
+<p>Three equivalent forms. Use whichever variable you know first.</p>
+<pre><code>parent − padding = child
+parent − child   = padding
+child  + padding = parent
+</code></pre>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>parent</strong></td>
+<td>Border radius of the outer rounded container</td>
+</tr>
+<tr>
+<td><strong>child</strong></td>
+<td>Border radius of the inner rounded element</td>
+</tr>
+<tr>
+<td><strong>padding</strong></td>
+<td>Inset between the two curves, padding, gap, or margin between their edges</td>
+</tr>
+</tbody>
+</table></div>
+<p>All values use the <strong>same unit</strong> (px, rem, etc.) and apply <strong>per corner</strong> when corners differ.</p>
+<h2>Which variable drives?</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>You know…</th>
+<th>Solve for…</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Parent radius + padding</td>
+<td>Child</td>
+<td><code>child = parent − padding</code></td>
+</tr>
+<tr>
+<td>Child radius + padding</td>
+<td>Parent</td>
+<td><code>parent = child + padding</code></td>
+</tr>
+<tr>
+<td>Parent + child</td>
+<td>Padding</td>
+<td><code>padding = parent − child</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Parent drives child</strong>, most common. Set the outer shell, pick padding, derive inner radius.</p>
+<p><strong>Child drives parent</strong>, inner component has a fixed radius (button, chip, image). Increase outer radius to match: <code>parent = child + padding</code>.</p>
+<p><strong>Padding drives both</strong>, spacing scale is fixed. Pick parent for the brand, compute child; or pick child and compute parent.</p>
+<h2>Rules</h2>
+<ol>
+<li><strong>Never use the same radius on parent and child</strong> when padding &gt; 0. The curves won't be concentric.</li>
+<li><strong>Child radius ≥ 0.</strong> If <code>parent − padding</code> is negative, set <code>child = 0</code> (square inner corners).</li>
+<li><strong>Apply at every nesting level.</strong> Each parent/child pair gets its own triplet. Grandchild uses its immediate parent as "parent."</li>
+<li><strong>Padding is the physical gap</strong>, not border-width alone. If a border sits between curves, include it in the inset you measure.</li>
+<li><strong>Match per corner.</strong> Asymmetric radii (e.g. <code>12px 12px 0 0</code>), run the formula on each corner independently.</li>
+</ol>
+<h2>Common mistakes</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Mistake</th>
+<th>Typical default</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clone radius</td>
+<td>Parent <code>16px</code>, child <code>16px</code>, padding <code>12px</code></td>
+<td>Child → <code>4px</code> (<code>16 − 12</code>)</td>
+</tr>
+<tr>
+<td>Oversized child</td>
+<td>Child radius ≥ parent</td>
+<td>Child → <code>0</code> or reduce child</td>
+</tr>
+<tr>
+<td>Ignored padding</td>
+<td>Tightens padding but leaves child radius unchanged</td>
+<td>Recompute child</td>
+</tr>
+<tr>
+<td>Flat stack</td>
+<td>Every card <code>rounded-xl</code> with no nesting math</td>
+<td>Audit nested pairs only where both layers are rounded</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Examples</h2>
+<h3>Card with inner panel</h3>
+<p>Outer card: <code>border-radius: 16px</code>, padding: <code>12px</code>.</p>
+<pre><code>child = 16 − 12 = 4px
+</code></pre>
+<p>Inner panel: <code>border-radius: 4px</code>.</p>
+<h3>Fixed button inside rounded bar</h3>
+<p>Button radius fixed at <code>8px</code>. Bar padding to button edge: <code>6px</code>.</p>
+<pre><code>parent = 8 + 6 = 14px
+</code></pre>
+<p>Bar: <code>border-radius: 14px</code>.</p>
+<h3>Hero image inset in rounded frame</h3>
+<p>Frame: <code>24px</code> radius, <code>8px</code> padding.</p>
+<pre><code>child = 24 − 8 = 16px
+</code></pre>
+<p>Image wrapper: <code>border-radius: 16px</code>.</p>
+<h2>CSS</h2>
+<pre><code class="language-css">.card {
+  --radius-parent: 16px;
+  --padding: 12px;
+  --radius-child: calc(var(--radius-parent) - var(--padding));
+
+  border-radius: var(--radius-parent);
+  padding: var(--padding);
+}
+
+.card__panel {
+  border-radius: max(0px, var(--radius-child));
+}
+</code></pre>
+<p>Use <code>max(0px, …)</code> so negative values clamp to square corners.</p>
+<h3>Tailwind-style tokens</h3>
+<p>If parent is <code>rounded-2xl</code> (16px) and padding is <code>p-3</code> (12px):</p>
+<ul>
+<li>Inner element → <code>rounded</code> (4px) or explicit <code>rounded-[4px]</code></li>
+<li>Do not give inner element <code>rounded-2xl</code></li>
+</ul>
+<h2>Audit workflow</h2>
+<p>For each nested pair where <strong>both</strong> have <code>border-radius &gt; 0</code>:</p>
+<ol>
+<li>Measure <strong>parent</strong> radius (computed or token)</li>
+<li>Measure <strong>padding/gap</strong> between the two curve edges</li>
+<li>Compute expected <strong>child</strong>: <code>parent − padding</code></li>
+<li>Compare to actual child radius, fix if off by more than 1px (rounding)</li>
+</ol>
+<p>Flag as <strong>High</strong> when parent and child radii are equal with visible padding between them.</p>
+<h2>Do / Don't</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Derive inner radius from outer + padding</td>
+<td>Copy the same <code>rounded-*</code> class at every depth</td>
+</tr>
+<tr>
+<td>Clamp child to 0 when math goes negative</td>
+<td>Force a visible inner radius that breaks the curve</td>
+</tr>
+<tr>
+<td>Use CSS variables for the triplet</td>
+<td>Hard-code unrelated radius tokens per layer</td>
+</tr>
+<tr>
+<td>Re-run formula when padding changes</td>
+<td>Tune radius visually without the formula</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Notes</h2>
+<ul>
+<li><strong>Full-bleed children</strong> (edge-to-edge image, no gap): child radius can equal parent on the flush corners only; inset corners still follow the formula where padding exists.</li>
+<li><strong>Circles / pills</strong>: When parent is <code>9999px</code> and child is a pill, padding still subtracts, inner pill radius = outer − padding.</li>
+<li><strong>Design tools</strong>: In Figma, set outer radius first, then inner = outer − padding. Auto-layout padding is the gap value.</li>
+</ul>
+<h2>Text sits concentric to the corner radius</h2>
+<p>When a card ends with text, anchor the text <strong>concentric to the corner</strong>: the <strong>start of the last line's baseline lands on the center of the corner's radius circle</strong>, the same circle whose quarter-arc rounds that corner. The text therefore takes <strong>both</strong> a horizontal and a vertical inset equal to the radius <code>R</code>.</p>
+<p><strong>Geometry.</strong> A corner of radius <code>R</code> has its arc center at <code>(R, R)</code> from the corner: <code>R</code> in from the side edge, <code>R</code> up from the bottom edge. Put the leading end of the last baseline on that center point:</p>
+<ul>
+<li><strong>Horizontal:</strong> the text's leading edge sits <strong><code>R</code></strong> from the side edge (<code>padding-inline-start: R</code>).</li>
+<li><strong>Vertical:</strong> the last baseline sits <strong><code>R</code></strong> above the bottom edge (<code>padding-bottom</code> to the baseline <code>= R</code>).</li>
+</ul>
+<p>Both insets equal the radius, so the corner curve and the text's bottom-leading corner share one center, they are concentric.</p>
+<pre><code>  card bottom-left corner
+        ·  ← baseline start = center of the corner circle, at (R, R)
+       ╱ ╲
+      (   )  radius R , its quarter-arc is the card's rounded corner
+       ╲ ╱
+  ──────┼──────────────────  bottom edge   (baseline is R above this)
+        │
+     R from the side edge
+</code></pre>
+<p><strong>Why:</strong> the last line defines where the card's bottom space begins; tying that corner to <code>R</code> makes the text concentric with the rounding instead of floating at an arbitrary padding. Small radius → tight, large radius → airier, the spacing scales with roundness and reads intentional. Same principle as the icon square in <a href="components.html">components.md</a>: let the geometry set the spacing.</p>
+<p><strong>Implementation.</strong> The vertical inset is measured to the <strong>baseline</strong>, not the line box (which extends below the baseline by the font's descent). Trim the trailing leading so the box ends at the baseline, then inset by <code>R</code> on both axes:</p>
+<pre><code class="language-css">.card { --r: 24px; border-radius: var(--r); }
+.card__text {
+  padding-inline-start: var(--r);   /* leading edge = R from the side (RTL-safe) */
+  padding-bottom: var(--r);         /* last baseline = R above the bottom */
+  /* end the text box at the alphabetic baseline so R lands on the baseline, not the descender */
+  text-box-trim: trim-end;
+  text-box-edge: cap alphabetic;
+}
+</code></pre>
+<p>If the card already carries a base padding <code>P</code>, the text's <strong>extra</strong> inset is <code>R − P</code> on each axis (it stacks on the existing padding to total <code>R</code> from the card edge). Where <code>text-box-trim</code> is unavailable, approximate the vertical with <code>calc(var(--r) - (1lh - 1cap) / 2)</code>. Either way <strong>verify on the rendered pixels</strong>, measure the last-baseline start to the corner: <code>R</code> from the side, <code>R</code> from the bottom. This offset is invisible in the source.</p>
+<p><strong>Audit:</strong> for a rounded card whose last element is text, the last baseline's leading end should sit at the corner arc center, <code>R</code> from the side edge and <code>R</code> above the bottom edge. Text crowding the curve, or floating far from it, or inset on only one axis → <strong>Medium</strong>.</p>
+      </article>
+      <nav class="pager">
+        <a class="prev empty" aria-hidden="true"><span class="dir">prev</span></a><a class="next" href="section-eyebrows.html"><span class="dir">Next rule</span><span class="ttl">02 · Section eyebrows</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>

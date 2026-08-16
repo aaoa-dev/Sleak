@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Intentional accent · Sleak</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 03: Intentional accent. 1 focal point / view." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">03</span><span>core</span></div>
+      <h1>Intentional accent</h1>
+      <span class="formula">1 focal point / view</span>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="wrap">
+      <div class="demo" id="demo-intentional-accent">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="ia-ui"><div class="ia-row"><div class="ia-chip">Overview</div><div class="ia-chip">Reports</div><div class="ia-chip">Settings</div></div><div class="ia-row"><div class="ia-chip">Team plan</div><div class="ia-chip">Usage</div></div><div class="ia-row" style="align-items:center;justify-content:space-between;"><span style="display:flex;gap:.4rem"><span class="ia-dot"></span><span class="ia-dot"></span><span class="ia-dot"></span></span><span style="font-size:.78rem;color:var(--muted)">recent activity</span></div><div class="ia-cta">Start free trial</div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Accent strategy</label><div class="seg"><button type="button" data-mode="focus">One focal point</button><button type="button" data-mode="scatter">Accent everywhere</button></div></div></div>
+        <div class="demo-note" id="ia-note"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h2>Intentional accent use (core rule)</h2>
+<p><strong>Use the main accent with intent, not decoration.</strong> The accent exists to pull the eye to the <strong>most important task</strong> on the page. Every extra hit of full accent dilutes that signal and wastes brand impact.</p>
+<h3>Goal</h3>
+<p>One clear visual priority per view. The user should know what to do next without scanning a sea of the same brand color.</p>
+<h3>Rule</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Use</th>
+<th>Saturation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primary accent</strong></td>
+<td>The main action, critical link, or single focal control</td>
+<td>Full accent</td>
+</tr>
+<tr>
+<td><strong>Accent tints</strong></td>
+<td>Selected row, subtle highlight, focus ring fill, badge that supports the primary task</td>
+<td>Same hue, <strong>lower opacity</strong> or lower saturation</td>
+</tr>
+<tr>
+<td><strong>Neutrals</strong></td>
+<td>Body text, surfaces, borders, icons, secondary buttons</td>
+<td>Accent <strong>hue</strong> only on tinted darks (see below), not full chroma</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Full accent is scarce.</strong> If everything is accent, nothing is.</p>
+<h3>Allowed (intent)</h3>
+<ul>
+<li>Primary CTA button</li>
+<li>Current nav item / active tab (one)</li>
+<li>Key inline link or single hero action</li>
+<li>Critical status that blocks or unlocks the main task (error on submit, required field)</li>
+<li>Focus indicator (often accent at partial opacity)</li>
+</ul>
+<h3>Limit or remove (decoration)</h3>
+<ul>
+<li>Accent icon on every feature card</li>
+<li>Accent borders on all containers</li>
+<li>Accent headings, eyebrows, and dividers on the same page</li>
+<li>Gradient wash <strong>and</strong> accent buttons <strong>and</strong> accent bullets</li>
+<li>Secondary buttons in full accent when one primary already exists</li>
+<li>Decorative badges ("New", "Popular") on every block unless they drive the one main action</li>
+</ul>
+<p><strong>Test:</strong> Cover the page with your thumb except one element. If the main task isn't obvious, you have too much accent, or it's on the wrong things.</p>
+<h3>Opacity variations</h3>
+<p>Same accent hue at reduced strength is fine <strong>when it supports hierarchy</strong>, not when it spreads color for looks:</p>
+<pre><code class="language-css">--accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+
+--accent-primary: var(--accent);                    /* full, primary CTA only */
+--accent-subtle:  hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.12);
+--accent-muted:   hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.08);
+--accent-border:  hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.24);
+</code></pre>
+<p>Use tints for: selected state background, hover on related items, focus halo, progress toward the primary action.</p>
+<p>Do <strong>not</strong> stack many tint layers across unrelated sections, that recreates "accent everywhere" at lower saturation.</p>
+<h3>Workflow</h3>
+<ol>
+<li><strong>Name the one job</strong>, "Sign up", "Export", "Choose plan", "Send message".</li>
+<li><strong>Assign full accent</strong> to that control (and at most 1–2 supporting calls if truly co-equal).</li>
+<li><strong>Demote everything else</strong>, neutral secondary buttons, neutral icons, spacing for structure.</li>
+<li><strong>Audit decorative accent</strong>, remove any full-chroma use that doesn't change what the user does next.</li>
+<li><strong>Tints sparingly</strong>, opacity variants only where they reinforce the primary path.</li>
+</ol>
+<h3>Audit</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Can't identify primary task in 3 seconds</td>
+<td><strong>High</strong></td>
+</tr>
+<tr>
+<td>4+ elements at full accent saturation</td>
+<td><strong>High</strong></td>
+</tr>
+<tr>
+<td>Accent on icons, borders, and headings with no action tie</td>
+<td><strong>Medium</strong></td>
+</tr>
+<tr>
+<td>More than one competing primary-strength CTA</td>
+<td><strong>Medium</strong></td>
+</tr>
+<tr>
+<td>Tinted accents on every section background</td>
+<td><strong>Medium</strong>, trim to active/related areas</td>
+</tr>
+</tbody>
+</table></div>
+<p>Count <strong>full-saturation accent instances</strong>. Target: <strong>1 primary</strong>, rarely <strong>2</strong> on dense screens. Everything else neutral or low-opacity tint.</p>
+      </article>
+      <nav class="pager">
+        <a class="prev" href="section-eyebrows.html"><span class="dir">Previous rule</span><span class="ttl">02 · Section eyebrows</span></a><a class="next" href="accent-hue-blacks.html"><span class="dir">Next rule</span><span class="ttl">04 · Accent-hue blacks</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>

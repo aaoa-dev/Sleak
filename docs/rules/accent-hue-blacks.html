@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Accent-hue blacks · Sleak</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 04: Accent-hue blacks. sat > 0 → hue = accent." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">04</span><span>color</span></div>
+      <h1>Accent-hue blacks</h1>
+      <span class="formula">sat > 0 → hue = accent</span>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="wrap">
+      <div class="demo" id="demo-accent-hue-blacks">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="ah-demo"><div class="ah-card"><div class="ah-ct">Accent-hue neutrals</div><div class="ah-cb">Every dark on this page, surfaces, borders, body text, is derived from the same hue as the accent.</div><button class="ah-cta">Primary action</button></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Accent hue (whole page) <output id="ah-ho"></output></label><input id="ah-hue" type="range" min="0" max="360" value="340"></div><div class="ctl"><label>Reset</label><div class="seg"><button type="button" id="ah-reset">Back to 340°</button></div></div></div>
+        <div class="demo-note" id="ah-note"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h2>Accent-hue blacks (core rule)</h2>
+<p><strong>Blacks and dark neutrals must pair with the accent.</strong> A blue theme with a red-based near-black clashes even when both look "dark" in isolation.</p>
+<h3>Rule</h3>
+<p>When a dark neutral has <strong>saturation &gt; 0</strong>, its <strong>hue must equal the theme / accent hue</strong>.</p>
+<pre><code>if saturation &gt; 0 → hue = accent hue
+if saturation = 0 → achromatic OK (#000, neutral gray)
+</code></pre>
+<p>Same logic in any color space, HSL, HSV, OKLCH, LCH, etc. Convert to read/write hue; apply the rule on the hue channel.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Space</th>
+<th>Match on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HSL / HSV</td>
+<td><code>h</code></td>
+</tr>
+<tr>
+<td>OKLCH / LCH</td>
+<td><code>h</code> (hue angle)</td>
+</tr>
+<tr>
+<td>RGB hex</td>
+<td>Derive hue; if chroma/sat &gt; 0, retint to accent hue at same lightness</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Saturation 0</strong> = true neutral black or gray. No hue to align.</p>
+<p><strong>Saturation &gt; 0</strong> = tinted dark. Hue <strong>must</strong> follow accent, not warm default, not random gray from a library.</p>
+<h3>Why this goes wrong</h3>
+<ul>
+<li>Uses <code>#000</code>, <code>#111</code>, <code>#1a1a1a</code> (often warm or green-shifted in perception)</li>
+<li>Pulls "slate" or "zinc" scales from a component library without matching brand hue</li>
+<li>Blue accent + <code>hsl(0, 10%, 8%)</code> or stone/warm gray stack → subtle red/yellow cast against blue</li>
+</ul>
+<h3>Examples</h3>
+<p><strong>Blue accent</strong>, <code>hsl(220, 85%, 55%)</code></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Bad (clash)</th>
+<th>Good (paired)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hsl(10, 12%, 8%)</code>, warm/red black</td>
+<td><code>hsl(220, 14%, 8%)</code></td>
+</tr>
+<tr>
+<td><code>hsl(45, 8%, 9%)</code>, yellow-cast near-black</td>
+<td><code>hsl(220, 10%, 12%)</code> for surfaces</td>
+</tr>
+<tr>
+<td>Tailwind <code>stone-950</code> under blue brand</td>
+<td>Custom <code>--surface: hsl(var(--accent-h) 12% 9%)</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>A true achromatic (<code>hsl(0, 0%, 7%)</code>, saturation 0) is <strong>not</strong> a clash, it has no hue to conflict, see the rule above. It can read flat beside saturated UI; a slight accent-hue tint (<code>hsl(220, 10%, 12%)</code>) usually feels more intentional, but the neutral is allowed.</p>
+<p><strong>Green accent</strong>, <code>hsl(145, 60%, 45%)</code></p>
+<ul>
+<li>Dark text on light: <code>hsl(145, 8%, 12%)</code> not <code>hsl(30, 8%, 12%)</code></li>
+</ul>
+<h3>Workflow</h3>
+<ol>
+<li>Set <strong>accent hue</strong> once (<code>--accent-h: 220</code> or from primary token).</li>
+<li>For each dark neutral (background, text, border) with saturation &gt; 0:
+   - Set <code>h = --accent-h</code>
+   - Tune <code>s</code> and <code>l</code> for contrast and hierarchy only</li>
+<li>Leave <strong>s = 0</strong> only for true black/white/gray when you want achromatic.</li>
+</ol>
+<h3>CSS tokens</h3>
+<pre><code class="language-css">:root {
+  --accent-h: 220;
+  --accent-s: 85%;
+  --accent-l: 55%;
+
+  --color-primary: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+
+  /* Tinted darks, hue locked to accent */
+  --color-bg:        hsl(var(--accent-h) 12% 7%);
+  --color-surface:   hsl(var(--accent-h) 10% 11%);
+  --color-text:      hsl(var(--accent-h) 8% 92%);
+  --color-text-muted: hsl(var(--accent-h) 6% 62%);
+
+  /* Achromatic escape hatch */
+  --color-black: hsl(0 0% 0%);
+}
+</code></pre>
+<p>Dark mode: same rule, elevated surfaces use accent hue with lower <code>l</code>, not a unrelated gray scale.</p>
+<h3>OKLCH</h3>
+<pre><code class="language-css">/* accent ~ oklch(0.55 0.18 250) → hue 250 */
+--color-bg: oklch(0.14 0.02 250);   /* h matches accent */
+--color-bg-bad: oklch(0.14 0.02 25); /* warm hue, clashes with blue accent */
+</code></pre>
+<p>If <code>c &gt; 0</code> (or chroma equivalent), <code>h</code> = accent <code>h</code>.</p>
+<h3>Audit</h3>
+<p>For each near-black / dark gray with measurable saturation:</p>
+<ol>
+<li>Read hue of accent / primary</li>
+<li>Read hue of dark neutral</li>
+<li>If neutral <code>s &gt; 0</code> (or chroma &gt; 0) and hues differ → <strong>High</strong>, retint to accent hue</li>
+</ol>
+<p>Flag common library grays (<code>zinc</code>, <code>stone</code>, <code>neutral</code>) under a saturated brand unless their hue was deliberately aligned.</p>
+<h2>Common mistakes</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tell</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accent on every card icon and border</td>
+<td>Neutral cards; full accent on one CTA</td>
+</tr>
+<tr>
+<td>Hero gradient + accent nav + accent footer links</td>
+<td>One accent focal point; neutrals elsewhere</td>
+</tr>
+<tr>
+<td>Three equally loud "primary" buttons</td>
+<td>One full accent; others secondary/outline</td>
+</tr>
+<tr>
+<td>Purple/blue theme with every heading tinted</td>
+<td>Headings neutral; accent on action only</td>
+</tr>
+<tr>
+<td><code>#000</code> text on tinted brand page</td>
+<td>Accent-hue dark or true <code>s: 0</code> neutral</td>
+</tr>
+<tr>
+<td>Warm gray dark mode + cool accent</td>
+<td>Rebuild dark scale on <code>--accent-h</code></td>
+</tr>
+<tr>
+<td>Gradient hero + unrelated gray sections</td>
+<td>One hue family for neutrals</td>
+</tr>
+<tr>
+<td>Default Tailwind/shadcn gray + custom primary</td>
+<td>Retint <code>--background</code>, <code>--foreground</code>, <code>--muted</code> to accent hue</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Fixes</h2>
+<ol>
+<li>Define the <strong>single primary task</strong> for the view; give it the only full-accent control.</li>
+<li>Strip decorative accent from icons, section chrome, and non-action headings.</li>
+<li>Use <strong>opacity tints</strong> only on states tied to the primary path (selected, focus, progress).</li>
+<li>Define <code>--accent-h</code> (or equivalent) at theme root for neutrals (see accent-hue blacks).</li>
+<li>Replace tinted darks whose hue ≠ accent hue.</li>
+<li>Keep saturation low on neutrals (often 6–15%), <strong>hue</strong> harmonizes; <strong>chroma</strong> is for actions.</li>
+</ol>
+<h2>Do / Don't</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One clear accent focal point per view</td>
+<td>Paint every component brand-colored</td>
+</tr>
+<tr>
+<td>Full accent on primary action only</td>
+<td>Full accent on secondary + tertiary buttons</td>
+</tr>
+<tr>
+<td>Opacity tints for related selected/hover states</td>
+<td>Low-opacity accent wash on every section</td>
+</tr>
+<tr>
+<td>Neutrals for structure; accent for direction</td>
+<td>Accent eyebrows, dividers, and icons by default</td>
+</tr>
+<tr>
+<td>Lock hue on tinted blacks/darks to accent</td>
+<td>Mix warm <code>#1a1a1a</code> under cool blue brand</td>
+</tr>
+<tr>
+<td>Use <code>s: 0</code> for true achromatic black/white</td>
+<td>Assume more brand color = stronger brand</td>
+</tr>
+<tr>
+<td>Check hue in HSL, OKLCH, or converted RGB</td>
+<td>Eyeball hex without checking hue</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Notes</h2>
+<ul>
+<li><strong>Contrast / a11y:</strong> Retinting hue rarely breaks WCAG if lightness is unchanged; re-check contrast after shifts.</li>
+<li><strong>Multi-accent brands:</strong> Use dominant UI accent hue for neutrals, or split by surface role, document the choice.</li>
+<li><strong>Print / exports:</strong> Same rule when generating theme tokens for Figma or design systems.</li>
+</ul>
+      </article>
+      <nav class="pager">
+        <a class="prev" href="intentional-accent.html"><span class="dir">Previous rule</span><span class="ttl">03 · Intentional accent</span></a><a class="next" href="contrast.html"><span class="dir">Next rule</span><span class="ttl">05 · Contrast</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>
