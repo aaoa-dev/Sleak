@@ -150,9 +150,11 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 /* ---------- Interactive rule demos ---------- */
 .demo-section { padding: clamp(1.6rem, 3vw, 2.4rem) 0 0; }
 /* Concentric by construction: outer card r16, padding 4, inner panel r12 (= 16 − 4). */
-.demo { border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface-2); padding: var(--pad-card); box-shadow: var(--shadow); }
-.demo-inner { background: var(--surface); border-radius: var(--r-inner); overflow: hidden; }
-.demo-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 1rem 1.3rem; border-bottom: 1px solid var(--line); }
+.demo { border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); overflow: hidden; box-shadow: var(--shadow); }
+.demo-inner { display: contents; }
+/* No card padding; the stage runs full-bleed while the header and footer float
+   on their own margin, so whitespace (not a divider) separates them. */
+.demo-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin: .95rem 1.2rem; }
 .demo-head .lbl { font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); }
 .demo-head .live { font-family: var(--mono); font-size: .78rem; color: var(--accent); font-variant-numeric: tabular-nums; }
 .demo-stage { padding: clamp(1.5rem, 5vw, 2.8rem); background: var(--surface-2); display: grid; place-items: center; gap: 1rem; min-height: 220px; }
@@ -160,7 +162,7 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .demo-controls .ctl { display: flex; flex-direction: column; gap: .45rem; flex: 1 1 190px; min-width: 160px; }
 .demo-controls .ctl > label { font-family: var(--mono); font-size: .72rem; letter-spacing: .03em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
 .demo-controls .ctl output, .demo-val { color: var(--accent); font-variant-numeric: tabular-nums; }
-.demo-note { padding: .9rem 1.3rem; border-top: 1px solid var(--line); font-size: .86rem; color: var(--muted); display: flex; align-items: center; gap: .6rem; }
+.demo-note { margin: .95rem 1.2rem; font-size: .86rem; color: var(--muted); display: flex; align-items: center; gap: .6rem; }
 .demo-note b { color: var(--ink); font-weight: 650; }
 
 /* range input, shared with the demos */

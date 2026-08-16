@@ -38,6 +38,20 @@ RULES = [
      "verb + object", ("content-copy.md", None, None)),
 ]
 
+# Short, punchy tab title per rule: the browser tab reads "Sleak Eyebrow", etc.
+NICKNAME = {
+    "concentric-radius": "Radius",
+    "section-eyebrows": "Eyebrow",
+    "intentional-accent": "Accent",
+    "accent-hue-blacks": "Blacks",
+    "contrast": "Contrast",
+    "typography": "Type",
+    "layout-spacing": "Spacing",
+    "components": "Buttons",
+    "motion": "Motion",
+    "content-copy": "Copy",
+}
+
 # reference filename -> destination rule slug (for rewriting cross-links)
 REF_TO_SLUG = {
     "concentric-radius.md": "concentric-radius",
@@ -113,7 +127,7 @@ def page(rule, prev_rule, next_rule):
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>{title} · Sleak</title>
+<title>Sleak {NICKNAME.get(slug, title)}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="Sleak rule {num}: {title}. {formula}." />
 <link rel="stylesheet" href="../assets/site.css" />
