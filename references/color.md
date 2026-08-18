@@ -178,6 +178,103 @@ For each near-black / dark gray with measurable saturation:
 
 Flag common library grays (`zinc`, `stone`, `neutral`) under a saturated brand unless their hue was deliberately aligned.
 
+## Building the palette
+Sleak's accent + accent-hue-black rules above are the sharpened version of the conventional
+palette method. The underlying construction recipe:
+
+**One monochromatic ramp** built from the brand hue, each step with a defined job and a
+contrast floor (against the lightest/background):
+
+| Role | Use | Contrast floor |
+|------|-----|----------------|
+| **Primary** | Actions: links, buttons, interactive elements | ≥ 4.5:1 |
+| **Darkest** | Primary text (headings, body, labels) | ≥ 4.5:1 |
+| **Dark** | Secondary / supporting text | ≥ 4.5:1 |
+| **Medium** | Non-decorative borders (form fields, inputs) | ≥ 3:1 |
+| **Light** | Decorative borders | decorative, no floor |
+| **Lightest** | Alternate background surface | n/a |
+
+- Greys carry a **tinge of the primary hue** (saturate slightly, don't use pure neutral),
+  this is exactly the [accent-hue blacks](#accent-hue-blacks-core-rule) rule. Use `s: 0`
+  only when you deliberately want true achromatic.
+- **Apply the brand colour to interactive elements**, not decoration, it teaches users
+  what's clickable. (Sleak goes further: reserve *full* accent for the single primary task.)
+- **If the brand colour carries meaning** (e.g. red = errors) or is too light/dark to hit
+  contrast, use the **darkest/white variation** for actions instead, or add a 3:1 border.
+
+**Keep the ramp lean.** A few tints (mixed toward white) and shades (mixed toward black) per
+colour, plus a slim neutral set, no more. Too many near-identical steps invite inconsistency
+and misuse; add an option only when a real need appears. Store them as
+[tokens](design-systems.md).
+
+**Darken/lighten without muddiness.** Mixing a colour with pure black or white can turn it
+muddy, a darkened yellow drifts toward brown. Mix toward a **neighbouring hue** instead (deepen
+yellow with a little orange) to keep the shade clean.
+
+**Start in black and white.** Design the interface in greys first, it forces you to solve
+spacing, size, and contrast before colour, and colour then goes only where it carries meaning.
+And avoid **pure `#000` on pure `#fff`**: the maximal contrast causes eye strain over long
+reading, prefer a very dark grey (which also satisfies the accent-hue-black rule above).
+
+**System colours**, you need three, each paired with an icon (never colour alone):
+
+| Colour | Meaning |
+|--------|---------|
+| Red | Error / failure needing attention |
+| Amber | Warning / risky action |
+| Green | Success / completed as expected |
+
+System-colour **text** needs ≥ 4.5:1; system-colour **icons/components** need ≥ 3:1.
+
+## Light & dark mode: slide, don't invert
+
+**Switching themes is not colour inversion.** Flipping every value (light ↔ dark) breaks
+hierarchy and produces harsh, muddy results. Instead, **slide each colour along its range**
+to the equivalent role in the other mode, keeping the palette's relationships intact.
+
+### Preserve relative luminance across modes
+
+A surface keeps its **relative brightness rank** when you toggle modes. The surface that is
+brightest *relative to its neighbours* in light mode stays the brightest *relative to its
+neighbours* in dark mode, the whole set slides down the luminance range together; it doesn't
+flip.
+
+### Elevation governs luminance
+
+Surface luminance is driven by **elevation**, how close a surface sits to the user:
+
+- **Surfaces closer to the user (higher elevation) have higher luminance.**
+- In **dark mode**, elevated surfaces (cards, menus, modals, popovers) get **lighter** as
+  they rise, not darker. The base/background is the darkest; each layer above lifts.
+- In **light mode**, the ordering is preserved by the same range-slide; don't invert it into a
+  contradictory stack.
+
+Model elevation as steps on one luminance ramp and reuse the same ramp in both modes:
+
+```css
+/* one ramp; each mode slides the same roles along it */
+:root { /* light */
+  --surface-0: hsl(var(--accent-h) 10% 99%);  /* base */
+  --surface-1: hsl(var(--accent-h) 10% 97%);  /* raised card */
+  --surface-2: hsl(var(--accent-h) 10% 95%);  /* menu / modal, closest to user */
+}
+:root[data-theme="dark"] { /* slid down the range, elevation still lifts luminance */
+  --surface-0: hsl(var(--accent-h) 12% 9%);   /* base, darkest */
+  --surface-1: hsl(var(--accent-h) 11% 13%);  /* raised card, lighter */
+  --surface-2: hsl(var(--accent-h) 10% 17%);  /* menu / modal, lightest */
+}
+```
+
+Neutrals still follow [accent-hue blacks](#accent-hue-blacks-core-rule); re-check
+[contrast.md](contrast.md) after the slide (a pair that passed in light mode is a different
+ratio in dark).
+
+| Do | Don't |
+|----|-------|
+| Slide each role to its dark-mode equivalent | Invert every colour value |
+| Lift luminance with elevation in dark mode | Make raised surfaces darker than the base |
+| Keep relative brightness ranking across modes | Reorder the surface stack between modes |
+
 ## Common mistakes
 
 | Tell | Fix |

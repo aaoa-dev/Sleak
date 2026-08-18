@@ -33,29 +33,18 @@
     </div>
   </section>
 
-  <section class="demo-section">
-    <div class="wrap">
-      <div class="demo" id="demo-motion">
-        <div class="demo-inner">
-          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
-          <div class="demo-stage"><div id="mo-track"><div id="mo-box"></div></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Duration <output id="mo-do"></output></label><input id="mo-dur" type="range" min="0" max="600" step="10" value="140"></div><div class="ctl"><label>Easing</label><select id="mo-ease"><option value="cubic-bezier(.22,1,.36,1)">ease-out (expressive)</option><option value="ease">ease</option><option value="linear">linear</option><option value="cubic-bezier(.34,1.56,.64,1)">overshoot</option></select></div><div class="ctl"><label>Preview</label><button type="button" class="play" id="mo-play">Play ▶</button></div></div>
-        <div class="demo-note" id="mo-note"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="article">
     <div class="wrap">
       <article class="doc">
 <h1>Motion</h1>
 <p>Animation and transitions that feel intentional, not the same spring on every hover.</p>
-<p>Synthesizes Sleak motion principles with craft from <a href="https://github.com/emilkowalski/skills">Emil Kowalski's skills</a> (<code>emil-design-eng</code>, <code>animate</code>) and <a href="https://github.com/jakubkrehel/skills">Jakub Krehel's interface skills</a> (<code>better-ui</code>, <a href="https://github.com/jakubkrehel/make-interfaces-feel-better">make-interfaces-feel-better</a>). For full build recipes and strict review gates, load those skills alongside this one.</p>
+<p>Sleak owns <em>when not to animate</em> and <em>avoiding repetitive motion</em>. For full build recipes, easing tables, and strict review gates, load the external motion skills catalogued in <a href="../references/sources.md#external-craft-skills">sources.md</a> alongside this one.</p>
 <h2>Purpose</h2>
 <p>Catch motion that weakens focus: everything bounces, everything staggers, same curve everywhere, springs on every card hover.</p>
 <h2>Motion is a budget (core rule)</h2>
-<p><strong>Vary animations. Don't animate everything.</strong> One spring on hover feels nice. Fifteen springs on one screen is noise.</p>
+<p><strong>Prefer subtle motion over none, but vary it, and don't animate everything.</strong> A small,
+quick transition beats an abrupt jump; one spring on hover feels nice; fifteen springs on one
+screen is noise.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -65,8 +54,12 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>Default: no motion</strong></td>
-<td>Static UI until a transition earns its place</td>
+<td><strong>Default: subtle motion</strong></td>
+<td>Prefer a small, quick transition over a hard cut; reserve pure stillness for the highest-frequency interactions</td>
+</tr>
+<tr>
+<td><strong>Emphasize &amp; delight</strong></td>
+<td>Use motion to draw the eye to a potential action, and occasionally to add fun/personality</td>
 </tr>
 <tr>
 <td><strong>Subtle for most elements</strong></td>
@@ -84,7 +77,7 @@
 </table></div>
 <p>Motion should guide attention, like <a href="intentional-accent.html">intentional accent use</a>. When everything moves, nothing feels special.</p>
 <h2>Step 1, Should this animate at all?</h2>
-<p>From <a href="https://github.com/emilkowalski/skills">Emil's frequency gate</a>. Ask: <strong>how often will users see this?</strong></p>
+<p>The frequency gate. Ask: <strong>how often will users see this?</strong></p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -112,9 +105,19 @@
 </tbody>
 </table></div>
 <p><strong>Keyboard-initiated actions:</strong> no animation. Raycast-style instant open/close is correct for high-frequency tools.</p>
-<p>If it fails this gate, use instant state change. Zero lines of animation is a success.</p>
+<p>For the <strong>highest-frequency tier</strong>, instant is correct, an abrupt change beats a laggy one,
+and zero lines of animation is a legitimate result. Everywhere else, prefer a <strong>subtle
+transition</strong> over a hard cut.</p>
+      <div class="demo" id="demo-motion-frequency">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Frequency gates motion</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="mof"><div class="mof-demo" id="mof-demo"><div class="mof-box" id="mof-box"></div></div><div class="mof-budget" id="mof-budget"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>How often users see it</label><div class="seg"><button type="button" data-tier="high">100+/day · shortcut, palette</button><button type="button" data-tier="occ" aria-pressed="true">Tens/day · row hover</button><button type="button" data-tier="rare">Rare · empty-state reveal</button></div></div></div>
+        <div class="demo-note" id="mof-note"></div>
+        </div>
+      </div>
 <h2>Step 2, Name the purpose</h2>
-<p>Every animation needs one word why (<a href="https://github.com/emilkowalski/skills">Emil</a>):</p>
+<p>Every animation needs one word why:</p>
 <ul>
 <li><strong>Feedback</strong>, press scale confirms the tap</li>
 <li><strong>Spatial consistency</strong>, toast exits where it entered</li>
@@ -124,7 +127,7 @@
 <li><strong>Delight</strong>, only at the rare/first-time tier</li>
 </ul>
 <p>Can't name it? Don't build it. <strong>"It looks cool" on a frequent interaction</strong> is a reason to stop.</p>
-<p>From <a href="https://github.com/jakubkrehel/skills">Jakub Krehel's motion restraint</a>: motion is <strong>never the only feedback channel</strong>. Color, icon, or label must still communicate the state if animation is off (<code>prefers-reduced-motion</code> or a blink).</p>
+<p>Motion restraint: motion is <strong>never the only feedback channel</strong>. Color, icon, or label must still communicate the state if animation is off (<code>prefers-reduced-motion</code> or a blink).</p>
 <h2>Step 3, Pick intensity (vary, don't repeat)</h2>
 <p><strong>Weak pattern:</strong> same <code>spring</code> + <code>whileHover={{ scale: 1.05 }}</code> on every card, chip, and icon.</p>
 <p><strong>Sleak:</strong></p>
@@ -167,6 +170,14 @@
 </tbody>
 </table></div>
 <p><strong>Rule of thumb:</strong> pick <strong>one</strong> element per view for expressive hover/spring. Everything else stays subtle or static.</p>
+      <div class="demo" id="demo-motion-vary">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Vary the recipe, don't copy it</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="mov-grid" id="mov-grid"><button type="button" class="mov-btn" id="mov-btn">Primary</button><div class="mov-card" id="mov-c1"><div class="mov-cb"></div></div><div class="mov-card" id="mov-c2"><div class="mov-cb"></div></div><div class="mov-card" id="mov-c3"><div class="mov-cb"></div></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Motion recipe</label><div class="seg"><button type="button" data-mode="vary" aria-pressed="true">Vary by role</button><button type="button" data-mode="copy">Same spring everywhere</button></div></div></div>
+        <div class="demo-note" id="mov-note"></div>
+        </div>
+      </div>
 <h3>Springs, scarce</h3>
 <p>Springs feel alive but <strong>add up fast</strong>. Reserve for:</p>
 <ul>
@@ -183,7 +194,7 @@
 <p><strong>Avoid bounce</strong> in most UI (0.1–0.3 max when used). Never spring every <code>:hover</code>.</p>
 <p>Default interactive motion → <strong>CSS ease-out</strong> transitions, not springs.</p>
 <h2>Step 4, Easing and duration</h2>
-<h3>Easing (<a href="https://github.com/emilkowalski/skills">Emil</a>)</h3>
+<h3>Easing</h3>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -247,6 +258,14 @@
 </tbody>
 </table></div>
 <p><strong>UI stays under 300ms</strong> unless marketing/explanatory.</p>
+      <div class="demo" id="demo-motion">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Duration + easing within budget</span><span class="live"></span></div>
+          <div class="demo-stage"><div id="mo-track"><div id="mo-box"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Duration <output id="mo-do"></output></label><input id="mo-dur" type="range" min="0" max="600" step="10" value="140"></div><div class="ctl"><label>Easing</label><select id="mo-ease"><option value="cubic-bezier(.22,1,.36,1)">ease-out (expressive)</option><option value="ease">ease</option><option value="linear">linear</option><option value="cubic-bezier(.34,1.56,.64,1)">overshoot</option></select></div><div class="ctl"><label>Preview</label><button type="button" class="play" id="mo-play">Play ▶</button></div></div>
+        <div class="demo-note" id="mo-note"></div>
+        </div>
+      </div>
 <h2>Step 5, Properties and tools</h2>
 <ul>
 <li>Animate <strong><code>transform</code> and <code>opacity</code> only</strong> (GPU-friendly). Avoid <code>width</code>, <code>height</code>, <code>margin</code>, <code>top</code>, <code>left</code>.</li>
@@ -256,12 +275,25 @@
 <li><strong>High-frequency</strong> → CSS transition. <strong>Springs/layout</strong> → Motion library when needed, not for every hover.</li>
 </ul>
 <p>Popovers: <code>transform-origin</code> at trigger (<code>var(--transform-origin)</code>). Modals: center origin.</p>
+      <div class="demo" id="demo-motion-props">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Animate transform + opacity only</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="mop"><div class="mop-track"><div class="mop-box" id="mop-gpu"></div></div><div class="mop-track"><div class="mop-box" id="mop-jank"></div></div><div class="mop-lbl"><span>transform / opacity</span><span>width / left</span></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Preview</label><button type="button" class="play" id="mop-play">Play ▶</button></div></div>
+        <div class="demo-note" id="mop-note"></div>
+        </div>
+      </div>
 <h2>Stagger, infrequent only</h2>
-<p>Staggered entrance (~30–80ms between chunks, <a href="https://github.com/emilkowalski/skills">Emil</a>) is for <strong>first load of a view</strong> or onboarding, not every section on scroll, not every list render.</p>
-<p>From <a href="https://github.com/jakubkrehel/skills">Jakub</a>: split semantic chunks, ~100ms stagger. <strong>Do not stagger routine interactions.</strong></p>
+<p>Staggered entrance (~30–80ms between chunks) is for <strong>first load of a view</strong> or onboarding, not every section on scroll, not every list render.</p>
+<p>Split semantic chunks, ~100ms stagger. <strong>Do not stagger routine interactions.</strong></p>
 <p>Skip enter animation on page load for elements already in default state (<code>initial={false}</code> on <code>AnimatePresence</code> where appropriate).</p>
+<p><strong>Overlapping action.</strong> When a group <em>does</em> stagger in, ramp the per-item delay <strong>down</strong> (a
+decay, e.g. square-root) so items appear to pick up pace rather than plod. Tune the stagger to
+the <strong>actual item count</strong>, an offset that feels right for 3 items feels sluggish for 12; keep
+the total short and the group tight. Optionally give the last item a touch more duration to
+punctuate the sequence.</p>
 <h2>Reduced motion and hover gating</h2>
-<p>Ship with every animation (<a href="https://github.com/emilkowalski/skills">Emil</a>, <a href="https://github.com/jakubkrehel/skills">Jakub <code>better-accessibility</code></a>):</p>
+<p>Ship with every animation:</p>
 <pre><code class="language-css">@media (prefers-reduced-motion: reduce) {
   .element { transition: opacity 0.2s ease; } /* drop transform motion */
 }
@@ -271,6 +303,34 @@
 }
 </code></pre>
 <p>Reduced motion = <strong>fewer and gentler</strong>, not necessarily zero.</p>
+<h2>Connect &amp; stage state changes</h2>
+<p>Motion's core job is to <strong>supply context</strong>, fill the gap between an action and its result so a
+change is <em>understood</em> rather than teleporting into place. Principles that complement Sleak's
+restraint gate, apply them only <em>after</em> an animation has earned its place:</p>
+<ul>
+<li><strong>Connect shared content between states.</strong> When moving from A to B, animate the element
+  they share rather than sliding a new view in over the top. Expanding a tapped card <em>in
+  place</em> preserves the mental model far better than a generic slide-in.</li>
+<li><strong>Stage the change.</strong> A brief beat of stillness before something changes (or a bit of
+  directionality on a changing number, like a flipboard) prepares the eye so the change isn't
+  missed. Sudden swaps get overlooked.</li>
+<li><strong>Follow-through, barely.</strong> A little spring overshoot adds life, but it should sit <strong>on the
+  verge of being perceived</strong>, not a visible bounce. (Reinforces the low-<code>bounce</code> rule above.)</li>
+<li><strong>Ease-out on enter / gaining attention; ease-in on exit / leaving.</strong> (Matches the easing
+  table above.) ~100ms is the floor for a change to register at all.</li>
+<li><strong>Keep one physical model (consistency).</strong> Motion should obey a single, consistent
+  spatial/physical logic, the way type and colour do. Same-function, same-looking elements
+  animate the <strong>same</strong> way; a control that springs back where its sibling doesn't (for no
+  reason) breaks the mental model and adds cognitive load. Vary recipes <em>across</em> roles (see
+  above); stay consistent <em>within</em> a role.</li>
+<li><strong>Fluid gestures stay interruptible.</strong> A drag or swipe should be redirectable and cancellable
+  mid-flight, fluid interaction happens <em>while</em> the user is still deciding (drag a file toward
+  the trash, then to a folder instead; a half-swipe that springs back). Drive these from the
+  gesture's position, not a fixed play-through animation.</li>
+<li><strong>Give assistive tech time.</strong> A notification that animates in and out must stay long enough
+  for a screen reader to announce it before it disappears, set minimum durations, and pair
+  the motion with an accessible announcement (see <a href="accessibility.html">accessibility.md</a>).</li>
+</ul>
 <h2>Common mistakes</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -325,7 +385,7 @@
 <li>Count <strong>springs</strong> and <strong>bounce</strong>, more than 1–2 expressive springs per view → <strong>High</strong>.</li>
 <li>Count <strong>identical</strong> configs (same duration + curve on 5+ elements) → <strong>Medium</strong>, vary or remove.</li>
 <li>Confirm high-frequency items use ≤150ms or no motion.</li>
-<li>Replay at <strong>10% speed</strong> in DevTools (<a href="https://github.com/jakubkrehel/skills">Jakub</a>), what feels wrong slow is wrong fast.</li>
+<li>Replay at <strong>10% speed</strong> in DevTools, what feels wrong slow is wrong fast.</li>
 </ol>
 <h2>Do / Don't</h2>
 <div class="table-wrap"><table>
@@ -337,7 +397,7 @@
 </thead>
 <tbody>
 <tr>
-<td>Default static; add motion with a named purpose</td>
+<td>Prefer subtle motion; add it with a named purpose</td>
 <td>Animate everything "to feel alive"</td>
 </tr>
 <tr>
@@ -365,35 +425,16 @@
 <td>Motion as the only feedback</td>
 </tr>
 <tr>
-<td>Load <a href="https://github.com/emilkowalski/skills">emilkowalski/skills</a> for build/review depth</td>
+<td>Load an external motion skill (see <a href="../references/sources.md#external-craft-skills">sources.md</a>) for build/review depth</td>
 <td>Hand-roll animation without a gate</td>
 </tr>
 </tbody>
 </table></div>
 <h2>Further reading</h2>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Resource</th>
-<th>Use for</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://github.com/emilkowalski/skills">emilkowalski/skills</a>, <code>animate</code>, <code>review-animations</code>, <code>emil-design-eng</code></td>
-<td>Build sequence, strict review, easing tables</td>
-</tr>
-<tr>
-<td><a href="https://github.com/jakubkrehel/skills">jakubkrehel/skills</a>, <code>better-ui</code></td>
-<td>Motion restraint, press scale, enter/exit recipes</td>
-</tr>
-<tr>
-<td><a href="https://github.com/jakubkrehel/make-interfaces-feel-better">make-interfaces-feel-better</a></td>
-<td>Combined interface polish review</td>
-</tr>
-</tbody>
-</table></div>
-<p>Sleak owns <strong>when not to animate</strong> and <strong>avoiding repetitive motion</strong>. Those repos own <strong>how to implement</strong> motion that passes craft review.</p>
+<p>For build recipes, easing tables, press-scale, and strict review gates, load the external
+motion skills catalogued in <a href="../references/sources.md#external-craft-skills">sources.md</a>.</p>
+<p>Sleak owns <strong>when not to animate</strong> and <strong>avoiding repetitive motion</strong>; those external skills own
+<strong>how to implement</strong> motion that passes craft review.</p>
       </article>
       <nav class="pager">
         <a class="prev" href="components.html"><span class="dir">Previous rule</span><span class="ttl">08 · Cards & buttons</span></a><a class="next" href="content-copy.html"><span class="dir">Next rule</span><span class="ttl">10 · Content & copy</span></a>

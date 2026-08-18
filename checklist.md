@@ -117,6 +117,31 @@ See [references/content-copy.md](references/content-copy.md).
 - [ ] No generic marketing voice (seamless, empower, journey, etc.)
 - [ ] Title + primary button alone make the screen's purpose clear
 
+## Accessibility
+
+See [references/accessibility.md](references/accessibility.md). Contrast is covered separately above.
+
+- [ ] Every interactive control has an accessible name (icon buttons get `aria-label`; inputs have real `<label>`)
+- [ ] Meaningful images have `alt`; decorative images use `alt=""`
+- [ ] Visible `:focus-visible` indicator on all focusable elements (no bare `outline: none`)
+- [ ] Fully keyboard-operable: logical tab order, no traps, custom widgets handle Esc/arrows/Enter
+- [ ] Interactive uses native elements (`<button>`, `<a>`, `<input>`) rather than `div` + `onClick`
+- [ ] Touch/hit targets ≥ 44×44px with spacing to avoid mis-taps
+- [ ] No meaning encoded by color alone (paired with text, icon, or shape)
+- [ ] One `<h1>`, heading levels don't skip, landmarks present; layout survives 200% zoom
+
+## UX (states & interaction)
+
+See [references/ux.md](references/ux.md).
+
+- [ ] Loading, empty, and error states designed, not just the populated state
+- [ ] Destructive/irreversible actions confirm or offer undo; confirm button names the action
+- [ ] Actions are `<button>`, navigation is `<a href>`, submits live in a `<form>`
+- [ ] No dead zones: checkbox/radio labels clickable, full card/row surface interactive
+- [ ] Mobile input `font-size ≥ 16px` (avoids iOS focus-zoom); correct `type`/`inputmode`/`autocomplete`
+- [ ] No font-weight change on state (use color/background to avoid layout shift); space reserved for appearing content
+- [ ] Every action gives feedback within ~100ms; user input preserved on error/navigation
+
 ## Cross-cutting
 
 - [ ] Matches existing brand or design system (if applicable)

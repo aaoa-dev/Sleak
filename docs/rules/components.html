@@ -33,18 +33,6 @@
     </div>
   </section>
 
-  <section class="demo-section">
-    <div class="wrap">
-      <div class="demo" id="demo-components">
-        <div class="demo-inner">
-          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
-          <div class="demo-stage"><button id="cp-btn"></button><div class="cp-guide" id="cp-guide"></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Icon position</label><div class="seg"><button type="button" data-icon="left">Left</button><button type="button" data-icon="right">Right</button><button type="button" data-icon="none">None</button></div></div></div>
-        <div class="demo-note" id="cp-note"></div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="article">
     <div class="wrap">
@@ -88,6 +76,14 @@
 </tr>
 </tbody>
 </table></div>
+      <div class="demo" id="demo-components-cards">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Whole card is the hit target</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="cpc-row"><div class="cpc-card" id="cpc-card"><div class="cpc-img"></div><div class="cpc-t">Project Alpha</div><div class="cpc-b">A short summary of the project.</div><button type="button" class="cpc-btn" id="cpc-btn">View project</button></div><div class="cpc-meter" id="cpc-meter"><span class="cpc-meter-lbl">clicks that land</span></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Hit target</label><div class="seg"><button type="button" data-mode="card" aria-pressed="true">Whole card (good)</button><button type="button" data-mode="button">Button only (bad)</button></div></div></div>
+        <div class="demo-note" id="cpc-note"></div>
+        </div>
+      </div>
 <h3>Implementation</h3>
 <p><strong>Prefer one interactive element</strong>, not a button floating inside a dead div.</p>
 <pre><code class="language-html">&lt;!-- Good: whole card is the link --&gt;
@@ -221,6 +217,109 @@
 <li>Pairs with <a href="motion.html">motion.md</a>: subtle card hover is OK; don't spring every tile (see motion budget)</li>
 <li>Platform: iOS/Android often use full-row/cell tap natively; web cards should match that expectation</li>
 </ul>
+<h2>Button hierarchy, states &amp; size</h2>
+<h3>Three weights, hierarchy not by colour alone</h3>
+<p>Most UIs need three button weights, and the difference must survive colour-blindness, never
+rely on hue alone to tell them apart:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Weight</th>
+<th>Style</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primary</strong></td>
+<td>Solid fill (accent), white text</td>
+<td>The one most important action</td>
+</tr>
+<tr>
+<td><strong>Secondary</strong></td>
+<td>Outlined (border + accent text), no fill</td>
+<td>Important but not primary</td>
+</tr>
+<tr>
+<td><strong>Tertiary</strong></td>
+<td>Text/link style, underlined</td>
+<td>Least important</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Avoid a light-grey secondary fill</strong>, it reads as <em>disabled</em>. Use an outline instead.</li>
+<li>Don't make primary and secondary similar weight/contrast; the hierarchy should be obvious
+  at a glance and to the colour-blind.</li>
+<li><strong>Try to avoid disabled buttons</strong>, they can look broken and give no path forward; prefer
+  validating on submit and explaining what's needed (see <a href="ux.html">ux.md</a>).</li>
+</ul>
+      <div class="demo" id="demo-components-weights">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Three weights, not colour alone</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="cpw-row" id="cpw-row"><button type="button" class="cpw-btn cpw-p" id="cpw-p">Save</button><button type="button" class="cpw-btn cpw-s" id="cpw-s">Cancel</button><button type="button" class="cpw-btn cpw-t" id="cpw-t">Learn more</button></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Secondary style</label><div class="seg"><button type="button" data-sec="outline" aria-pressed="true">Outline (good)</button><button type="button" data-sec="greyfill">Light-grey fill (reads disabled)</button></div></div></div>
+        <div class="demo-note" id="cpw-note"></div>
+        </div>
+      </div>
+<h3>States: distinguishable, not noisy</h3>
+<p>Each state (enabled, hover, pressed, focus, loading, disabled) must be clearly different from
+the others, but don't overdo the change. Drastic per-state restyling is visual noise; a
+measured shift in fill/elevation is enough. (Motion between states → <a href="motion.html">motion.md</a>.)</p>
+<h3>Target size &amp; hit area</h3>
+<ul>
+<li><strong>Minimum 48×48px</strong> (aligns to an 8pt grid; slightly above the WCAG <strong>44×44</strong> floor).
+  Desktop mouse targets can go to ~32–40px, but touch/primary stays ≥44.</li>
+<li><strong>Separate adjacent buttons by ≥ 8px</strong> to prevent mis-taps.</li>
+<li><strong>Extend the hit area beyond the visible glyph</strong> with padding, especially for tertiary
+  links and list items, whose tappable area is easy to forget. Never a bare icon with no
+  invisible padding.</li>
+</ul>
+      <div class="demo" id="demo-components-target">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Targets ≥ 44px, gap ≥ 8px</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="cpt-stage"><div class="cpt-row" id="cpt-row"><div class="cpt-btn" id="cpt-a"></div><div class="cpt-btn" id="cpt-b"></div></div><div class="cpt-guide" id="cpt-guide"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Target size <output id="cpt-so"></output></label><input id="cpt-size" type="range" min="24" max="56" value="44"></div><div class="ctl"><label>Gap <output id="cpt-go"></output></label><input id="cpt-gap" type="range" min="0" max="28" value="8"></div></div>
+        <div class="demo-note" id="cpt-note"></div>
+        </div>
+      </div>
+<h3>Icon + text</h3>
+<ul>
+<li><strong>Lead with the icon</strong> when it aids scanning / communicates the action (icon before label,
+  like an icon list). A trailing icon is for <em>where it leads</em> ("Log out" →, "Send" ✈).</li>
+<li>Match icon <strong>weight and size</strong> to the text, or balance a heavier icon by <strong>lowering its
+  contrast</strong> (medium neutral vs dark text). See the square-padding geometry below.</li>
+<li><strong>Label = action verb + object.</strong> Never "Click here" (users tap/keyboard too) or vague
+  "Submit" when "Pay $49" is clearer (see <a href="content-copy.html">content-copy.md</a>).</li>
+</ul>
+<h2>Icon system</h2>
+<p>Icons look unified only when the rules are set <strong>before</strong> you draw them. Decide up front and
+apply consistently:</p>
+<ul>
+<li><strong>Filled or outline?</strong> Pick one as the default. A common split: solid/one-colour for utility
+  and action icons (bell, cog), more expressive/multicolour for navigation or brand icons.</li>
+<li><strong>Line weight</strong>, one stroke width across the set (match it to text weight when paired; see
+  icon+text balance above).</li>
+<li><strong>Colour count</strong>, usually one; document any exceptions.</li>
+<li><strong>Sizes</strong>, a small set on the 4-based scale (16/20/24…), so icons align with text and
+  spacing.</li>
+<li><strong>Art boundary</strong>, a consistent inner icon boundary inside an outer box, so glyphs feel the
+  same visual size even when shapes differ.</li>
+<li><strong>Format:</strong> ship icons as <strong>SVG</strong> (crisp at any size, styleable); raster (PNG/JPG) only for
+  photos.</li>
+</ul>
+<p>Store these as shared assets/<a href="design-systems.html">tokens</a> so every product draws from one set.
+Depth/elevation (shadows, z-index) should likewise come from a standardized scale, not per-icon
+one-offs, see <a href="design-systems.html">design-systems.md</a>.</p>
+<h3>Alignment &amp; control states</h3>
+<ul>
+<li><strong>Left-align buttons</strong> in forms and dialogs (stack them on multi-step flows). They stay on the
+  reading axis and, under screen magnification, don't get scrolled out of view the way a
+  right-aligned button can.</li>
+<li><strong>Give every interactive control distinct states</strong>, default, hover, open, selected, disabled,
+  via colour/shading/icon, with a smooth transition. A dropdown or control whose current state
+  you can't read is a dead end.</li>
+</ul>
 <h2>Buttons</h2>
 <p>A button's padding is <strong>not</strong> one uniform box. It follows the content: an icon needs equal space on every side, while text needs more room on its open end than it does next to an icon.</p>
 <h3>Rule 1, icons sit in a square</h3>
@@ -258,6 +357,14 @@
    p  = vertical padding (icon's square: p on top, bottom, outer side)
    2p = text-side padding  →  icon side is half the text side
 </code></pre>
+      <div class="demo" id="demo-components-button">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Icon sits in a square</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="cp-ui"><button id="cp-btn"></button><div class="cp-guide" id="cp-guide"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Icon position</label><div class="seg"><button type="button" data-icon="left">Left</button><button type="button" data-icon="right">Right</button><button type="button" data-icon="none">None</button></div></div></div>
+        <div class="demo-note" id="cp-note"></div>
+        </div>
+      </div>
 <h3>Icon-only</h3>
 <p>Equal padding on all four sides → a square (or circular) button. Same square rule applied to every edge.</p>
 <pre><code>┌──────┐

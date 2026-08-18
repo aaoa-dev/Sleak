@@ -12,15 +12,20 @@ Sleak/
 ├── AGENTS.md                # Pointer for AGENTS.md-aware agents (Codex, Kimi, …)
 ├── checklist.md             # Pre-ship audit
 ├── references/
+│   ├── accessibility.md      # names, focus, targets, non-colour cues
+│   ├── color.md              # accent tiers, neutrals, dark mode
+│   ├── components.md         # buttons, icons, clickable cards
 │   ├── concentric-radius.md # parent − padding = child (core)
-│   ├── section-eyebrows.md  # limit kickers / overlines (core)
 │   ├── content-copy.md      # action-first UI copy
-│   ├── typography.md
 │   ├── contrast.md          # WCAG (mathematical) + APCA (perceptual)
+│   ├── design-systems.md    # tokens, lean sets, elevation
 │   ├── layout-spacing.md
-│   ├── color.md
-│   ├── components.md
-│   └── motion.md
+│   ├── motion.md
+│   ├── principles.md        # decide what to build, iterate
+│   ├── section-eyebrows.md  # limit kickers / overlines (core)
+│   ├── sources.md           # reference library & credits
+│   ├── typography.md
+│   └── ux.md                # loading/empty/error states, forms
 ├── examples/
 │   ├── before-after.md
 │   ├── landing-before.html   # natural default build (no skill applied)
@@ -28,12 +33,10 @@ Sleak/
 ├── docs/                     # Static site (GitHub Pages)
 │   ├── index.html            # Landing page (self-contained)
 │   ├── assets/               # Shared CSS/JS + interactive rule demos
-│   └── rules/                # One page per rule, generated from references/
-└── scripts/
-    └── build_rules.py        # Regenerates docs/rules/ from the reference markdown
+│   └── rules/                # One hand-authored page per rule
 ```
 
-Browse the rules with a live, interactive demo on each: open `docs/index.html` in a browser (or the published GitHub Pages site). The rule pages under `docs/rules/` are generated, edit the matching `references/*.md`, then run `python3 scripts/build_rules.py` (needs `pip install markdown`).
+Browse the rules with a live, interactive demo on each: open `docs/index.html` in a browser (or the published GitHub Pages site). The rule pages under `docs/rules/` are hand-authored vanilla HTML, each interactive demo sits **inline at the section it illustrates**. The pages share `docs/assets/site.css` + `demos.js`; `references/*.md` remain the canonical, agent-facing source of truth (SKILL.md and AGENTS.md point there), so when a rule changes, update the reference **and** the matching page together.
 
 ## Install (agents)
 
@@ -91,4 +94,9 @@ Human readers can use the repo as-is, start at `SKILL.md` or jump to any `refere
 - **Buttons** (icon-in-a-square padding, uneven horizontal), drafted ([components.md](references/components.md))
 - **Typography**, drafted ([typography.md](references/typography.md))
 - **Contrast**, drafted, dual-method WCAG + APCA ([contrast.md](references/contrast.md))
+- **Accessibility**, drafted, names/focus/keyboard/targets/non-colour cues ([accessibility.md](references/accessibility.md))
+- **UX & states**, drafted, loading/empty/error states, forms, control mechanics ([ux.md](references/ux.md))
+- **Design system foundations**, drafted, tokens/lean sets/atomic composition/elevation ([design-systems.md](references/design-systems.md))
+- **Principles** (process layer), how to decide what to build, research/framing/iteration/feedback ([principles.md](references/principles.md))
+- **Reference library & credits**, Practical UI (base) + supplementary books ([sources.md](references/sources.md))
 - **Landing demo** (open in a browser), [landing-before.html](examples/landing-before.html) + [landing-after.html](examples/landing-after.html)

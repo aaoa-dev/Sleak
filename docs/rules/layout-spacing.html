@@ -33,19 +33,6 @@
     </div>
   </section>
 
-  <section class="demo-section">
-    <div class="wrap">
-      <div class="demo" id="demo-layout-spacing">
-        <div class="demo-inner">
-          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
-          <div class="demo-stage"><div id="ls-stage" data-sep="space"><div class="ls-sec"><div class="ls-h">Features</div><div class="ls-b">Everything you need to ship intentional UI.</div></div><div class="ls-sec"><div class="ls-h">Pricing</div><div class="ls-b">Simple plans that scale with your team.</div></div><div class="ls-sec"><div class="ls-h">FAQ</div><div class="ls-b">Answers to the questions teams ask most.</div></div></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Section separation</label><div class="seg"><button type="button" data-sep="space">Space + surface</button><button type="button" data-sep="rules">Full-bleed rule</button></div></div><div class="ctl"><label>Breathing room <output id="ls-go"></output></label><input id="ls-gap" type="range" min="8" max="48" value="28"></div></div>
-        <div class="demo-note" id="ls-note"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="article">
     <div class="wrap">
       <article class="doc">
@@ -104,6 +91,14 @@
 </tr>
 </tbody>
 </table></div>
+      <div class="demo" id="demo-layout-spacing">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Space + surface, not full-bleed rules</span><span class="live"></span></div>
+          <div class="demo-stage"><div id="ls-stage" data-sep="space"><div class="ls-sec"><div class="ls-h">Features</div><div class="ls-b">Everything you need to ship intentional UI.</div></div><div class="ls-sec"><div class="ls-h">Pricing</div><div class="ls-b">Simple plans that scale with your team.</div></div><div class="ls-sec"><div class="ls-h">FAQ</div><div class="ls-b">Answers to the questions teams ask most.</div></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Section separation</label><div class="seg"><button type="button" data-sep="space">Space + surface</button><button type="button" data-sep="rules">Full-bleed rule</button></div></div><div class="ctl"><label>Breathing room <output id="ls-go"></output></label><input id="ls-gap" type="range" min="8" max="48" value="28"></div></div>
+        <div class="demo-note" id="ls-note"></div>
+        </div>
+      </div>
 <h3>Inset divider (when a line is justified)</h3>
 <p>Align to the <strong>content inset</strong>, not the container edge:</p>
 <pre><code class="language-css">/* Bad, full bleed */
@@ -130,6 +125,64 @@
 <li><strong>One between every section</strong>, <strong>Medium/High</strong>; replace with spacing or a surface tier</li>
 <li><strong>Inside rounded cards at full bleed</strong>, <strong>High</strong>; breaks radius harmony</li>
 </ul>
+<h2>Spacing scale: base-4</h2>
+<p>Don't hand-pick gaps. Derive every margin, padding, and gap from a <strong>4px base</strong>, use
+multiples of 4 (4, 8, 12, 16, 24, 32, 48, 64, 80…). Reasons it's the modern default:</p>
+<ul>
+<li>iOS and Android both recommend metrics divisible by 4; icons are 4-based (16/24/32) so they
+  scale cleanly; the browser's default font size is 16.</li>
+<li>When everything snaps to one scale, elements <strong>line up and "fit"</strong> without pixel-nudging,
+  and responsive math stays clean.</li>
+<li><strong>8-based</strong> works well for most horizontal spacing; a 1px border can throw alignment off by
+  a hair, subtract it case-by-case, don't abandon the scale.</li>
+</ul>
+<p>Store the steps as <a href="design-systems.html">tokens</a> (<code>--space-4: 1rem</code>) and space <strong>related elements
+closer than unrelated</strong> ones (see grouping, below).</p>
+      <div class="demo" id="demo-layout-spacing-scale">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Spacing snaps to base-4</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="lss"><div class="lss-row" id="lss-row"><div class="lss-item"></div><div class="lss-item"></div><div class="lss-item"></div></div><div class="lss-read" id="lss-read"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Gap <output id="lss-go"></output></label><input id="lss-gap" type="range" min="4" max="64" step="1" value="32"></div><div class="ctl"><label>Snap to base-4</label><div class="seg"><button type="button" id="lss-snap" aria-pressed="true">Snap on</button><button type="button" id="lss-free" aria-pressed="false">Free value</button></div></div></div>
+        <div class="demo-note" id="lss-note"></div>
+        </div>
+      </div>
+<h3>Responsive by flow</h3>
+<p>Avoid fixed <code>width</code>/<code>height</code>, let elements <strong>grow and shrink to fill</strong> the space they're
+given; it makes responsive layout far easier. Images: <code>max-width: 100%</code>, <code>height: auto</code>, with
+a few preset fractions (½, ⅓, ¼) as <em>max-widths</em> so they rescale on small screens.</p>
+<h2>Visual hierarchy &amp; the squint test</h2>
+<p>Present information in <strong>order of importance</strong>, the eye should land on the most important thing
+first. Build hierarchy with <strong>size, weight, contrast, colour, and spacing</strong> (plus depth/elevation
+; see <a href="design-systems.html">design-systems.md</a>), not by making everything loud.</p>
+<p><strong>The squint test:</strong> blur your eyes (or the screen) until detail drops out. Whatever still
+stands out <em>is</em> your hierarchy, if the wrong things pop, or everything reads equally loud, it's
+off. A fast, tool-free audit at any fidelity.</p>
+<h2>Grouping related elements</h2>
+<p>Structure comes from <strong>grouping</strong>, not from boxing everything. Four ways to signal that
+elements are related, from strongest to most subtle:</p>
+<ol>
+<li><strong>Common region</strong>, put them in one container (border, shadow, background). Strongest cue,
+   but the heaviest. <strong>Don't box every group</strong>, containers everywhere = clutter.</li>
+<li><strong>Proximity</strong>, place related elements closer together; push unrelated ones apart. Often
+   enough on its own, and lighter than a container.</li>
+<li><strong>Similarity</strong>, give related items the same size/shape/colour. Corollary: elements that
+   <strong>function the same should look the same</strong>, and elements that function differently should
+   look different (a non-interactive badge shouldn't look like a button).</li>
+<li><strong>Continuity</strong>, align items along a line; the eye follows it as a group. Break the line
+   to end a group or highlight one item.</li>
+</ol>
+<p><strong>Prefer spacing over containers.</strong> When proximity + similarity + continuity already group
+things, drop the box, it simplifies the design without losing the grouping.</p>
+<p><strong>Form fields:</strong> keep each <strong>label close to its field</strong> (and closer to its own field than to
+the next), so it's unambiguous which label belongs to which input, and the eye focuses once.</p>
+      <div class="demo" id="demo-layout-spacing-group">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Related close, unrelated apart</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="lsg-form" id="lsg-form"><div class="lsg-field"><label class="lsg-lbl">Email</label><div class="lsg-in"></div></div><div class="lsg-field"><label class="lsg-lbl">Password</label><div class="lsg-in"></div></div><div class="lsg-helper">At least 8 characters</div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Spacing model</label><div class="seg"><button type="button" data-model="prox" aria-pressed="true">Proximity groups</button><button type="button" data-model="even">Even everywhere</button></div></div></div>
+        <div class="demo-note" id="lsg-note"></div>
+        </div>
+      </div>
 <h2>Common mistakes</h2>
 <div class="table-wrap"><table>
 <thead>

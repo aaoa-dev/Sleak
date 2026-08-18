@@ -33,23 +33,10 @@
     </div>
   </section>
 
-  <section class="demo-section">
-    <div class="wrap">
-      <div class="demo" id="demo-accent-hue-blacks">
-        <div class="demo-inner">
-          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
-          <div class="demo-stage"><div class="ah-demo"><div class="ah-card"><div class="ah-ct">Accent-hue neutrals</div><div class="ah-cb">Every dark on this page, surfaces, borders, body text, is derived from the same hue as the accent.</div><button class="ah-cta">Primary action</button></div></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Accent hue (whole page) <output id="ah-ho"></output></label><input id="ah-hue" type="range" min="0" max="360" value="340"></div><div class="ctl"><label>Reset</label><div class="seg"><button type="button" id="ah-reset">Back to 340°</button></div></div></div>
-        <div class="demo-note" id="ah-note"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="article">
     <div class="wrap">
       <article class="doc">
-<h2>Accent-hue blacks (core rule)</h2>
+<h2 id="accent-hue-blacks-core-rule">Accent-hue blacks (core rule)</h2>
 <p><strong>Blacks and dark neutrals must pair with the accent.</strong> A blue theme with a red-based near-black clashes even when both look "dark" in isolation.</p>
 <h3>Rule</h3>
 <p>When a dark neutral has <strong>saturation &gt; 0</strong>, its <strong>hue must equal the theme / accent hue</strong>.</p>
@@ -81,6 +68,14 @@ if saturation = 0 → achromatic OK (#000, neutral gray)
 </table></div>
 <p><strong>Saturation 0</strong> = true neutral black or gray. No hue to align.</p>
 <p><strong>Saturation &gt; 0</strong> = tinted dark. Hue <strong>must</strong> follow accent, not warm default, not random gray from a library.</p>
+      <div class="demo" id="demo-accent-hue-blacks">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · One hue, whole page</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="ah-demo"><div class="ah-card"><div class="ah-ct">Accent-hue neutrals</div><div class="ah-cb">Every dark on this page, surfaces, borders, body text, is derived from the same hue as the accent.</div><button class="ah-cta">Primary action</button></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Accent hue (whole page) <output id="ah-ho"></output></label><input id="ah-hue" type="range" min="0" max="360" value="340"></div><div class="ctl"><label>Reset</label><div class="seg"><button type="button" id="ah-reset">Back to 340°</button></div></div></div>
+        <div class="demo-note" id="ah-note"></div>
+        </div>
+      </div>
 <h3>Why this goes wrong</h3>
 <ul>
 <li>Uses <code>#000</code>, <code>#111</code>, <code>#1a1a1a</code> (often warm or green-shifted in perception)</li>
@@ -112,6 +107,14 @@ if saturation = 0 → achromatic OK (#000, neutral gray)
 </tbody>
 </table></div>
 <p>A true achromatic (<code>hsl(0, 0%, 7%)</code>, saturation 0) is <strong>not</strong> a clash, it has no hue to conflict, see the rule above. It can read flat beside saturated UI; a slight accent-hue tint (<code>hsl(220, 10%, 12%)</code>) usually feels more intentional, but the neutral is allowed.</p>
+      <div class="demo" id="demo-accent-hue-blacks-pair">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Tinted darks must match accent</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="ahp"><div class="ahp-sw" style="background:hsl(220 85% 55%)">accent<br><span class="ahp-sw-sub">hue 220°</span></div><div class="ahp-dark" id="ahp-dark"><div class="ahp-t">Tinted dark surface</div><div class="ahp-b">Surfaces, text, and borders on this card read from one hue.</div></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Dark neutral hue <output id="ahp-ho"></output></label><input id="ahp-hue" type="range" min="0" max="360" value="30"></div><div class="ctl"><label>Reset</label><div class="seg"><button type="button" id="ahp-reset">Match accent 220°</button></div></div></div>
+        <div class="demo-note" id="ahp-note"></div>
+        </div>
+      </div>
 <p><strong>Green accent</strong>, <code>hsl(145, 60%, 45%)</code></p>
 <ul>
 <li>Dark text on light: <code>hsl(145, 8%, 12%)</code> not <code>hsl(30, 8%, 12%)</code></li>
@@ -157,6 +160,152 @@ if saturation = 0 → achromatic OK (#000, neutral gray)
 <li>If neutral <code>s &gt; 0</code> (or chroma &gt; 0) and hues differ → <strong>High</strong>, retint to accent hue</li>
 </ol>
 <p>Flag common library grays (<code>zinc</code>, <code>stone</code>, <code>neutral</code>) under a saturated brand unless their hue was deliberately aligned.</p>
+<h2>Building the palette</h2>
+<p>Sleak's accent + accent-hue-black rules above are the sharpened version of the conventional
+palette method. The underlying construction recipe:</p>
+<p><strong>One monochromatic ramp</strong> built from the brand hue, each step with a defined job and a
+contrast floor (against the lightest/background):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Use</th>
+<th>Contrast floor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primary</strong></td>
+<td>Actions: links, buttons, interactive elements</td>
+<td>≥ 4.5:1</td>
+</tr>
+<tr>
+<td><strong>Darkest</strong></td>
+<td>Primary text (headings, body, labels)</td>
+<td>≥ 4.5:1</td>
+</tr>
+<tr>
+<td><strong>Dark</strong></td>
+<td>Secondary / supporting text</td>
+<td>≥ 4.5:1</td>
+</tr>
+<tr>
+<td><strong>Medium</strong></td>
+<td>Non-decorative borders (form fields, inputs)</td>
+<td>≥ 3:1</td>
+</tr>
+<tr>
+<td><strong>Light</strong></td>
+<td>Decorative borders</td>
+<td>decorative, no floor</td>
+</tr>
+<tr>
+<td><strong>Lightest</strong></td>
+<td>Alternate background surface</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Greys carry a <strong>tinge of the primary hue</strong> (saturate slightly, don't use pure neutral),
+  this is exactly the <a href="#accent-hue-blacks-core-rule">accent-hue blacks</a> rule. Use <code>s: 0</code>
+  only when you deliberately want true achromatic.</li>
+<li><strong>Apply the brand colour to interactive elements</strong>, not decoration, it teaches users
+  what's clickable. (Sleak goes further: reserve <em>full</em> accent for the single primary task.)</li>
+<li><strong>If the brand colour carries meaning</strong> (e.g. red = errors) or is too light/dark to hit
+  contrast, use the <strong>darkest/white variation</strong> for actions instead, or add a 3:1 border.</li>
+</ul>
+<p><strong>Keep the ramp lean.</strong> A few tints (mixed toward white) and shades (mixed toward black) per
+colour, plus a slim neutral set, no more. Too many near-identical steps invite inconsistency
+and misuse; add an option only when a real need appears. Store them as
+<a href="design-systems.html">tokens</a>.</p>
+<p><strong>Darken/lighten without muddiness.</strong> Mixing a colour with pure black or white can turn it
+muddy, a darkened yellow drifts toward brown. Mix toward a <strong>neighbouring hue</strong> instead (deepen
+yellow with a little orange) to keep the shade clean.</p>
+<p><strong>Start in black and white.</strong> Design the interface in greys first, it forces you to solve
+spacing, size, and contrast before colour, and colour then goes only where it carries meaning.
+And avoid <strong>pure <code>#000</code> on pure <code>#fff</code></strong>: the maximal contrast causes eye strain over long
+reading, prefer a very dark grey (which also satisfies the accent-hue-black rule above).</p>
+<p><strong>System colours</strong>, you need three, each paired with an icon (never colour alone):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Colour</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Red</td>
+<td>Error / failure needing attention</td>
+</tr>
+<tr>
+<td>Amber</td>
+<td>Warning / risky action</td>
+</tr>
+<tr>
+<td>Green</td>
+<td>Success / completed as expected</td>
+</tr>
+</tbody>
+</table></div>
+<p>System-colour <strong>text</strong> needs ≥ 4.5:1; system-colour <strong>icons/components</strong> need ≥ 3:1.</p>
+<h2>Light &amp; dark mode: slide, don't invert</h2>
+<p><strong>Switching themes is not colour inversion.</strong> Flipping every value (light ↔ dark) breaks
+hierarchy and produces harsh, muddy results. Instead, <strong>slide each colour along its range</strong>
+to the equivalent role in the other mode, keeping the palette's relationships intact.</p>
+<h3>Preserve relative luminance across modes</h3>
+<p>A surface keeps its <strong>relative brightness rank</strong> when you toggle modes. The surface that is
+brightest <em>relative to its neighbours</em> in light mode stays the brightest <em>relative to its
+neighbours</em> in dark mode, the whole set slides down the luminance range together; it doesn't
+flip.</p>
+<h3>Elevation governs luminance</h3>
+<p>Surface luminance is driven by <strong>elevation</strong>, how close a surface sits to the user:</p>
+<ul>
+<li><strong>Surfaces closer to the user (higher elevation) have higher luminance.</strong></li>
+<li>In <strong>dark mode</strong>, elevated surfaces (cards, menus, modals, popovers) get <strong>lighter</strong> as
+  they rise, not darker. The base/background is the darkest; each layer above lifts.</li>
+<li>In <strong>light mode</strong>, the ordering is preserved by the same range-slide; don't invert it into a
+  contradictory stack.</li>
+</ul>
+<p>Model elevation as steps on one luminance ramp and reuse the same ramp in both modes:</p>
+<pre><code class="language-css">/* one ramp; each mode slides the same roles along it */
+:root { /* light */
+  --surface-0: hsl(var(--accent-h) 10% 99%);  /* base */
+  --surface-1: hsl(var(--accent-h) 10% 97%);  /* raised card */
+  --surface-2: hsl(var(--accent-h) 10% 95%);  /* menu / modal, closest to user */
+}
+:root[data-theme=&quot;dark&quot;] { /* slid down the range, elevation still lifts luminance */
+  --surface-0: hsl(var(--accent-h) 12% 9%);   /* base, darkest */
+  --surface-1: hsl(var(--accent-h) 11% 13%);  /* raised card, lighter */
+  --surface-2: hsl(var(--accent-h) 10% 17%);  /* menu / modal, lightest */
+}
+</code></pre>
+<p>Neutrals still follow <a href="#accent-hue-blacks-core-rule">accent-hue blacks</a>; re-check
+<a href="contrast.html">contrast.md</a> after the slide (a pair that passed in light mode is a different
+ratio in dark).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Slide each role to its dark-mode equivalent</td>
+<td>Invert every colour value</td>
+</tr>
+<tr>
+<td>Lift luminance with elevation in dark mode</td>
+<td>Make raised surfaces darker than the base</td>
+</tr>
+<tr>
+<td>Keep relative brightness ranking across modes</td>
+<td>Reorder the surface stack between modes</td>
+</tr>
+</tbody>
+</table></div>
 <h2>Common mistakes</h2>
 <div class="table-wrap"><table>
 <thead>

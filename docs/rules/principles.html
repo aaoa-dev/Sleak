@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Sleak Principles</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 14: Principles. guess less · story first · test early." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">14</span><span>process</span></div>
+      <h1>Principles</h1>
+      <span class="formula">guess less · story first · test early</span>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h1>Principles (how to work)</h1>
+<p>Every other reference in Sleak is <strong>craft and hierarchy</strong>, what good UI looks like. This one
+is the <strong>decision layer</strong>, how you arrive at it: research, framing, low-fidelity iteration,
+and feedback. Process, not pixels.</p>
+<p>Use it <strong>upstream</strong> (discovery, problem framing, exploration); switch to the craft references
+once you're shaping the actual interface.</p>
+<h2>Purpose</h2>
+<p>Catch the process failures that no amount of visual polish fixes: designing from assumptions,
+polishing the wrong thing, or hiding work until it's "done."</p>
+<h2>Guess less, decide from evidence</h2>
+<p>Assumptions are the expensive mistake. Work from a position of strength by talking to users and
+looking at data. Two kinds of research, used at different moments:</p>
+<ul>
+<li><strong>Generative</strong> (before you design): what do people actually need? Uncovers the real problem.</li>
+<li><strong>Evaluative</strong> (after you have something): does this work for them? Validates or kills it.</li>
+</ul>
+<p>The goal is simply to <strong>guess less</strong>, replace one assumption per round with a fact.</p>
+<h2>Reframe the problem before solving it</h2>
+<p>The sharpest lever is the <strong>problem statement</strong>, not the solution. First empathize, collect
+real user stories and insights, then write a <strong>point of view (POV)</strong> that reframes the problem.
+A good reframe opens solutions a literal reading hides (the classic: reframing "patients fear
+the MRI machine" as "make the scan an adventure" changed the whole design).</p>
+<h2>Story first, set the North Star</h2>
+<p>Before pixels, agree the <strong>narrative</strong>: what future are we creating, and for whom. A shared
+North Star aligns the team and gives every later decision something to measure against.</p>
+<h2>Diverge before you converge</h2>
+<p>Generate <strong>many</strong> options before committing to one. Frame exploration as <em>"How might we…?"</em> to
+open the space. <strong>Pencils before pixels:</strong> sketch low-fidelity and widely first, polished
+pixels too early shut down exploration and pull critique toward colour instead of the idea.</p>
+      <div class="demo" id="demo-principles-flow">
+          <div class="demo-inner">
+            <div class="demo-head"><span class="lbl">Try it · Diverge, then converge</span><span class="live"></span></div>
+            <div class="demo-stage"><div class="prf"><svg class="prf-svg" id="prf-svg" viewBox="0 0 460 200"></svg><div class="prf-read" id="prf-read"></div></div></div>
+            <div class="demo-controls"><div class="ctl"><label>Process <output id="prf-co"></output></label><input id="prf-prog" type="range" min="0" max="100" value="20"></div><div class="ctl"><label>Preview</label><button type="button" class="play" id="prf-play">Play ▶</button></div></div>
+          <div class="demo-note" id="prf-note"></div>
+          </div>
+      </div>
+<h2>Prototype to learn</h2>
+<p>A prototype is a <strong>question, not a deliverable</strong>. Build at the <strong>lowest fidelity that answers
+the question</strong>, a prototype settles disagreements and tests a hypothesis faster than any
+debate. Match fidelity to the question: pen-and-paper for flow, clickable for interaction.</p>
+      <div class="demo" id="demo-principles">
+          <div class="demo-inner">
+            <div class="demo-head"><span class="lbl">Try it · Prototype at the lowest fidelity</span><span class="live"></span></div>
+            <div class="demo-stage"><div class="pr-mock" id="pr-mock"><div class="pr-el pr-title"></div><div class="pr-el pr-img"></div><div class="pr-el pr-line"></div><div class="pr-el pr-line short"></div><div class="pr-el pr-btn"></div></div></div>
+            <div class="demo-controls"><div class="ctl"><label>Prototype fidelity <output id="pr-fo"></output></label><input id="pr-fi" type="range" min="0" max="100" value="18"></div></div>
+          <div class="demo-note" id="pr-note"></div>
+          </div>
+      </div>
+<h2>Show early, build a feedback culture</h2>
+<p>Share work <strong>early and often</strong>. Low-fidelity work <em>invites</em> honest critique; finished-looking
+work suppresses it, because people assume it's done. Frame feedback by the <strong>project goals</strong>,
+not personal taste. Giving and receiving critique is a skill, make it routine, specific, and
+safe (hard on the work, easy on the people).</p>
+      <div class="demo" id="demo-principles-share">
+          <div class="demo-inner">
+            <div class="demo-head"><span class="lbl">Try it · Show early, invite critique</span><span class="live"></span></div>
+            <div class="demo-stage"><div class="prs"><div class="prs-sketch" id="prs-sketch"></div><div class="prs-fb" id="prs-fb"></div></div></div>
+            <div class="demo-controls"><div class="ctl"><label>Fidelity of the share</label><div class="seg"><button type="button" data-mode="low" aria-pressed="true">Low-fi sketch</button><button type="button" data-mode="high">Hi-fi polish</button></div></div></div>
+          <div class="demo-note" id="prs-note"></div>
+          </div>
+      </div>
+<h2>Test early and often</h2>
+<p>Put it in front of <strong>real users</strong> sooner than is comfortable. Each round removes a guess.
+Early-and-often beats one big test at the end, when it's too late (and too expensive) to change.</p>
+<h2>Work laterally, break the black box</h2>
+<p>Design is a team sport. Involve <strong>engineering and stakeholders early</strong>, a design-engineering
+bridge closes the gap between what's designed and what's built. Keep the process <strong>visible</strong>: an
+opaque "black box" breeds mistrust and rework. Product design is people.</p>
+<h2>How this relates to the craft rules</h2>
+<p>The craft references tell you <strong>what</strong> to build; these principles tell you <strong>how to decide</strong>
+what to build. They sit upstream of the pixels, when you're shaping the interface itself,
+follow the craft rules.</p>
+<h2>Do / Don't</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Replace assumptions with research each round</td>
+<td>Design from opinion and hope</td>
+</tr>
+<tr>
+<td>Reframe the problem before solving it</td>
+<td>Jump straight to a solution</td>
+</tr>
+<tr>
+<td>Agree the story/North Star first</td>
+<td>Start in the pixel editor</td>
+</tr>
+<tr>
+<td>Sketch many low-fi options</td>
+<td>Polish one idea too early</td>
+</tr>
+<tr>
+<td>Prototype the lowest fidelity that answers the question</td>
+<td>Build a "real" thing to ask a small question</td>
+</tr>
+<tr>
+<td>Share early; critique against goals</td>
+<td>Hide work until it looks finished</td>
+</tr>
+<tr>
+<td>Test with real users, early and often</td>
+<td>Save all testing for the end</td>
+</tr>
+<tr>
+<td>Involve engineering/stakeholders early</td>
+<td>Toss a finished design over the wall</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Notes</h2>
+<ul>
+<li>This is the one <strong>process/methodology</strong> layer in Sleak; it is deliberately distinct from the
+  visual-craft rules. Credits for the source books are in the Sources reference (<code>sources.md</code>).</li>
+<li>Not every project needs every step, treat these as the moves available when a decision is
+  bigger than "what should this look like?"</li>
+</ul>
+      </article>
+      <nav class="pager">
+        <a class="prev" href="design-systems.html"><span class="dir">Previous rule</span><span class="ttl">13 · Design system foundations</span></a><a class="next empty" aria-hidden="true"><span class="dir">next</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>

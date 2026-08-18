@@ -33,19 +33,6 @@
     </div>
   </section>
 
-  <section class="demo-section">
-    <div class="wrap">
-      <div class="demo" id="demo-section-eyebrows">
-        <div class="demo-inner">
-          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
-          <div class="demo-stage"><div id="se-stage"></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Sections on page <output id="se-co"></output></label><input id="se-count" type="range" min="1" max="5" value="3"></div><div class="ctl"><label>Eyebrows</label><div class="seg"><button type="button" id="se-eye" aria-pressed="true">Toggle eyebrows</button></div></div></div>
-        <div class="demo-note" id="se-note"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="article">
     <div class="wrap">
       <article class="doc">
@@ -61,7 +48,7 @@
 │  Lorem ipsum…   │
 └─────────────────┘
 </code></pre>
-<p>Also appears as: colored pill, dot + label, ",  Section , ", small caps with letter-spacing, gradient text above H2.</p>
+<p>Also appears as: colored pill, dot + label, "Section", small caps with letter-spacing, gradient text above H2.</p>
 <h2>Rules</h2>
 <h3>1. Default: none</h3>
 <p>Most sections need <strong>heading + body</strong> only. No eyebrow.</p>
@@ -76,7 +63,15 @@
 <li>a compact <strong>badge on the announcement itself</strong>, or</li>
 <li>metadata in the headline line</li>
 </ul>
-<p>, not a standalone eyebrow above the main title.</p>
+<p>In short, not a standalone eyebrow above the main title.</p>
+      <div class="demo" id="demo-section-eyebrows-hero">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Eyebrow in the hero</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="seh-hero" id="seh-hero"><div class="seh-eyebrow" id="seh-eyebrow">Introducing</div><div class="seh-h1">Ship UI that looks <span class="seh-em">decided</span></div><div class="seh-lede">A short hero line that carries the pitch.</div><div class="seh-badge" id="seh-badge">v2.0 out now</div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Hero treatment</label><div class="seg"><button type="button" data-hero="eyebrow" aria-pressed="true">Eyebrow above title</button><button type="button" data-hero="badge" aria-pressed="false">Badge on the news</button></div></div></div>
+        <div class="demo-note" id="seh-note"></div>
+        </div>
+      </div>
 <h3>5. When an eyebrow is justified</h3>
 <p>Use only if it adds <strong>fact</strong>, not <strong>category</strong>:</p>
 <div class="table-wrap"><table>
@@ -106,6 +101,14 @@
 </tbody>
 </table></div>
 <p>If the eyebrow text could be the H2, delete the eyebrow and promote the idea into the heading, or delete both and write a better H2.</p>
+      <div class="demo" id="demo-section-eyebrows">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Eyebrows per section</span><span class="live"></span></div>
+          <div class="demo-stage"><div id="se-stage"></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Sections on page <output id="se-co"></output></label><input id="se-count" type="range" min="1" max="5" value="3"></div><div class="ctl"><label>Eyebrows</label><div class="seg"><button type="button" id="se-eye" aria-pressed="true">Toggle eyebrows</button></div></div></div>
+        <div class="demo-note" id="se-note"></div>
+        </div>
+      </div>
 <h2>Common mistakes</h2>
 <div class="table-wrap"><table>
 <thead>

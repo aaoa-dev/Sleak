@@ -118,9 +118,55 @@ Prefer **`rem`** for text so user zoom and root scaling propagate. Use **`clamp(
 | Body | 16–17px | 16–18px | 7–12 words per line via width |
 | Secondary / meta | 12–14px | 13–14px | Short strings only |
 | Captions / legal | 11–12px min | 12–14px min | Check WCAG contrast |
-| TV body |, |, | Often 24px+ at 1080p; follow platform HIG |
+| TV body | n/a | n/a | Often 24px+ at 1080p; follow platform HIG |
 
 Match the project's type scale if one exists. Extend it per breakpoint; don't fork a second system.
+
+## Type scale ratios
+Don't hand-pick font sizes. Start from one **base body size** and multiply by a fixed
+**ratio** to generate the scale. Round messy decimals to whole px.
+
+| Ratio | Name | Feel |
+|-------|------|------|
+| 1.067 | Minor Second | very tight |
+| 1.125 | Major Second | tight, good for dense tools/dashboards |
+| 1.200 | Minor Third | |
+| **1.250** | **Major Third** | balanced default |
+| 1.333 | Perfect Fourth | |
+| 1.414 | Augmented Fourth | |
+| 1.500 | Perfect Fifth | large, good for marketing pages |
+| 1.618 | Golden Ratio | dramatic |
+
+Use a **16px base body size** (the common modern default) unless a design system says
+otherwise. Example, 16px base × **1.250**: `16 → 20 → 25 → 31 → 39` (body → H4 → H3 → H2 → H1).
+
+- **Small ratios** (≤1.2): complex apps, dashboards, tools, small steps, more levels.
+- **Large ratios** (≥1.4): simpler/marketing UI, big jumps, few levels.
+- **Responsive:** a large scale that fits desktop can wrap on mobile; drop to a smaller
+  ratio at narrow widths.
+- Only create a step you actually use, every unused text style is noise.
+
+## Typeface & weight discipline
+
+- **Two typefaces is usually the ceiling:** one for headings and body (optionally a second,
+  complementary heading face), plus a monospace for code. More rarely earns its place, it's
+  both a typographic best practice and a web-font **performance** cost.
+- **Light / thin weights only at large sizes.** A hairline weight looks elegant on a big
+  heading and turns illegible at body size. Reserve thin for display; keep body regular/medium.
+- Prefer familiar system fonts when brand allows, they're instantly legible and free of
+  font-loading cost. Define sizes and weights once as [tokens](design-systems.md).
+
+## Alignment & spacing details
+- **Left-align** long body text (English reads L→R in an F-pattern). Centre only short
+  headings/labels; never centre long body (moving start-point stresses the eye).
+- **Don't justify** body text, variable word spacing creates distracting "rivers" and hurts
+  dyslexic readers. Left-align gives a consistent anchor.
+- **Decrease letter-spacing as text gets larger.** "Text type" faces have wide spacing for
+  small sizes; large headings look tighter and better with slightly negative tracking.
+  (Display faces already run tight, leave them.)
+- **Text on photos must stay legible:** add a dark linear-gradient scrim (e.g. darkest tint
+  at ~90% opacity fading to 0 halfway up) or a semi-transparent overlay, plus a text shadow,
+  so the text clears WCAG against the *worst* pixel behind it (see [contrast.md](contrast.md)).
 
 ## Accessibility
 

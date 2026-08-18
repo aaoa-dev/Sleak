@@ -100,6 +100,9 @@ Run the [checklist](checklist.md). Flag issues by category:
 | Components                      | [references/components.md](references/components.md)               |
 | Motion                          | [references/motion.md](references/motion.md)                       |
 | Content & copy                  | [references/content-copy.md](references/content-copy.md)           |
+| Accessibility                   | [references/accessibility.md](references/accessibility.md)         |
+| UX (states & interaction)       | [references/ux.md](references/ux.md)                               |
+| Design system foundations       | [references/design-systems.md](references/design-systems.md)       |
 
 
 
@@ -171,4 +174,9 @@ When reviewing or proposing changes, use:
 - [references/contrast.md](references/contrast.md), readability via WCAG (mathematical) + APCA (perceptual)
 - [references/layout-spacing.md](references/layout-spacing.md), spacing over dividers
 - [references/components.md](references/components.md), clickable cards and interaction patterns
+- [references/accessibility.md](references/accessibility.md), names, focus, keyboard, targets, non-color cues (contrast lives in contrast.md)
+- [references/ux.md](references/ux.md), loading/empty/error states, destructive confirms, form and control mechanics
+- [references/design-systems.md](references/design-systems.md), tokens as single source of truth, lean scales, atomic composition, elevation
+- [references/principles.md](references/principles.md), the process layer, how to decide what to build (research, framing, low-fi iteration, feedback), upstream of the craft rules
+- [references/sources.md](references/sources.md), the reference library (Practical UI is the base) + deviation policy
 

@@ -2,7 +2,9 @@
 
 UI strings, labels, headings, errors, empty states, and onboarding text.
 
-Inspired by the same anti-fluff logic as [i-have-adhd](https://github.com/ayghri/i-have-adhd) (action-first, no buried answers) and [caveman](https://github.com/JuliusBrussee/caveman) (drop filler, keep substance). Applied to **product copy**, not agent chat.
+Built on an anti-fluff logic (action-first, no buried answers; drop filler, keep substance),
+applied to **product copy**, not agent chat. The external skills this draws on are catalogued
+in [sources.md](sources.md#external-craft-skills).
 
 ## Purpose
 
@@ -73,7 +75,7 @@ Errors and confirmations state fact + fix. Then stop.
 
 ### 6. Matter-of-fact errors
 
-No performative sympathy. State cause and fix like [i-have-adhd](https://github.com/ayghri/i-have-adhd) rule 8.
+No performative sympathy. State cause and fix.
 
 | Bad | Good |
 |-----|------|
@@ -101,7 +103,7 @@ Rank by user priority, not marketing completeness.
 
 ### 9. Drop filler; keep meaning
 
-Apply [caveman](https://github.com/JuliusBrussee/caveman)-style compression to microcopy, not broken grammar on critical paths.
+Apply aggressive compression to microcopy, not broken grammar on critical paths.
 
 **Drop:** just, really, simply, actually, basically, kindly, please (when not legally required), "we're here to help."
 
@@ -124,6 +126,31 @@ Avoid unless the brand explicitly uses them:
 - Triple synonym stacks ("fast, reliable, and secure")
 
 Write like the product team talks internally, then tighten once.
+
+## Mechanics
+Sleak's anti-fluff rules above are the sharpened line; these are the conventional copy
+mechanics Sleak keeps:
+
+- **Sentence case**, not Title Case, for UI text (headings, labels, buttons). Easier to read
+  and friendlier.
+- **Numerals for numbers** ("7 days", not "seven days"), they're scannable and shorter.
+- **Limit UPPERCASE.** All-caps is harder to read in longer strings (letterforms lose their
+  shape). Reserve it for short labels or eyebrows, and add a little letter-spacing when you do.
+- **Descriptive link/action text.** The text must make sense read **out of context** (screen
+  readers announce it alone, and eyes scan links). "View pricing", never "Read more" / "Click
+  here". This is also an [accessibility.md](accessibility.md) rule.
+- **Drop full stops** on short, standalone lines (labels, single-sentence helper text, list
+  items). Keep them in multi-sentence body copy.
+- **Parallel elements, parallel length.** Keep copy roughly the same length across items that
+  sit together (nav links, card titles, feature bullets) so the layout stays even.
+- **Break long content** with descriptive sub-headings and bullets; front-load each with the
+  key word (inverted pyramid, most important first).
+
+## Voice: distinctive beats bland
+Concise and clear is the floor, not the ceiling. In marketing and personality-bearing copy,
+**bland is the real failure**, trying to appeal to everyone yields nothing memorable. A
+distinctive voice won't land for everyone, and that's the trade: the people who get it should
+love it. Keep it within brand, never at the expense of clarity on functional/critical paths.
 
 ## Common mistakes
 

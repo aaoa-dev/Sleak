@@ -18,7 +18,7 @@ Limit or remove section eyebrows so hierarchy comes from the heading itself, not
 └─────────────────┘
 ```
 
-Also appears as: colored pill, dot + label, ",  Section , ", small caps with letter-spacing, gradient text above H2.
+Also appears as: colored pill, dot + label, "Section", small caps with letter-spacing, gradient text above H2.
 
 ## Rules
 
@@ -43,7 +43,7 @@ The hero does **not** need an eyebrow. The headline is the hook.
 - a compact **badge on the announcement itself**, or
 - metadata in the headline line
 
-, not a standalone eyebrow above the main title.
+In short, not a standalone eyebrow above the main title.
 
 ### 5. When an eyebrow is justified
 

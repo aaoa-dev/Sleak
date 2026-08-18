@@ -71,6 +71,57 @@ Count **full-bleed section** rules on the page (row separators inset within a li
 - **One between every section**, **Medium/High**; replace with spacing or a surface tier
 - **Inside rounded cards at full bleed**, **High**; breaks radius harmony
 
+## Spacing scale: base-4
+
+Don't hand-pick gaps. Derive every margin, padding, and gap from a **4px base**, use
+multiples of 4 (4, 8, 12, 16, 24, 32, 48, 64, 80…). Reasons it's the modern default:
+
+- iOS and Android both recommend metrics divisible by 4; icons are 4-based (16/24/32) so they
+  scale cleanly; the browser's default font size is 16.
+- When everything snaps to one scale, elements **line up and "fit"** without pixel-nudging,
+  and responsive math stays clean.
+- **8-based** works well for most horizontal spacing; a 1px border can throw alignment off by
+  a hair, subtract it case-by-case, don't abandon the scale.
+
+Store the steps as [tokens](design-systems.md) (`--space-4: 1rem`) and space **related elements
+closer than unrelated** ones (see grouping, below).
+
+### Responsive by flow
+
+Avoid fixed `width`/`height`, let elements **grow and shrink to fill** the space they're
+given; it makes responsive layout far easier. Images: `max-width: 100%`, `height: auto`, with
+a few preset fractions (½, ⅓, ¼) as *max-widths* so they rescale on small screens.
+
+## Visual hierarchy & the squint test
+
+Present information in **order of importance**, the eye should land on the most important thing
+first. Build hierarchy with **size, weight, contrast, colour, and spacing** (plus depth/elevation
+; see [design-systems.md](design-systems.md)), not by making everything loud.
+
+**The squint test:** blur your eyes (or the screen) until detail drops out. Whatever still
+stands out *is* your hierarchy, if the wrong things pop, or everything reads equally loud, it's
+off. A fast, tool-free audit at any fidelity.
+
+## Grouping related elements
+Structure comes from **grouping**, not from boxing everything. Four ways to signal that
+elements are related, from strongest to most subtle:
+
+1. **Common region**, put them in one container (border, shadow, background). Strongest cue,
+   but the heaviest. **Don't box every group**, containers everywhere = clutter.
+2. **Proximity**, place related elements closer together; push unrelated ones apart. Often
+   enough on its own, and lighter than a container.
+3. **Similarity**, give related items the same size/shape/colour. Corollary: elements that
+   **function the same should look the same**, and elements that function differently should
+   look different (a non-interactive badge shouldn't look like a button).
+4. **Continuity**, align items along a line; the eye follows it as a group. Break the line
+   to end a group or highlight one item.
+
+**Prefer spacing over containers.** When proximity + similarity + continuity already group
+things, drop the box, it simplifies the design without losing the grouping.
+
+**Form fields:** keep each **label close to its field** (and closer to its own field than to
+the next), so it's unambiguous which label belongs to which input, and the eye focuses once.
+
 ## Common mistakes
 
 | Tell | Fix |

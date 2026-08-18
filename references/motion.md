@@ -2,7 +2,7 @@
 
 Animation and transitions that feel intentional, not the same spring on every hover.
 
-Synthesizes Sleak motion principles with craft from [Emil Kowalski's skills](https://github.com/emilkowalski/skills) (`emil-design-eng`, `animate`) and [Jakub Krehel's interface skills](https://github.com/jakubkrehel/skills) (`better-ui`, [make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better)). For full build recipes and strict review gates, load those skills alongside this one.
+Sleak owns *when not to animate* and *avoiding repetitive motion*. For full build recipes, easing tables, and strict review gates, load the external motion skills catalogued in [sources.md](sources.md#external-craft-skills) alongside this one.
 
 ## Purpose
 
@@ -10,11 +10,14 @@ Catch motion that weakens focus: everything bounces, everything staggers, same c
 
 ## Motion is a budget (core rule)
 
-**Vary animations. Don't animate everything.** One spring on hover feels nice. Fifteen springs on one screen is noise.
+**Prefer subtle motion over none, but vary it, and don't animate everything.** A small,
+quick transition beats an abrupt jump; one spring on hover feels nice; fifteen springs on one
+screen is noise.
 
 | Principle | Meaning |
 |-----------|---------|
-| **Default: no motion** | Static UI until a transition earns its place |
+| **Default: subtle motion** | Prefer a small, quick transition over a hard cut; reserve pure stillness for the highest-frequency interactions |
+| **Emphasize & delight** | Use motion to draw the eye to a potential action, and occasionally to add fun/personality |
 | **Subtle for most elements** | High-frequency interactions → instant or ≤150ms opacity/color only |
 | **Expressive rarely** | Springs, stagger, bounce → one or two moments per view |
 | **Vary the recipe** | Don't copy the same spring/duration/easing onto every component |
@@ -23,7 +26,7 @@ Motion should guide attention, like [intentional accent use](color.md#intentiona
 
 ## Step 1, Should this animate at all?
 
-From [Emil's frequency gate](https://github.com/emilkowalski/skills). Ask: **how often will users see this?**
+The frequency gate. Ask: **how often will users see this?**
 
 | Frequency | Decision |
 |-----------|----------|
@@ -34,11 +37,13 @@ From [Emil's frequency gate](https://github.com/emilkowalski/skills). Ask: **how
 
 **Keyboard-initiated actions:** no animation. Raycast-style instant open/close is correct for high-frequency tools.
 
-If it fails this gate, use instant state change. Zero lines of animation is a success.
+For the **highest-frequency tier**, instant is correct, an abrupt change beats a laggy one,
+and zero lines of animation is a legitimate result. Everywhere else, prefer a **subtle
+transition** over a hard cut.
 
 ## Step 2, Name the purpose
 
-Every animation needs one word why ([Emil](https://github.com/emilkowalski/skills)):
+Every animation needs one word why:
 
 - **Feedback**, press scale confirms the tap
 - **Spatial consistency**, toast exits where it entered
@@ -49,7 +54,7 @@ Every animation needs one word why ([Emil](https://github.com/emilkowalski/skill
 
 Can't name it? Don't build it. **"It looks cool" on a frequent interaction** is a reason to stop.
 
-From [Jakub Krehel's motion restraint](https://github.com/jakubkrehel/skills): motion is **never the only feedback channel**. Color, icon, or label must still communicate the state if animation is off (`prefers-reduced-motion` or a blink).
+Motion restraint: motion is **never the only feedback channel**. Color, icon, or label must still communicate the state if animation is off (`prefers-reduced-motion` or a blink).
 
 ## Step 3, Pick intensity (vary, don't repeat)
 
@@ -91,7 +96,7 @@ Default interactive motion → **CSS ease-out** transitions, not springs.
 
 ## Step 4, Easing and duration
 
-### Easing ([Emil](https://github.com/emilkowalski/skills))
+### Easing
 
 | Situation | Easing |
 |-----------|--------|
@@ -133,15 +138,21 @@ Popovers: `transform-origin` at trigger (`var(--transform-origin)`). Modals: cen
 
 ## Stagger, infrequent only
 
-Staggered entrance (~30–80ms between chunks, [Emil](https://github.com/emilkowalski/skills)) is for **first load of a view** or onboarding, not every section on scroll, not every list render.
+Staggered entrance (~30–80ms between chunks) is for **first load of a view** or onboarding, not every section on scroll, not every list render.
 
-From [Jakub](https://github.com/jakubkrehel/skills): split semantic chunks, ~100ms stagger. **Do not stagger routine interactions.**
+Split semantic chunks, ~100ms stagger. **Do not stagger routine interactions.**
 
 Skip enter animation on page load for elements already in default state (`initial={false}` on `AnimatePresence` where appropriate).
 
+**Overlapping action.** When a group *does* stagger in, ramp the per-item delay **down** (a
+decay, e.g. square-root) so items appear to pick up pace rather than plod. Tune the stagger to
+the **actual item count**, an offset that feels right for 3 items feels sluggish for 12; keep
+the total short and the group tight. Optionally give the last item a touch more duration to
+punctuate the sequence.
+
 ## Reduced motion and hover gating
 
-Ship with every animation ([Emil](https://github.com/emilkowalski/skills), [Jakub `better-accessibility`](https://github.com/jakubkrehel/skills)):
+Ship with every animation:
 
 ```css
 @media (prefers-reduced-motion: reduce) {
@@ -154,6 +165,35 @@ Ship with every animation ([Emil](https://github.com/emilkowalski/skills), [Jaku
 ```
 
 Reduced motion = **fewer and gentler**, not necessarily zero.
+
+## Connect & stage state changes
+
+Motion's core job is to **supply context**, fill the gap between an action and its result so a
+change is *understood* rather than teleporting into place. Principles that complement Sleak's
+restraint gate, apply them only *after* an animation has earned its place:
+
+- **Connect shared content between states.** When moving from A to B, animate the element
+  they share rather than sliding a new view in over the top. Expanding a tapped card *in
+  place* preserves the mental model far better than a generic slide-in.
+- **Stage the change.** A brief beat of stillness before something changes (or a bit of
+  directionality on a changing number, like a flipboard) prepares the eye so the change isn't
+  missed. Sudden swaps get overlooked.
+- **Follow-through, barely.** A little spring overshoot adds life, but it should sit **on the
+  verge of being perceived**, not a visible bounce. (Reinforces the low-`bounce` rule above.)
+- **Ease-out on enter / gaining attention; ease-in on exit / leaving.** (Matches the easing
+  table above.) ~100ms is the floor for a change to register at all.
+- **Keep one physical model (consistency).** Motion should obey a single, consistent
+  spatial/physical logic, the way type and colour do. Same-function, same-looking elements
+  animate the **same** way; a control that springs back where its sibling doesn't (for no
+  reason) breaks the mental model and adds cognitive load. Vary recipes *across* roles (see
+  above); stay consistent *within* a role.
+- **Fluid gestures stay interruptible.** A drag or swipe should be redirectable and cancellable
+  mid-flight, fluid interaction happens *while* the user is still deciding (drag a file toward
+  the trash, then to a folder instead; a half-swipe that springs back). Drive these from the
+  gesture's position, not a fixed play-through animation.
+- **Give assistive tech time.** A notification that animates in and out must stay long enough
+  for a screen reader to announce it before it disappears, set minimum durations, and pair
+  the motion with an accessible announcement (see [accessibility.md](accessibility.md)).
 
 ## Common mistakes
 
@@ -176,27 +216,25 @@ Reduced motion = **fewer and gentler**, not necessarily zero.
 3. Count **springs** and **bounce**, more than 1–2 expressive springs per view → **High**.
 4. Count **identical** configs (same duration + curve on 5+ elements) → **Medium**, vary or remove.
 5. Confirm high-frequency items use ≤150ms or no motion.
-6. Replay at **10% speed** in DevTools ([Jakub](https://github.com/jakubkrehel/skills)), what feels wrong slow is wrong fast.
+6. Replay at **10% speed** in DevTools, what feels wrong slow is wrong fast.
 
 ## Do / Don't
 
 | Do | Don't |
 |----|-------|
-| Default static; add motion with a named purpose | Animate everything "to feel alive" |
+| Prefer subtle motion; add it with a named purpose | Animate everything "to feel alive" |
 | One spring/hover delight per view (optional) | 15 springs on one page |
 | Subtle press `scale(0.96–0.97)` on primary actions | Bouncy hover on every tile |
 | ease-out, &lt;300ms for UI | ease-in, slow dropdowns |
 | Vary recipes by element role | Copy-paste the same Motion props everywhere |
 | Transitions for interactive state | Keyframes on toasts/toggles |
 | `prefers-reduced-motion` + static fallback cues | Motion as the only feedback |
-| Load [emilkowalski/skills](https://github.com/emilkowalski/skills) for build/review depth | Hand-roll animation without a gate |
+| Load an external motion skill (see [sources.md](sources.md#external-craft-skills)) for build/review depth | Hand-roll animation without a gate |
 
 ## Further reading
 
-| Resource | Use for |
-|----------|---------|
-| [emilkowalski/skills](https://github.com/emilkowalski/skills), `animate`, `review-animations`, `emil-design-eng` | Build sequence, strict review, easing tables |
-| [jakubkrehel/skills](https://github.com/jakubkrehel/skills), `better-ui` | Motion restraint, press scale, enter/exit recipes |
-| [make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better) | Combined interface polish review |
+For build recipes, easing tables, press-scale, and strict review gates, load the external
+motion skills catalogued in [sources.md](sources.md#external-craft-skills).
 
-Sleak owns **when not to animate** and **avoiding repetitive motion**. Those repos own **how to implement** motion that passes craft review.
+Sleak owns **when not to animate** and **avoiding repetitive motion**; those external skills own
+**how to implement** motion that passes craft review.

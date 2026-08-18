@@ -33,19 +33,6 @@
     </div>
   </section>
 
-  <section class="demo-section">
-    <div class="wrap">
-      <div class="demo" id="demo-typography">
-        <div class="demo-inner">
-          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
-          <div class="demo-stage"><p id="ty-para"><b>Typography sets the measure.</b> Line length is characters per line; comfortable reading sits between forty-five and seventy-five, where the eye finds each new line without hunting for its start or snapping back too soon.</p></div>
-          <div class="demo-controls"><div class="ctl"><label>Measure <output id="ty-co"></output></label><input id="ty-ch" type="range" min="24" max="96" value="58"></div></div>
-        <div class="demo-note" id="ty-note"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="article">
     <div class="wrap">
       <article class="doc">
@@ -86,6 +73,14 @@
 </code></pre>
 <p><strong>Audit:</strong> Pick a representative body paragraph. Count words on a full line at the target viewport. Outside 7–12 → adjust <code>max-width</code> (or font size if the container is fixed).</p>
 <p>Headings can break the rule if they're short phrases. <strong>Paragraphs and subtitles</strong> should not.</p>
+      <div class="demo" id="demo-typography">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Measure, 45–75ch</span><span class="live"></span></div>
+          <div class="demo-stage"><p id="ty-para"><b>Typography sets the measure.</b> Line length is characters per line; comfortable reading sits between forty-five and seventy-five, where the eye finds each new line without hunting for its start or snapping back too soon.</p></div>
+          <div class="demo-controls"><div class="ctl"><label>Measure <output id="ty-co"></output></label><input id="ty-ch" type="range" min="24" max="96" value="58"></div></div>
+        <div class="demo-note" id="ty-note"></div>
+        </div>
+      </div>
 <h2>Center-aligned text</h2>
 <p>Centered type is for <strong>short, ceremonial lines</strong>, not paragraphs.</p>
 <h3>Rules</h3>
@@ -130,6 +125,14 @@
 }
 </code></pre>
 <p><strong>Weak pattern:</strong> full-width centered paragraph wrapping to 6+ lines. <strong>Fix:</strong> shorten, split, or switch to start-aligned prose.</p>
+      <div class="demo" id="demo-typography-center">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Center ≤ 3 short lines</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="tyc-block" id="tyc-block"><div class="tyc-h" id="tyc-h">A centered block of copy</div><div class="tyc-b" id="tyc-b">Feature descriptions that run on and on can quickly wrap past three centered lines, and when they do the reading becomes a hunt across ragged line starts. This is the kind of paragraph that should never be centered.</div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Treatment</label><div class="seg"><button type="button" data-mode="hero" aria-pressed="true">3-line hero, centered</button><button type="button" data-mode="center">Long paragraph, centered</button><button type="button" data-mode="left">Left-aligned paragraph</button></div></div></div>
+        <div class="demo-note" id="tyc-note"></div>
+        </div>
+      </div>
 <h2>Font size and viewing distance</h2>
 <p>Typography must <strong>adapt to device and distance from the eyes</strong>. The same pixel size is not the same visual size across contexts.</p>
 <h3>Viewing distance (rule of thumb)</h3>
@@ -161,6 +164,14 @@
 </table></div>
 <p><strong>8px on mobile</strong> may work for dense captions, badges, or tab bar labels when contrast is strong and copy is minimal. <strong>8px on desktop</strong> for anything the user reads → <strong>High</strong> failure.</p>
 <p>Think in <strong>angular size</strong> (how large the letter subtends at the eye), not raw pixels. farther screen → larger type for the same legibility.</p>
+      <div class="demo" id="demo-typography-distance">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Size to viewing distance</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="tyd" id="tyd"><div class="tyd-frame" id="tyd-frame"><div class="tyd-body" id="tyd-body">Body text sized for the screen in front of you, not for a thumbnail of it.</div><div class="tyd-meta" id="tyd-meta">secondary · 13px</div></div><div class="tyd-tag" id="tyd-tag">laptop · ~50–70cm</div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Device / distance</label><div class="seg"><button type="button" data-dev="phone" >Phone · ~35cm</button><button type="button" data-dev="laptop" aria-pressed="true">Laptop · ~60cm</button><button type="button" data-dev="tv">TV · ~2m</button></div></div></div>
+        <div class="demo-note" id="tyd-note"></div>
+        </div>
+      </div>
 <h3>Responsive scaling</h3>
 <p>Size up for farther viewing; don't ship one global <code>font-size</code> for all breakpoints.</p>
 <pre><code class="language-css">:root {
@@ -215,13 +226,107 @@
 </tr>
 <tr>
 <td>TV body</td>
-<td>,</td>
-<td>,</td>
+<td>n/a</td>
+<td>n/a</td>
 <td>Often 24px+ at 1080p; follow platform HIG</td>
 </tr>
 </tbody>
 </table></div>
 <p>Match the project's type scale if one exists. Extend it per breakpoint; don't fork a second system.</p>
+<h2>Type scale ratios</h2>
+<p>Don't hand-pick font sizes. Start from one <strong>base body size</strong> and multiply by a fixed
+<strong>ratio</strong> to generate the scale. Round messy decimals to whole px.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Ratio</th>
+<th>Name</th>
+<th>Feel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.067</td>
+<td>Minor Second</td>
+<td>very tight</td>
+</tr>
+<tr>
+<td>1.125</td>
+<td>Major Second</td>
+<td>tight, good for dense tools/dashboards</td>
+</tr>
+<tr>
+<td>1.200</td>
+<td>Minor Third</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>1.250</strong></td>
+<td><strong>Major Third</strong></td>
+<td>balanced default</td>
+</tr>
+<tr>
+<td>1.333</td>
+<td>Perfect Fourth</td>
+<td></td>
+</tr>
+<tr>
+<td>1.414</td>
+<td>Augmented Fourth</td>
+<td></td>
+</tr>
+<tr>
+<td>1.500</td>
+<td>Perfect Fifth</td>
+<td>large, good for marketing pages</td>
+</tr>
+<tr>
+<td>1.618</td>
+<td>Golden Ratio</td>
+<td>dramatic</td>
+</tr>
+</tbody>
+</table></div>
+<p>Use a <strong>16px base body size</strong> (the common modern default) unless a design system says
+otherwise. Example, 16px base × <strong>1.250</strong>: <code>16 → 20 → 25 → 31 → 39</code> (body → H4 → H3 → H2 → H1).</p>
+<ul>
+<li><strong>Small ratios</strong> (≤1.2): complex apps, dashboards, tools, small steps, more levels.</li>
+<li><strong>Large ratios</strong> (≥1.4): simpler/marketing UI, big jumps, few levels.</li>
+<li><strong>Responsive:</strong> a large scale that fits desktop can wrap on mobile; drop to a smaller
+  ratio at narrow widths.</li>
+<li>Only create a step you actually use, every unused text style is noise.</li>
+</ul>
+      <div class="demo" id="demo-typography-scale">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · A scale from one ratio</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="tys-scale" id="tys-scale"></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Ratio <output id="tys-ro"></output></label><input id="tys-r" type="range" min="1.1" max="1.6" step="0.005" value="1.25"></div><div class="ctl"><label>Base body <output id="tys-bo"></output></label><input id="tys-b" type="range" min="14" max="20" step="1" value="16"></div></div>
+        <div class="demo-note" id="tys-note"></div>
+        </div>
+      </div>
+<h2>Typeface &amp; weight discipline</h2>
+<ul>
+<li><strong>Two typefaces is usually the ceiling:</strong> one for headings and body (optionally a second,
+  complementary heading face), plus a monospace for code. More rarely earns its place, it's
+  both a typographic best practice and a web-font <strong>performance</strong> cost.</li>
+<li><strong>Light / thin weights only at large sizes.</strong> A hairline weight looks elegant on a big
+  heading and turns illegible at body size. Reserve thin for display; keep body regular/medium.</li>
+<li>Prefer familiar system fonts when brand allows, they're instantly legible and free of
+  font-loading cost. Define sizes and weights once as <a href="design-systems.html">tokens</a>.</li>
+</ul>
+<h2>Alignment &amp; spacing details</h2>
+<ul>
+<li><strong>Left-align</strong> long body text (English reads L→R in an F-pattern). Centre only short
+  headings/labels; never centre long body (moving start-point stresses the eye).</li>
+<li><strong>Don't justify</strong> body text, variable word spacing creates distracting "rivers" and hurts
+  dyslexic readers. Left-align gives a consistent anchor.</li>
+<li><strong>Decrease letter-spacing as text gets larger.</strong> "Text type" faces have wide spacing for
+  small sizes; large headings look tighter and better with slightly negative tracking.
+  (Display faces already run tight, leave them.)</li>
+<li><strong>Text on photos must stay legible:</strong> add a dark linear-gradient scrim (e.g. darkest tint
+  at ~90% opacity fading to 0 halfway up) or a semi-transparent overlay, plus a text shadow,
+  so the text clears WCAG against the <em>worst</em> pixel behind it (see <a href="contrast.html">contrast.md</a>).</li>
+</ul>
 <h2>Accessibility</h2>
 <ul>
 <li>Meet <strong>WCAG contrast</strong> for every size you use; smaller type needs stricter pairing.</li>

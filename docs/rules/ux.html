@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Sleak UX</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 12: UX & states. every state · real elements." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">12</span><span>ux</span></div>
+      <h1>UX & states</h1>
+      <span class="formula">every state · real elements</span>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h1>UX</h1>
+<p>Whether the interface behaves correctly under real use, all the states beyond the happy path, and the small interaction details that make controls feel solid instead of brittle.</p>
+<p>Scaffold based on common product-UX guidance. Treat as a baseline, not exhaustive.</p>
+<h2>Purpose</h2>
+<p>Design for every state and every input method, loading, empty, error, destructive, and the mechanics of the controls themselves, so the interface never leaves the user stuck, surprised, or unsure what happened.</p>
+<h2>Rules</h2>
+<h3>1. Design every state, not just the full one</h3>
+<p>A view has more states than "populated."</p>
+<ul>
+<li><strong>Loading</strong>: skeleton or spinner; don't jump from blank to full.</li>
+<li><strong>Empty</strong>: explain what goes here and offer the first action, not a bare "No data".</li>
+<li><strong>Error</strong>: say what failed and what to do; keep the user's input.</li>
+<li><strong>Partial / offline</strong>: degrade gracefully.</li>
+</ul>
+      <div class="demo" id="demo-ux">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Every state, not just full</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="ux-panel" id="ux-panel"></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Component state</label><div class="seg"><button type="button" data-state="loading">Loading</button><button type="button" data-state="empty">Empty</button><button type="button" data-state="error">Error</button><button type="button" data-state="content" aria-pressed="true">Content</button></div></div></div>
+        <div class="demo-note" id="ux-note"></div>
+        </div>
+      </div>
+
+<h3>2. Confirm destructive and irreversible actions</h3>
+<ul>
+<li>Delete, remove, overwrite, and "cannot be undone" actions ask first, or offer undo.</li>
+<li>The confirm button names the action ("Delete 3 files"), not "OK".</li>
+<li>Don't place a destructive action where the primary action usually sits.</li>
+<li><strong>Escalate friction with severity.</strong> For an <em>initial</em> destructive action, use <em>less</em>
+  prominence (demote it, move it away, or progressively disclose it), don't colour it red yet.
+  Save the strong red + explicit confirm for the point of no return.</li>
+<li><strong>Frame the confirm positively.</strong> Avoid double negatives ("Are you sure you don't want to keep
+  it?", what does <em>No</em> mean?). Phrase it plainly and let the button name the action.</li>
+</ul>
+      <div class="demo" id="demo-ux-destructive">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Confirm destructive actions</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="uxd"><div class="uxd-item"><span class="uxd-name">Draft report Q3</span><span class="uxd-actions"><button type="button" class="uxd-del" id="uxd-del">Delete</button></span></div><div class="uxd-confirm" id="uxd-confirm"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Confirm style</label><div class="seg"><button type="button" data-mode="none" aria-pressed="true">No confirm</button><button type="button" data-mode="ok">Vague “OK”</button><button type="button" data-mode="named">Names the action</button></div></div></div>
+        <div class="demo-note" id="uxd-note"></div>
+        </div>
+      </div>
+
+<h3>3. Use the right element for the job</h3>
+<p>Semantics drive behavior, and behavior is UX.</p>
+<ul>
+<li>Actions are <code>&lt;button&gt;</code>; navigation is <code>&lt;a href&gt;</code>. A clickable <code>div</code> loses keyboard, focus, and Enter/Space for free.</li>
+<li>Submit controls live in a <code>&lt;form&gt;</code> so Enter submits.</li>
+<li>Toggles/checkboxes/radios use native inputs where possible.</li>
+</ul>
+<h3>4. Kill dead zones on controls</h3>
+<p>The whole control should be interactive, not just the glyph.</p>
+<ul>
+<li>Checkbox/radio labels are clickable and tied via <code>htmlFor</code>/<code>id</code>.</li>
+<li>Card and list-row targets extend to the full surface (see <a href="components.html">components.md</a>).</li>
+<li>Padding, not margin, carries the hit area so there's no dead gap.</li>
+</ul>
+      <div class="demo" id="demo-ux-deadzone">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · No dead zones on controls</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="uxz"><label class="uxz-label" id="uxz-label"><input type="checkbox" id="uxz-box" class="uxz-box"> Send me a weekly digest</label><div class="uxz-read" id="uxz-read">Click the text, not just the box.</div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Label target</label><div class="seg"><button type="button" data-mode="whole" aria-pressed="true">Whole label (good)</button><button type="button" data-mode="box">Box only (bad)</button></div></div></div>
+        <div class="demo-note" id="uxz-note"></div>
+        </div>
+      </div>
+
+<h3>5. Form field mechanics</h3>
+<ul>
+<li>Input <code>font-size ≥ 16px</code> on mobile web (smaller triggers iOS auto-zoom on focus).</li>
+<li>Correct <code>type</code>/<code>inputmode</code>/<code>autocomplete</code> so the right keyboard and autofill appear.</li>
+<li>Validate on blur/submit, not on every keystroke; show errors inline next to the field.</li>
+<li>Support expected shortcuts (e.g. <strong>Cmd/Ctrl+Enter</strong> to submit a textarea).</li>
+</ul>
+      <div class="demo" id="demo-ux-form">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Labels above, 16px inputs</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="uxf-form" id="uxf-form"><label class="uxf-lbl" id="uxf-lbl" for="uxf-in">Email</label><input class="uxf-in" id="uxf-in" type="email" placeholder="you@example.com"><div class="uxf-note" id="uxf-note"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Field style</label><div class="seg"><button type="button" data-mode="good" aria-pressed="true">Label + 16px</button><button type="button" data-mode="bad">Placeholder label, 14px</button></div></div></div>
+        <div class="demo-note" id="uxf-note"></div>
+        </div>
+      </div>
+
+<h3>6. Stable, predictable feedback</h3>
+<ul>
+<li>Don't change <strong>font-weight</strong> on hover/active, it shifts layout; change color/background instead.</li>
+<li>Reserve space for things that appear (validation text, badges) so content doesn't jump.</li>
+<li>Every action gives feedback within ~100ms (pressed state, spinner, optimistic update).</li>
+</ul>
+<h3>7. Preserve user work and context</h3>
+<ul>
+<li>Don't discard input on error or navigation without warning.</li>
+<li>Maintain scroll position and selection across benign re-renders.</li>
+<li>Make "back" and "cancel" actually restore prior state.</li>
+</ul>
+<h2>Reduce interaction cost</h2>
+<p>Every look, scroll, click, and decision is effort. Lower it:</p>
+<ul>
+<li><strong>Keep related actions close and big enough</strong> (Fitts's Law: nearer + larger = faster to hit).
+  Put an action beside the thing it acts on.</li>
+<li><strong>Reduce choices</strong> (Hick's Law: decision time grows with the number and complexity of
+  options). Remove, group/categorise, split into steps, or recommend a sensible default.</li>
+<li><strong>Progressive disclosure.</strong> Show only what's needed now; reveal detail on demand instead of
+  dumping everything up front.</li>
+<li><strong>Use conventional patterns</strong> (Jakob's Law: people expect your UI to behave like the others
+  they already know). Don't reinvent standard controls; spend novelty on your actual
+  differentiator.</li>
+<li><strong>Minimal ≠ simple.</strong> Don't strip labels or critical information for a clean look, a vague
+  minimal screen is harder to use, not simpler.</li>
+</ul>
+<h2>Forms</h2>
+<p>Forms are where UX is won or lost. The concrete rules:</p>
+<ul>
+<li><strong>Single-column, stacked layout.</strong> Multi-column forms break the reading flow and get
+  mis-filled. One field per row.</li>
+<li><strong>Minimise fields.</strong> Every field is friction and drop-off. Don't ask for what you don't
+  need (phone number for a card charge? cut it). Progressive-disclose rare fields.</li>
+<li><strong>Mark optional, not required.</strong> Most fields are required; asterisking them all adds clutter
+  and feels interrogative. Label the <em>optional</em> ones instead.</li>
+<li><strong>Labels above the field, always visible.</strong> Don't use placeholder text as the label, it
+  vanishes on focus and fails contrast. Placeholder is a <em>hint</em> only.</li>
+<li><strong>Match field width to the expected input</strong> (a 4-digit code field shouldn't be 400px wide).</li>
+<li><strong>Right input for the choice:</strong> checkboxes for multi-select, radios for one-of-few (≲6–10),
+  a select/autocomplete for long lists, a stepper for small numeric changes. Stack options
+  vertically to avoid mis-clicks.</li>
+<li><strong>Validate on submit, not on every keystroke.</strong> Live per-character errors are jarring.
+  Exceptions where inline <em>is</em> right: password-complexity, character-count limits, and
+  username-availability.</li>
+<li><strong>Errors:</strong> summary of links at the top (focus the field on click), messages <strong>above</strong> each
+  field (the space below gets covered by autofill/keyboards), red <strong>plus an icon</strong>.</li>
+<li><strong>Long forms → steps</strong> with a progress indicator, one bounded action per step, and a
+  <strong>success state</strong> at the end so the user knows they're done.</li>
+<li><strong>Don't over-style inputs</strong>, translucent fields on a gradient look slick to the designer
+  and unusable to everyone else. High-contrast borders (≥3:1) win.</li>
+</ul>
+<h2>Modals &amp; overlays</h2>
+<ul>
+<li><strong>Always give an escape route:</strong> a visible ✕, clear CTAs, and click-outside-to-dismiss.</li>
+<li><strong>Reserve modals for critical or timely interactions</strong>, destructive confirmations, focused
+  multi-step tasks. Overusing them breaks the app's flow and users stop reading them.</li>
+<li><strong>Not every error needs a modal.</strong> Inline messages/notifications are usually less disruptive;
+  interrupt with a modal only when the consequence is significant.</li>
+<li><strong>Responsive and legible</strong> at every screen size; if it guides a multi-step task, show progress.</li>
+<li>Confirm labels follow the positive-framing rule above (no double negatives; the button names
+  the action).</li>
+</ul>
+<h2>Show, don't tell</h2>
+<ul>
+<li>A good product <strong>shouldn't need to explain itself.</strong> If a screen requires a pop-over tour
+  or a wall of onboarding to be usable, the design isn't done, let layout, affordances, and
+  simple prompts do the teaching.</li>
+<li><strong>No redundant controls</strong>, e.g. a Back button <em>and</em> an X that do the same thing. Every
+  control should feel complete and non-duplicative ("polished" bar).</li>
+<li><strong>Restrain notifications.</strong> More pings lift short-term activity but erode trust and drive
+  people to mute or quit. Cap them regardless of what the short-term metric says.</li>
+</ul>
+<h2>Common mistakes</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tell</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blank screen while loading</td>
+<td>Skeleton / spinner</td>
+</tr>
+<tr>
+<td>Empty state is just "No results"</td>
+<td>Explain + offer first action</td>
+</tr>
+<tr>
+<td><code>&lt;div onClick&gt;</code> submit</td>
+<td>Use <code>&lt;button&gt;</code> / <code>&lt;form&gt;</code></td>
+</tr>
+<tr>
+<td>Delete with no confirm or undo</td>
+<td>Add confirm naming the action</td>
+</tr>
+<tr>
+<td>Mobile input &lt; 16px (zooms on focus)</td>
+<td><code>font-size: 16px+</code></td>
+</tr>
+<tr>
+<td>Font-weight change on hover (layout shift)</td>
+<td>Change color, not weight</td>
+</tr>
+<tr>
+<td>Error wipes the form</td>
+<td>Preserve input, show inline</td>
+</tr>
+<tr>
+<td>Only the checkbox box is clickable</td>
+<td>Make the label clickable</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Do / Don't</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Design loading / empty / error states</td>
+<td>Ship only the happy path</td>
+</tr>
+<tr>
+<td>Confirm or allow undo on destructive acts</td>
+<td>Delete on a single unguarded click</td>
+</tr>
+<tr>
+<td>Use <code>&lt;button&gt;</code> / <code>&lt;a&gt;</code> / <code>&lt;form&gt;</code></td>
+<td>Wire behavior onto <code>div</code>s</td>
+</tr>
+<tr>
+<td>Keep input <code>font-size ≥ 16px</code></td>
+<td>Trigger focus-zoom on mobile</td>
+</tr>
+<tr>
+<td>Give feedback within ~100ms</td>
+<td>Leave actions with no response</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Audit</h2>
+<ul>
+<li><strong>High</strong>: destructive action with no confirm/undo, action wired to a non-interactive element, error state that loses user input, no loading state on a slow fetch</li>
+<li><strong>Medium</strong>: missing empty state, mobile input &lt; 16px, layout shift on state change, dead zones on controls</li>
+<li><strong>Low</strong>: missing keyboard shortcut, minor feedback timing</li>
+</ul>
+<p>Verify by <strong>using</strong> the flow: trigger the error, empty the data, submit from the keyboard, delete something, on the rendered app, not from source.</p>
+      </article>
+      <nav class="pager">
+        <a class="prev" href="accessibility.html"><span class="dir">Previous rule</span><span class="ttl">11 · Accessibility</span></a><a class="next" href="design-systems.html"><span class="dir">Next rule</span><span class="ttl">13 · Design system foundations</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>

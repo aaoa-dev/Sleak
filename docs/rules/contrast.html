@@ -79,6 +79,14 @@
 <li>The element sits on a <strong>different background than assumed</strong> (a <code>.tint</code> section, a gradient, an image, a hover surface).</li>
 <li>Opacity on the text or an ancestor lowers the effective contrast.</li>
 </ul>
+      <div class="demo" id="demo-contrast-render">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Check rendered pixels, not tokens</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="ctr-ui"><div class="ctr-btn" id="ctr-btn">Get the skill</div><div class="ctr-meter" id="ctr-meter"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>What you verify</label><div class="seg"><button type="button" data-src="token" aria-pressed="true">Token pair (as designed)</button><button type="button" data-src="render" aria-pressed="false">Rendered (cascade override)</button></div></div></div>
+        <div class="demo-note" id="ctr-note"></div>
+        </div>
+      </div>
 <h3>The rule</h3>
 <ol>
 <li><strong>Render the page</strong> (real browser, the actual viewport and theme). Never sign off on contrast from CSS reading alone.</li>
@@ -87,6 +95,14 @@
 <li>Do this for every state and theme (hover, focus, disabled, dark mode) and for text over gradients/images at the worst point.</li>
 </ol>
 <p>If you claimed a pair passes but never rendered it, you have not checked contrast, you have checked intent. Look at it.</p>
+      <div class="demo" id="demo-contrast-dual">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Check both: WCAG + APCA</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="ctd-card" id="ctd-card"><span class="ctd-t" id="ctd-t">Readable? Two methods, one answer</span></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Background hue <output id="ctd-ho"></output></label><input id="ctd-hue" type="range" min="0" max="360" value="220"></div><div class="ctl"><label>Background lightness <output id="ctd-lo"></output></label><input id="ctd-l" type="range" min="5" max="60" value="32"></div><div class="ctl"><label>Text polarity</label><div class="seg"><button type="button" data-pol="light" aria-pressed="true">Light text</button><button type="button" data-pol="dark" aria-pressed="false">Dark text</button></div></div></div>
+        <div class="demo-note" id="ctd-note"></div>
+        </div>
+      </div>
 <h2>Mathematical thresholds (WCAG 2.2, AA)</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -123,6 +139,14 @@ const ratio = (fg, bg) =&gt; {
   return (Math.max(a,b) + 0.05) / (Math.min(a,b) + 0.05);
 }; // e.g. ratio([255,255,255],[124,58,237]) → 4.5+ passes AA large
 </code></pre>
+      <div class="demo" id="demo-contrast">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · WCAG AA, rendered on white</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="ct-card"><p class="ct-sample" id="ct-sample">The quick brown fox jumps over the lazy dog.</p></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Text lightness <output id="ct-lo"></output></label><input id="ct-l" type="range" min="0" max="100" value="60"></div><div class="ctl"><label>Text size</label><div class="seg"><button type="button" data-size="body" aria-pressed="true">Body</button><button type="button" data-size="large">Large / bold</button></div></div></div>
+        <div class="demo-note" id="ct-note"></div>
+        </div>
+      </div>
 <h2>Perceptual thresholds (APCA, Lc)</h2>
 <p>APCA returns a signed <strong>Lc</strong> value; use its absolute magnitude. Direction matters, computing dark-on-light vs light-on-dark are not symmetric, so run it in the actual polarity.</p>
 <div class="table-wrap"><table>

@@ -130,6 +130,78 @@ For each content card with a "View / Open / Read" pattern:
 - Pairs with [motion.md](motion.md): subtle card hover is OK; don't spring every tile (see motion budget)
 - Platform: iOS/Android often use full-row/cell tap natively; web cards should match that expectation
 
+## Button hierarchy, states & size
+### Three weights, hierarchy not by colour alone
+
+Most UIs need three button weights, and the difference must survive colour-blindness, never
+rely on hue alone to tell them apart:
+
+| Weight | Style | Use |
+|--------|-------|-----|
+| **Primary** | Solid fill (accent), white text | The one most important action |
+| **Secondary** | Outlined (border + accent text), no fill | Important but not primary |
+| **Tertiary** | Text/link style, underlined | Least important |
+
+- **Avoid a light-grey secondary fill**, it reads as *disabled*. Use an outline instead.
+- Don't make primary and secondary similar weight/contrast; the hierarchy should be obvious
+  at a glance and to the colour-blind.
+- **Try to avoid disabled buttons**, they can look broken and give no path forward; prefer
+  validating on submit and explaining what's needed (see [ux.md](ux.md)).
+
+### States: distinguishable, not noisy
+
+Each state (enabled, hover, pressed, focus, loading, disabled) must be clearly different from
+the others, but don't overdo the change. Drastic per-state restyling is visual noise; a
+measured shift in fill/elevation is enough. (Motion between states → [motion.md](motion.md).)
+
+### Target size & hit area
+
+- **Minimum 48×48px** (aligns to an 8pt grid; slightly above the WCAG **44×44** floor).
+  Desktop mouse targets can go to ~32–40px, but touch/primary stays ≥44.
+- **Separate adjacent buttons by ≥ 8px** to prevent mis-taps.
+- **Extend the hit area beyond the visible glyph** with padding, especially for tertiary
+  links and list items, whose tappable area is easy to forget. Never a bare icon with no
+  invisible padding.
+
+### Icon + text
+
+- **Lead with the icon** when it aids scanning / communicates the action (icon before label,
+  like an icon list). A trailing icon is for *where it leads* ("Log out" →, "Send" ✈).
+- Match icon **weight and size** to the text, or balance a heavier icon by **lowering its
+  contrast** (medium neutral vs dark text). See the square-padding geometry below.
+- **Label = action verb + object.** Never "Click here" (users tap/keyboard too) or vague
+  "Submit" when "Pay $49" is clearer (see [content-copy.md](content-copy.md)).
+
+## Icon system
+
+Icons look unified only when the rules are set **before** you draw them. Decide up front and
+apply consistently:
+
+- **Filled or outline?** Pick one as the default. A common split: solid/one-colour for utility
+  and action icons (bell, cog), more expressive/multicolour for navigation or brand icons.
+- **Line weight**, one stroke width across the set (match it to text weight when paired; see
+  icon+text balance above).
+- **Colour count**, usually one; document any exceptions.
+- **Sizes**, a small set on the 4-based scale (16/20/24…), so icons align with text and
+  spacing.
+- **Art boundary**, a consistent inner icon boundary inside an outer box, so glyphs feel the
+  same visual size even when shapes differ.
+- **Format:** ship icons as **SVG** (crisp at any size, styleable); raster (PNG/JPG) only for
+  photos.
+
+Store these as shared assets/[tokens](design-systems.md) so every product draws from one set.
+Depth/elevation (shadows, z-index) should likewise come from a standardized scale, not per-icon
+one-offs, see [design-systems.md](design-systems.md).
+
+### Alignment & control states
+
+- **Left-align buttons** in forms and dialogs (stack them on multi-step flows). They stay on the
+  reading axis and, under screen magnification, don't get scrolled out of view the way a
+  right-aligned button can.
+- **Give every interactive control distinct states**, default, hover, open, selected, disabled,
+  via colour/shading/icon, with a smooth transition. A dropdown or control whose current state
+  you can't read is a dead end.
+
 ## Buttons
 
 A button's padding is **not** one uniform box. It follows the content: an icon needs equal space on every side, while text needs more room on its open end than it does next to an icon.

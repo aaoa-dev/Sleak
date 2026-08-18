@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Sleak System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 13: Design system foundations. tokens · lean sets · atomic." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">13</span><span>system</span></div>
+      <h1>Design system foundations</h1>
+      <span class="formula">tokens · lean sets · atomic</span>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h1>Design system foundations</h1>
+<p>The per-topic references (colour, type, spacing, components) are the craft rules. This file is
+the <strong>system layer</strong>: how those decisions stay consistent once the work spans more than one
+screen, one product, or one person.</p>
+<h2>Purpose</h2>
+<p>Catch the failure mode where every screen re-invents its colours, sizes, and components;
+drift, inconsistency, and design debt. A system makes the right decision the easy one.</p>
+<h2>Design tokens are the single source of truth</h2>
+<p>Every reusable design decision, colour, type size, spacing step, radius, shadow, motion
+duration, is a <strong>named token</strong> (<code>name → value</code>), defined once.</p>
+<ul>
+<li>Change the value once and it <strong>propagates everywhere</strong>; no hard-coded hexes or px scattered
+  across components.</li>
+<li>Tokens are <strong>platform-agnostic</strong>, one definition compiles to a CSS variable, an iOS colour,
+  an Android value.</li>
+<li><strong>Multi-brand / theming</strong> = swap token <em>values</em> on one shared base (light/dark is the same
+  move, see <a href="intentional-accent.html">color.md</a>); never fork the components.</li>
+</ul>
+<pre><code>--space-4: 1rem;  --radius-2: 8px;  --color-primary: hsl(var(--accent-h) …);
+</code></pre>
+      <div class="demo" id="demo-design-systems">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Tokens drive everything</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="ds-mini" id="ds-mini"><button class="ds-btn">Save</button><span class="ds-chip">Draft</span><div class="ds-card"><div class="ds-bar"></div><div class="ds-line"></div></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>--accent-h <output id="ds-ho"></output></label><input id="ds-hue" type="range" min="0" max="360" value="255"></div><div class="ctl"><label>--radius <output id="ds-ro"></output></label><input id="ds-rad" type="range" min="0" max="18" value="8"></div><div class="ctl"><label>--space <output id="ds-so"></output></label><input id="ds-space" type="range" min="4" max="18" value="10"></div></div>
+          <div class="demo-note" id="ds-note"></div>
+        </div>
+      </div>
+<h2>Keep the sets lean</h2>
+<p>A <strong>small, predefined set</strong> per category beats unlimited choice. Too many colour steps, type
+sizes, or spacing values invites inconsistency and misuse. Start slim; add an option only when
+a real need appears. You can always add a step later, but removing one is painful.</p>
+<p>Ties to the lean scales in <a href="intentional-accent.html">color.md</a>, <a href="typography.html">typography.md</a> (type scale),
+and <a href="layout-spacing.html">layout-spacing.md</a> (spacing scale).</p>
+<h2>Components: modular, composable, generic, flexible</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Quality</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Modular</strong></td>
+<td>Self-contained; no cross-component dependencies</td>
+</tr>
+<tr>
+<td><strong>Composable</strong></td>
+<td>Small parts combine into larger ones</td>
+</tr>
+<tr>
+<td><strong>Generic</strong></td>
+<td>Handles multiple use cases, not one screen</td>
+</tr>
+<tr>
+<td><strong>Flexible</strong></td>
+<td>Extended via props/variants, not copy-paste</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>DRY</strong>, two pieces of code doing the same job double the bugs and the maintenance. One
+canonical implementation, reused.</p>
+<h2>Compose by layers (atomic)</h2>
+<p>Build the smallest pieces first, then assemble up:</p>
+<pre><code>elements/atoms (button, icon, input)
+  → components/molecules (search field = input + button + icon)
+    → regions/organisms (left nav)
+      → layouts (header + sidebar + main)
+</code></pre>
+      <div class="demo" id="demo-design-systems-atomic">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Compose by layers</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="dsa" id="dsa"><div class="dsa-track" id="dsa-track"></div><div class="dsa-name" id="dsa-name"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Assembly</label><div class="seg"><button type="button" data-level="atoms" aria-pressed="true">Atoms</button><button type="button" data-level="molecule">+ molecule</button><button type="button" data-level="organism">+ organism</button></div></div></div>
+          <div class="demo-note" id="dsa-note"></div>
+        </div>
+      </div>
+<h2>Elevation is a standardized scale</h2>
+<p>Depth comes from a <strong>defined set of z-index + shadow steps</strong>, not ad-hoc shadows per
+component. Surfaces closer to the user sit higher on the scale, and, in dark mode, get
+<em>lighter</em> (see the elevation/luminance rule in <a href="intentional-accent.html">color.md</a>).</p>
+      <div class="demo" id="demo-design-systems-elevation">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Elevation is a scale</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="dse-stack" id="dse-stack"><div class="dse-surface s3"><span class="dse-lbl">menu / modal</span></div><div class="dse-surface s2"><span class="dse-lbl">raised card</span></div><div class="dse-surface s1"><span class="dse-lbl">base</span></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Theme</label><div class="seg"><button type="button" data-theme="light" aria-pressed="true">Light</button><button type="button" data-theme="dark">Dark, elevation lifts luminance</button></div></div></div>
+          <div class="demo-note" id="dse-note"></div>
+        </div>
+      </div>
+<h2>Accessibility is built in, not bolted on</h2>
+<p>Bake contrast, keyboard operability, labels, and alt text into the <strong>shared components</strong> so
+every product inherits them. It is far cheaper than retrofitting a11y after the fact. See
+<a href="accessibility.html">accessibility.md</a> and <a href="contrast.html">contrast.md</a>.</p>
+<h2>Responsive by flow</h2>
+<p>Avoid fixed <code>width</code>/<code>height</code>; let elements <strong>fill the space they're given</strong> so layouts adapt.
+Images: <code>max-width: 100%</code>, <code>height: auto</code>, with a few preset fractions (½, ⅓) as max-widths.
+Design mobile-first.</p>
+<h2>Name things consistently</h2>
+<p>Clear, predictable names for components, variants, and utilities. Namespace shared classes
+(e.g. <code>.ds-btn</code>) so they don't collide with other libraries on the page.</p>
+<h2>Do / Don't</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Define each decision once as a token</td>
+<td>Hard-code hexes/px across components</td>
+</tr>
+<tr>
+<td>Keep colour/type/spacing sets lean</td>
+<td>Ship dozens of near-identical options</td>
+</tr>
+<tr>
+<td>Build modular, composable components</td>
+<td>Copy-paste a variant per screen</td>
+</tr>
+<tr>
+<td>Standardize elevation as a scale</td>
+<td>Sprinkle one-off shadows</td>
+</tr>
+<tr>
+<td>Bake a11y into shared components</td>
+<td>Retrofit accessibility per feature</td>
+</tr>
+<tr>
+<td>Let elements flow; size by content</td>
+<td>Pin fixed widths/heights everywhere</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Notes</h2>
+<ul>
+<li>The system is a <strong>living dependency</strong>, not one-and-done; version it and document changes.</li>
+<li>This is the one reference that is deliberately <em>implementation-aware</em>, the rest of Sleak is
+  craft-and-hierarchy. Match the project's existing system when one exists.</li>
+</ul>
+      </article>
+      <nav class="pager">
+        <a class="prev" href="ux.html"><span class="dir">Previous rule</span><span class="ttl">12 · UX & states</span></a><a class="next" href="principles.html"><span class="dir">Next rule</span><span class="ttl">14 · Principles</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>

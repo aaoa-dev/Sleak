@@ -33,25 +33,14 @@
     </div>
   </section>
 
-  <section class="demo-section">
-    <div class="wrap">
-      <div class="demo" id="demo-content-copy">
-        <div class="demo-inner">
-          <div class="demo-head"><span class="lbl">Try it</span><span class="live"></span></div>
-          <div class="demo-stage"><div class="co-ui"><div class="co-h" data-sharp="Add Sleak to your agent" data-fluff="Unlock the full potential of your design workflow"></div><div class="co-p" data-sharp="Point any coding agent at SKILL.md. It applies the rules as it builds." data-fluff="Our comprehensive solution empowers teams to seamlessly leverage best-in-class synergies at scale."></div><button class="co-btn" data-sharp="Copy install command" data-fluff="Get started today"></button></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Copy style</label><div class="seg"><button type="button" data-copy="sharp">Verb + object</button><button type="button" data-copy="fluff">Vague + padded</button></div></div></div>
-        <div class="demo-note" id="co-note"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="article">
     <div class="wrap">
       <article class="doc">
 <h1>Content &amp; copy</h1>
 <p>UI strings, labels, headings, errors, empty states, and onboarding text.</p>
-<p>Inspired by the same anti-fluff logic as <a href="https://github.com/ayghri/i-have-adhd">i-have-adhd</a> (action-first, no buried answers) and <a href="https://github.com/JuliusBrussee/caveman">caveman</a> (drop filler, keep substance). Applied to <strong>product copy</strong>, not agent chat.</p>
+<p>Built on an anti-fluff logic (action-first, no buried answers; drop filler, keep substance),
+applied to <strong>product copy</strong>, not agent chat. The external skills this draws on are catalogued
+in <a href="../references/sources.md#external-craft-skills">sources.md</a>.</p>
 <h2>Purpose</h2>
 <p>Catch copy that buries the action: preamble-heavy, vague, overly polite, or marketing-generic. Fix it so users know what to do in one scan.</p>
 <h2>What weak product copy gets wrong</h2>
@@ -89,6 +78,14 @@
 </tbody>
 </table></div>
 <p>Primary button = verb + object. Not "Get started" when "Import CSV" is the real action.</p>
+      <div class="demo" id="demo-content-copy">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Verb + object</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="co-ui"><div class="co-h" data-sharp="Add Sleak to your agent" data-fluff="Unlock the full potential of your design workflow"></div><div class="co-p" data-sharp="Point any coding agent at SKILL.md. It applies the rules as it builds." data-fluff="Our comprehensive solution empowers teams to seamlessly leverage best-in-class synergies at scale."></div><button class="co-btn" data-sharp="Copy install command" data-fluff="Get started today"></button></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Copy style</label><div class="seg"><button type="button" data-copy="sharp">Verb + object</button><button type="button" data-copy="fluff">Vague + padded</button></div></div></div>
+        <div class="demo-note" id="co-note"></div>
+        </div>
+      </div>
 <h3>2. One job per string</h3>
 <p>Each label, line, or toast does one thing. No "and then" in a single sentence.</p>
 <div class="table-wrap"><table>
@@ -138,7 +135,7 @@
 </ul>
 <p>Errors and confirmations state fact + fix. Then stop.</p>
 <h3>6. Matter-of-fact errors</h3>
-<p>No performative sympathy. State cause and fix like <a href="https://github.com/ayghri/i-have-adhd">i-have-adhd</a> rule 8.</p>
+<p>No performative sympathy. State cause and fix.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -158,6 +155,14 @@
 </tbody>
 </table></div>
 <p>Keep exact error codes and field names when the product exposes them.</p>
+      <div class="demo" id="demo-content-copy-error">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Errors: fact + fix</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="coe-msg" id="coe-msg"></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Error tone</label><div class="seg"><button type="button" data-mode="fact" aria-pressed="true">Fact + fix</button><button type="button" data-mode="apology">Apology + mystery</button></div></div></div>
+        <div class="demo-note" id="coe-note"></div>
+        </div>
+      </div>
 <h3>7. Specific beats vague</h3>
 <p>Replace fuzzy promises with concrete units when time, count, or scope matters.</p>
 <div class="table-wrap"><table>
@@ -179,11 +184,27 @@
 </tbody>
 </table></div>
 <p>If you don't know the number, omit the claim, don't fake specificity.</p>
+      <div class="demo" id="demo-content-copy-specific">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Specific beats vague</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="cos-ui"><div class="cos-line" id="cos-line"></div><div class="cos-line" id="cos-line2"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Claims</label><div class="seg"><button type="button" data-mode="specific" aria-pressed="true">Concrete numbers</button><button type="button" data-mode="vague">Fuzzy promises</button></div></div></div>
+        <div class="demo-note" id="cos-note"></div>
+        </div>
+      </div>
 <h3>8. Cap visible lists at five</h3>
 <p>Feature lists, plan comparisons, bullet benefits: max five visible items. Split <strong>Do now</strong> vs <strong>Later</strong> or <strong>Included</strong> vs <strong>Add-on</strong>.</p>
 <p>Rank by user priority, not marketing completeness.</p>
+      <div class="demo" id="demo-content-copy-list">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Cap visible lists at five</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="col-list" id="col-list"></div></div>
+          <div class="demo-controls"><div class="ctl"><label>List</label><div class="seg"><button type="button" data-mode="seven" aria-pressed="true">7 items, one list</button><button type="button" data-mode="split">5 now + “Later” split</button></div></div></div>
+        <div class="demo-note" id="col-note"></div>
+        </div>
+      </div>
 <h3>9. Drop filler; keep meaning</h3>
-<p>Apply <a href="https://github.com/JuliusBrussee/caveman">caveman</a>-style compression to microcopy, not broken grammar on critical paths.</p>
+<p>Apply aggressive compression to microcopy, not broken grammar on critical paths.</p>
 <p><strong>Drop:</strong> just, really, simply, actually, basically, kindly, please (when not legally required), "we're here to help."</p>
 <p><strong>Never drop:</strong> not, never, no, only, except, negation changes behavior.</p>
 <p><strong>Keep exact:</strong> product names, API terms, units, numbers, legal required text.</p>
@@ -214,6 +235,30 @@
 <li>Triple synonym stacks ("fast, reliable, and secure")</li>
 </ul>
 <p>Write like the product team talks internally, then tighten once.</p>
+<h2>Mechanics</h2>
+<p>Sleak's anti-fluff rules above are the sharpened line; these are the conventional copy
+mechanics Sleak keeps:</p>
+<ul>
+<li><strong>Sentence case</strong>, not Title Case, for UI text (headings, labels, buttons). Easier to read
+  and friendlier.</li>
+<li><strong>Numerals for numbers</strong> ("7 days", not "seven days"), they're scannable and shorter.</li>
+<li><strong>Limit UPPERCASE.</strong> All-caps is harder to read in longer strings (letterforms lose their
+  shape). Reserve it for short labels or eyebrows, and add a little letter-spacing when you do.</li>
+<li><strong>Descriptive link/action text.</strong> The text must make sense read <strong>out of context</strong> (screen
+  readers announce it alone, and eyes scan links). "View pricing", never "Read more" / "Click
+  here". This is also an <a href="accessibility.html">accessibility.md</a> rule.</li>
+<li><strong>Drop full stops</strong> on short, standalone lines (labels, single-sentence helper text, list
+  items). Keep them in multi-sentence body copy.</li>
+<li><strong>Parallel elements, parallel length.</strong> Keep copy roughly the same length across items that
+  sit together (nav links, card titles, feature bullets) so the layout stays even.</li>
+<li><strong>Break long content</strong> with descriptive sub-headings and bullets; front-load each with the
+  key word (inverted pyramid, most important first).</li>
+</ul>
+<h2>Voice: distinctive beats bland</h2>
+<p>Concise and clear is the floor, not the ceiling. In marketing and personality-bearing copy,
+<strong>bland is the real failure</strong>, trying to appeal to everyone yields nothing memorable. A
+distinctive voice won't land for everyone, and that's the trade: the people who get it should
+love it. Keep it within brand, never at the expense of clarity on functional/critical paths.</p>
 <h2>Common mistakes</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -343,7 +388,7 @@
 </ul>
       </article>
       <nav class="pager">
-        <a class="prev" href="motion.html"><span class="dir">Previous rule</span><span class="ttl">09 · Motion budget</span></a><a class="next empty" aria-hidden="true"><span class="dir">next</span></a>
+        <a class="prev" href="motion.html"><span class="dir">Previous rule</span><span class="ttl">09 · Motion budget</span></a><a class="next" href="accessibility.html"><span class="dir">Next rule</span><span class="ttl">11 · Accessibility</span></a>
       </nav>
     </div>
   </section>

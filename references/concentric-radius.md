@@ -152,7 +152,7 @@ Both insets equal the radius, so the corner curve and the text's bottom-leading 
   card bottom-left corner
         ·  ← baseline start = center of the corner circle, at (R, R)
        ╱ ╲
-      (   )  radius R , its quarter-arc is the card's rounded corner
+      (   )  radius R, its quarter-arc is the card's rounded corner
        ╲ ╱
   ──────┼──────────────────  bottom edge   (baseline is R above this)
         │

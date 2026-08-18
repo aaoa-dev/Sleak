@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Sleak A11y</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Sleak rule 11: Accessibility. names · focus · ≥ 44px." />
+<link rel="stylesheet" href="../assets/site.css" />
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <nav class="nav-links">
+      <a href="../index.html#rules">Rules</a>
+      <a href="../index.html#how">How it works</a>
+      <a href="../index.html#why">Why</a>
+      <a class="btn btn-primary" href="../index.html#get">Get the skill <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      <button class="theme-toggle" id="tt" title="Toggle theme" aria-label="Toggle light/dark theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5 3.6 3.6M20.4 20.4 19 19M19 5l1.4-1.4M3.6 20.4 5 19"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="rule-hero">
+    <div class="wrap">
+      <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
+      <div class="rule-eyebrow"><span class="num">11</span><span>a11y</span></div>
+      <h1>Accessibility</h1>
+      <span class="formula">names · focus · ≥ 44px</span>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="wrap">
+      <article class="doc">
+<h1>Accessibility</h1>
+<p>Whether real users, keyboard-only, screen-reader, low-vision, motor-impaired, can perceive and operate the interface. This file covers the non-contrast surface (names, focus, keyboard, targets, non-color cues); text/UI <strong>contrast</strong> lives in <a href="contrast.html">contrast.md</a>.</p>
+<p>Scaffold based on WCAG 2.2 AA and common platform guidance. Treat as a baseline, not exhaustive.</p>
+<h2>Purpose</h2>
+<p>Make every interactive element reachable, labeled, and operable without a mouse or perfect vision, so the design holds up for the people who need it most.</p>
+<h2>Rules</h2>
+<h3>1. Accessible names on every control</h3>
+<p>Every interactive element exposes a name to assistive tech.</p>
+<ul>
+<li>Images that carry meaning have <code>alt</code>; decorative images use <code>alt=""</code>.</li>
+<li>Icon-only buttons/links get an <code>aria-label</code> (or visually-hidden text). A bare <code>&lt;button&gt;&lt;svg/&gt;&lt;/button&gt;</code> is unnamed.</li>
+<li>Inputs have a real <code>&lt;label&gt;</code> (or <code>aria-labelledby</code>); placeholder is <strong>not</strong> a label.</li>
+</ul>
+<h3>2. Visible focus indicator</h3>
+<p>Keyboard users must always see where they are.</p>
+<ul>
+<li>Never <code>outline: none</code> without a replacement.</li>
+<li>Focus ring clears <strong>3:1</strong> against both the component and the page (see <a href="contrast.html">contrast.md</a>).</li>
+<li>Prefer <code>:focus-visible</code> so pointer users don't get rings but keyboard users do.</li>
+</ul>
+<h3>3. Full keyboard operability</h3>
+<p>Everything you can do with a mouse works from the keyboard.</p>
+<ul>
+<li>Logical tab order; no keyboard traps.</li>
+<li>Custom widgets (menus, tabs, dialogs) implement expected key handling (Esc, arrows, Enter/Space).</li>
+<li>Prefer native elements (<code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;input&gt;</code>) over <code>div</code>+<code>onClick</code>, which ship these behaviors for free.</li>
+</ul>
+      <div class="demo" id="demo-accessibility-keyboard">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Native elements, keyboard for free</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="axk-stage"><button type="button" class="axk-el" id="axk-native">Native &lt;button&gt;</button><div class="axk-el axk-div" id="axk-div" tabindex="0">div + onClick</div><div class="axk-read" id="axk-read">Tab to an element, then press Enter or Space.</div></div></div>
+          <div class="demo-controls"></div>
+        <div class="demo-note" id="axk-note"></div>
+        </div>
+      </div>
+<h3>4. Touch / hit targets ≥ 44×44px</h3>
+<p>Pointer and touch targets are large enough to hit reliably.</p>
+<ul>
+<li>Minimum <strong>44×44px</strong> (WCAG 2.5.8 AA is 24px; 44px is the safer platform norm).</li>
+<li>Spacing between adjacent targets prevents mis-taps.</li>
+<li>The clickable area can extend past the visible glyph via padding.</li>
+</ul>
+      <div class="demo" id="demo-accessibility">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Names, focus, targets</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="ax-stage"><button class="ax-btn" id="ax-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button><div class="ax-sr" id="ax-sr"><span class="ax-sr-lbl">reads</span><span id="ax-sr-txt"></span></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Accessible name</label><div class="seg"><button type="button" id="ax-name" aria-pressed="true">aria-label</button></div></div><div class="ctl"><label>Visible focus</label><div class="seg"><button type="button" id="ax-focus" aria-pressed="true">focus ring</button></div></div><div class="ctl"><label>Target size <output id="ax-so"></output></label><input id="ax-size" type="range" min="24" max="56" value="44"></div></div>
+        <div class="demo-note" id="ax-note"></div>
+        </div>
+      </div>
+<h3>5. Never encode meaning by color alone</h3>
+<p>Anyone with color-vision deficiency must get the same information.</p>
+<ul>
+<li>Pair color with text, icon, shape, or pattern (error field: red border <strong>and</strong> a message; chart series: color <strong>and</strong> label/marker).</li>
+<li>Links in body text carry a non-color cue (underline).</li>
+</ul>
+      <div class="demo" id="demo-accessibility-color">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Never encode by colour alone</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="axc-form"><label class="axc-lbl" for="axc-in">Card number</label><input class="axc-in" id="axc-in" type="text" value="1234 5678 90"><div class="axc-err" id="axc-err"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Error cue</label><div class="seg"><button type="button" data-mode="color" aria-pressed="true">Red border only</button><button type="button" data-mode="cue">Border + message + icon</button></div></div></div>
+        <div class="demo-note" id="axc-note"></div>
+        </div>
+      </div>
+<h3>6. Structure and landmarks</h3>
+<p>Screen readers navigate by structure.</p>
+<ul>
+<li>One <code>&lt;h1&gt;</code> per view; heading levels don't skip.</li>
+<li>Landmark elements (<code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>) frame the page.</li>
+<li>Lists use list markup; tables use <code>&lt;th&gt;</code> + scope.</li>
+</ul>
+<h3>7. Respect user settings</h3>
+<ul>
+<li><code>prefers-reduced-motion</code> honored (see <a href="motion.html">motion.md</a>).</li>
+<li>Layout survives 200% zoom and user font-size changes (use <code>rem</code>, not fixed <code>px</code> type).</li>
+</ul>
+<h2>Assistive technology &amp; standards</h2>
+<ul>
+<li><strong>Baseline: WCAG 2.1 level AA.</strong> A good, often legally-required floor. Aim to pass it for
+  contrast, targets, and non-text UI (≥3:1 for borders/icons/controls).</li>
+<li><strong>Design for screen readers.</strong> Elements are read <em>out of context</em>, so headings and link/
+  action text must be descriptive on their own ("View pricing", not "Read more"). This is a
+  copy rule too, see <a href="content-copy.html">content-copy.md</a>.</li>
+<li><strong>Design for screen magnifiers</strong> (more common than screen readers). The user sees only a
+  small slice of the screen at a time, so <strong>keep related actions close together</strong> and
+  <strong>left-align</strong> primary actions so they aren't scrolled out of view or missed.</li>
+<li><strong>Good accessibility = good usability for everyone.</strong> Sufficient contrast, low interaction
+  cost, and low cognitive load help sighted, able users too, and everyone hits temporary or
+  situational impairment (bright sun, one hand, an injury).</li>
+<li><strong>When you replace text with a visual/motion cue</strong> (a shake for an invalid field, a
+  colour change for a state), provide an accessible equivalent: <code>aria-invalid</code>, an
+  accessibility hint, or a live-region announcement. Motion is never the only channel
+  (see <a href="motion.html">motion.md</a>).</li>
+</ul>
+<h2>Common mistakes</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tell</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Icon button with no label</td>
+<td>Add <code>aria-label</code></td>
+</tr>
+<tr>
+<td><code>outline: none</code> with no <code>:focus-visible</code> style</td>
+<td>Restore a visible focus ring</td>
+</tr>
+<tr>
+<td><code>&lt;div onClick&gt;</code> acting as a button</td>
+<td>Use <code>&lt;button&gt;</code></td>
+</tr>
+<tr>
+<td>Placeholder used as the only label</td>
+<td>Add a real <code>&lt;label&gt;</code></td>
+</tr>
+<tr>
+<td>Error shown only as red border</td>
+<td>Add text + icon</td>
+</tr>
+<tr>
+<td>Tap target &lt; 44px</td>
+<td>Grow via padding/min-size</td>
+</tr>
+<tr>
+<td>Heading levels skip (h1 → h4)</td>
+<td>Fix hierarchy</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Do / Don't</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Do</th>
+<th>Don't</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name every control</td>
+<td>Ship unnamed icon buttons</td>
+</tr>
+<tr>
+<td>Keep a visible <code>:focus-visible</code> ring</td>
+<td><code>outline: none</code> globally</td>
+</tr>
+<tr>
+<td>Use native interactive elements</td>
+<td>Rebuild buttons from <code>div</code>s</td>
+</tr>
+<tr>
+<td>Pair color with a second cue</td>
+<td>Rely on hue alone</td>
+</tr>
+<tr>
+<td>Size targets ≥ 44px</td>
+<td>Cram tiny tap targets together</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Audit</h2>
+<ul>
+<li><strong>High</strong>: unnamed control, no visible focus, keyboard-inoperable widget, meaning by color alone, target &lt; 44px</li>
+<li><strong>Medium</strong>: skipped heading levels, missing landmarks, no reduced-motion handling</li>
+<li><strong>Low</strong>: minor label wording, non-underlined body links</li>
+</ul>
+<p>Verify on the <strong>rendered</strong> page: tab through it with no mouse, and check names in the accessibility tree, not just the source.</p>
+      </article>
+      <nav class="pager">
+        <a class="prev" href="content-copy.html"><span class="dir">Previous rule</span><span class="ttl">10 · Content & copy</span></a><a class="next" href="ux.html"><span class="dir">Next rule</span><span class="ttl">12 · UX & states</span></a>
+      </nav>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="../index.html"><span class="dot" aria-hidden="true"></span>sleak</a>
+    <span>A design-decision skill for intentional product UI.</span>
+    <span class="tag">craft over defaults</span>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script src="../assets/demos.js"></script>
+</body>
+</html>
