@@ -724,21 +724,37 @@
 
     /* 11b / accessibility: meaning must never live in colour alone. */
     "accessibility-color": function (root) {
-      var form = $(".axc-form", root), err = $("#axc-err", root), live = $(".live", root),
-          note = $("#axc-note", root), segBtns = root.querySelectorAll("[data-mode]");
-      function render(mode) {
-        form.setAttribute("data-mode", mode);
-        segBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.mode === mode ? "true" : "false"); });
-        err.innerHTML = mode === "color"
+      var wrap = $(".axc-wrap", root), err = $("#axc-err", root), live = $(".live", root),
+          note = $("#axc-note", root), modeBtns = root.querySelectorAll("[data-mode]"),
+          visBtns = root.querySelectorAll("[data-vision]");
+      var state = { mode: "color", vision: "typical" };
+      function render() {
+        var m = state.mode, v = state.vision;
+        wrap.setAttribute("data-mode", m);
+        root.setAttribute("data-vision", v);
+        modeBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.mode === m ? "true" : "false"); });
+        visBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.vision === v ? "true" : "false"); });
+        err.innerHTML = m === "color"
           ? ""
           : '<span class="axc-err-ico" aria-hidden="true">!</span> Enter a valid 16-digit card number.';
-        live.textContent = mode === "color" ? "red border only" : "red border + text + icon";
-        note.innerHTML = mode === "color"
-          ? 'The only cue is the red border. A colour-blind or screen-magnified user sees <b>a normal input</b>, the error is invisible.'
-          : 'The same error, now with <b>a message and an icon</b>. Colour points at it; text and icon carry the meaning. Never encode by hue alone.';
+        live.textContent = (m === "color" ? "red border only" : "border + text + icon")
+          + (v === "deutan" ? " · deuteranopia" : v === "mono" ? " · achromatopsia" : "");
+        if (m === "color" && v === "typical")
+          note.innerHTML = 'The only cue is the red border. Toggle <b>Deuteranopia</b> or <b>Achromatopsia</b> to see why it fails: colour-blind users lose the hue, so the error loses its meaning.';
+        else if (m === "color" && v === "deutan")
+          note.innerHTML = 'Under deuteranopia the whole card shifts hue and the red border muddies into the frame. <b>Colour alone doesn’t reach ~1 in 12 men</b>.';
+        else if (m === "color" && v === "mono")
+          note.innerHTML = 'Under achromatopsia the whole card collapses to greys. The red border reads as just a darker frame — <b>no message, no icon, no error state</b>.';
+        else if (m === "cue" && v === "typical")
+          note.innerHTML = 'The same error, now with <b>a message and an icon</b>. Colour points at it; text and icon carry the meaning. Never encode by hue alone.';
+        else if (m === "cue" && v === "deutan")
+          note.innerHTML = 'Even when colour is lost, the <b>icon and message still carry the error</b>. Colour augments the cue; it never has to carry it alone.';
+        else
+          note.innerHTML = 'Fully monochrome, the <b>icon and message still carry the error</b>. Text and shape survive the loss of every hue.';
       }
-      segBtns.forEach(function (b) { b.addEventListener("click", function () { render(b.dataset.mode); }); });
-      render("color");
+      modeBtns.forEach(function (b) { b.addEventListener("click", function () { state.mode = b.dataset.mode; render(); }); });
+      visBtns.forEach(function (b) { b.addEventListener("click", function () { state.vision = b.dataset.vision; render(); }); });
+      render();
     },
 
     /* 11c / accessibility: native elements ship keyboard behaviour for free. */
@@ -831,15 +847,21 @@
         segBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.mode === mode ? "true" : "false"); });
         live.textContent = mode === "whole" ? "text + box = one target" : "box is the only target";
         note.innerHTML = mode === "whole"
-          ? 'Click anywhere on the label, <b>the whole control is interactive</b>, tied with <span class="kbd">for</span>/<span class="kbd">id</span>. No dead zone.'
-          : 'Only the tiny box toggles; clicking the text does nothing. A dead zone, and a miss for every imprecise tap. Padding, not margin, should carry the hit area.';
+          ? 'Click anywhere on the pill, <b>the whole control is interactive</b> — box, text, and the padding between. No dead zone.'
+          : 'Only the tiny box toggles; clicking the text or padding does nothing. A dead zone, and a miss for every imprecise tap. Padding, not margin, should carry the hit area.';
       }
       function sync() {
         read.textContent = "checked: " + box.checked + (label.getAttribute("data-mode") === "box" ? " · text click does nothing" : " · text click toggles too");
       }
       box.addEventListener("change", sync);
-      label.addEventListener("click", function () {
-        if (label.getAttribute("data-mode") === "box") read.textContent = "you clicked the text, nothing happened (dead zone)";
+      label.addEventListener("click", function (e) {
+        if (e.target === box) return;
+        if (label.getAttribute("data-mode") === "whole") {
+          box.checked = !box.checked;
+          sync();
+        } else {
+          read.textContent = "you clicked the text — nothing happened";
+        }
       });
       segBtns.forEach(function (b) { b.addEventListener("click", function () { render(b.dataset.mode); sync(); }); });
       render("whole"); sync();
@@ -876,7 +898,7 @@
         mini.style.setProperty("--ds-s", s + "px");
         oH.textContent = h + "°"; oR.textContent = r + "px"; oS.textContent = s + "px";
         live.textContent = "3 tokens · every component";
-        note.innerHTML = 'Every element here reads from the same <b>tokens</b>. Change one value and <b>all of them update at once</b>, one source of truth, no stray hexes to hunt down.';
+        note.innerHTML = 'Every element reads from the same <b>tokens</b>: one hue drives the accent, authored in <b>OKLCH</b> so white-on-accent contrast holds as you drag it, and inner radii derive from <b>parent − padding</b>, concentric, never equal. One source of truth, no stray hexes.';
       }
       [hue, rad, sp].forEach(function (el) { el.addEventListener("input", render); });
       render();
@@ -907,10 +929,12 @@
 
     /* 13c / design systems: elevation is a standardised scale; dark mode lifts luminance. */
     "design-systems-elevation": function (root) {
-      var stack = $("#dse-stack", root), live = $(".live", root), note = $("#dse-note", root),
+      var live = $(".live", root), note = $("#dse-note", root),
           segBtns = root.querySelectorAll("[data-theme]");
+      var start = document.documentElement.getAttribute("data-theme")
+        || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       function render(theme) {
-        stack.setAttribute("data-theme", theme);
+        root.setAttribute("data-theme", theme);
         segBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.theme === theme ? "true" : "false"); });
         live.textContent = theme === "dark" ? "dark · higher = lighter" : "light · elevation via shadow";
         note.innerHTML = theme === "dark"
@@ -918,7 +942,7 @@
           : 'In <b>light mode</b> the same scale carries the stack via shadow, keeping the relative brightness order. One ramp, both modes, elevation governs luminance.';
       }
       segBtns.forEach(function (b) { b.addEventListener("click", function () { render(b.dataset.theme); }); });
-      render("light");
+      render(start);
     },
 
     /* 14 / principles: prototype fidelity slider, low-fi invites feedback and is cheap to change. */

@@ -95,11 +95,12 @@
       <div class="demo" id="demo-accessibility-color">
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · Never encode by colour alone</span><span class="live"></span></div>
-          <div class="demo-stage"><div class="axc-form"><label class="axc-lbl" for="axc-in">Card number</label><input class="axc-in" id="axc-in" type="text" value="1234 5678 90"><div class="axc-err" id="axc-err"></div></div></div>
-          <div class="demo-controls"><div class="ctl"><div class="seg"><button type="button" data-mode="color" aria-pressed="true">Red border only</button><button type="button" data-mode="cue">Border + message + icon</button></div></div></div>
+          <div class="demo-stage"><div class="axc-wrap" id="axc-wrap"><div class="axc-form"><label class="axc-lbl" for="axc-in">Card number</label><input class="axc-in" id="axc-in" type="text" value="1234 5678 90"><div class="axc-err" id="axc-err"></div></div><p class="axc-reason">~300&nbsp;million people have a colour-vision deficiency — 1 in 12 men. Red vs green is the most common miss, so a <b>red border alone can’t carry an error</b>.</p></div></div>
+          <div class="demo-controls"><div class="ctl"><div class="seg"><button type="button" data-mode="color" aria-pressed="true">Red border only</button><button type="button" data-mode="cue" aria-pressed="false">Border + message + icon</button></div></div><div class="ctl"><div class="seg"><button type="button" data-vision="typical" aria-pressed="true">Typical vision</button><button type="button" data-vision="deutan" aria-pressed="false">Deuteranopia</button><button type="button" data-vision="mono" aria-pressed="false">Achromatopsia</button></div></div></div>
         <div class="demo-note" id="axc-note"></div>
         </div>
       </div>
+      <svg class="axc-sim" width="0" height="0" aria-hidden="true"><filter id="axc-deutan"><feColorMatrix type="matrix" values="0.625 0.375 0 0 0 0.7 0.3 0 0 0 0 0.3 0.7 0 0 0 0 0 1 0"/></filter><filter id="axc-mono"><feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0 0 0 1 0"/></filter></svg>
 <h3>6. Structure and landmarks</h3>
 <p>Screen readers navigate by structure.</p>
 <ul>
