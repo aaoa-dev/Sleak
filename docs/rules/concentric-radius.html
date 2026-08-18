@@ -102,7 +102,7 @@ child  + padding = parent
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · Parent − padding = child</span><span class="live"></span></div>
           <div class="demo-stage"><div class="cc-parent" id="cc-parent" style="padding:16px"><div class="cc-child" id="cc-child">inner</div></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Parent radius <output id="cc-ro"></output></label><input id="cc-r" type="range" min="0" max="40" value="28"></div><div class="ctl"><label>Padding <output id="cc-po"></output></label><input id="cc-p" type="range" min="0" max="32" value="16"></div><div class="ctl"><label>Contrast</label><div class="seg"><button type="button" id="cc-same" aria-pressed="false">Force equal radii (wrong)</button></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Parent radius <output id="cc-ro"></output></label><input id="cc-r" type="range" min="0" max="40" value="28"></div><div class="ctl"><label>Padding <output id="cc-po"></output></label><input id="cc-p" type="range" min="0" max="32" value="16"></div><div class="ctl"><div class="seg"><button type="button" data-cc="conc" aria-pressed="true">Concentric (R − P)</button><button type="button" data-cc="equal" aria-pressed="false">Force equal radii (wrong)</button></div></div></div>
         <div class="demo-note" id="cc-note"></div>
         </div>
       </div>
@@ -231,7 +231,7 @@ child  + padding = parent
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · Text sits concentric to the corner</span><span class="live"></span></div>
           <div class="demo-stage"><div class="crt-wrap"><svg class="crt-svg" viewBox="0 0 320 150" role="img" aria-label="A rounded card whose last line of text sits concentric to the corner radius. Drag the radius slider."><rect id="crt-card" class="crt-card" x="16" y="12" width="288" height="120" rx="24"/><text id="crt-title" class="crt-title" x="40" y="72" font-size="13" font-weight="700">Title goes here</text><text id="crt-sub" class="crt-sub" x="40" y="96" font-size="11">Last line of the card</text><path id="crt-guides" class="crt-guide" d=""/><circle id="crt-circle" class="crt-anno" cx="40" cy="96" r="24"/><circle id="crt-dot" class="crt-dot" cx="40" cy="96" r="3"/><text id="crt-rh" class="crt-rmark" x="0" y="0" font-size="9">R</text><text id="crt-rv" class="crt-rmark" x="0" y="0" font-size="9">R</text></svg></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Corner radius R <output id="crt-ro"></output></label><input id="crt-r" type="range" min="8" max="40" value="24"></div><div class="ctl"><label>Text anchor</label><div class="seg"><button type="button" data-anchor="conc" aria-pressed="true">Concentric (R, R)</button><button type="button" data-anchor="off" aria-pressed="false">Off by +6px</button></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Corner radius R <output id="crt-ro"></output></label><input id="crt-r" type="range" min="8" max="40" value="24"></div><div class="ctl"><div class="seg"><button type="button" data-anchor="conc" aria-pressed="true">Concentric (R, R)</button><button type="button" data-anchor="off" aria-pressed="false">Off by +6px</button></div></div></div>
         <div class="demo-note" id="crt-note"></div>
         </div>
       </div>

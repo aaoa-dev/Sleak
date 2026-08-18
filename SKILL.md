@@ -178,5 +178,5 @@ When reviewing or proposing changes, use:
 - [references/ux.md](references/ux.md), loading/empty/error states, destructive confirms, form and control mechanics
 - [references/design-systems.md](references/design-systems.md), tokens as single source of truth, lean scales, atomic composition, elevation
 - [references/principles.md](references/principles.md), the process layer, how to decide what to build (research, framing, low-fi iteration, feedback), upstream of the craft rules
-- [references/sources.md](references/sources.md), the reference library (Practical UI is the base) + deviation policy
+- [references/sources.md](references/sources.md), the reference library
 

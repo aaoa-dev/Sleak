@@ -83,7 +83,7 @@
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · Check rendered pixels, not tokens</span><span class="live"></span></div>
           <div class="demo-stage"><div class="ctr-ui"><div class="ctr-btn" id="ctr-btn">Get the skill</div><div class="ctr-meter" id="ctr-meter"></div></div></div>
-          <div class="demo-controls"><div class="ctl"><label>What you verify</label><div class="seg"><button type="button" data-src="token" aria-pressed="true">Token pair (as designed)</button><button type="button" data-src="render" aria-pressed="false">Rendered (cascade override)</button></div></div></div>
+          <div class="demo-controls"><div class="ctl"><div class="seg"><button type="button" data-src="token" aria-pressed="true">Token pair (as designed)</button><button type="button" data-src="render" aria-pressed="false">Rendered (cascade override)</button></div></div></div>
         <div class="demo-note" id="ctr-note"></div>
         </div>
       </div>
@@ -99,7 +99,7 @@
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · Check both: WCAG + APCA</span><span class="live"></span></div>
           <div class="demo-stage"><div class="ctd-card" id="ctd-card"><span class="ctd-t" id="ctd-t">Readable? Two methods, one answer</span></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Background hue <output id="ctd-ho"></output></label><input id="ctd-hue" type="range" min="0" max="360" value="220"></div><div class="ctl"><label>Background lightness <output id="ctd-lo"></output></label><input id="ctd-l" type="range" min="5" max="60" value="32"></div><div class="ctl"><label>Text polarity</label><div class="seg"><button type="button" data-pol="light" aria-pressed="true">Light text</button><button type="button" data-pol="dark" aria-pressed="false">Dark text</button></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Background hue <output id="ctd-ho"></output></label><input id="ctd-hue" type="range" min="0" max="360" value="220"></div><div class="ctl"><label>Background lightness <output id="ctd-lo"></output></label><input id="ctd-l" type="range" min="5" max="60" value="32"></div><div class="ctl"><div class="seg"><button type="button" data-pol="light" aria-pressed="true">Light text</button><button type="button" data-pol="dark" aria-pressed="false">Dark text</button></div></div></div>
         <div class="demo-note" id="ctd-note"></div>
         </div>
       </div>
@@ -143,7 +143,7 @@ const ratio = (fg, bg) =&gt; {
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · WCAG AA, rendered on white</span><span class="live"></span></div>
           <div class="demo-stage"><div class="ct-card"><p class="ct-sample" id="ct-sample">The quick brown fox jumps over the lazy dog.</p></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Text lightness <output id="ct-lo"></output></label><input id="ct-l" type="range" min="0" max="100" value="60"></div><div class="ctl"><label>Text size</label><div class="seg"><button type="button" data-size="body" aria-pressed="true">Body</button><button type="button" data-size="large">Large / bold</button></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Text lightness <output id="ct-lo"></output></label><input id="ct-l" type="range" min="0" max="100" value="60"></div><div class="ctl"><div class="seg"><button type="button" data-size="body" aria-pressed="true">Body</button><button type="button" data-size="large">Large / bold</button></div></div></div>
         <div class="demo-note" id="ct-note"></div>
         </div>
       </div>

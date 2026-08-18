@@ -47,12 +47,12 @@
     "concentric-radius": function (root) {
       var parent = $("#cc-parent", root), child = $("#cc-child", root),
           rP = $("#cc-r", root), rPad = $("#cc-p", root),
-          same = $("#cc-same", root),
+          segBtns = root.querySelectorAll("[data-cc]"),
           oR = $("#cc-ro", root), oP = $("#cc-po", root), live = $(".live", root),
-          note = $("#cc-note", root);
+          note = $("#cc-note", root), forced = false;
       function render() {
         var R = +rP.value, P = +rPad.value;
-        var kids = same.getAttribute("aria-pressed") === "true";
+        var kids = forced;
         var childR = kids ? R : Math.max(0, R - P);
         parent.style.borderRadius = R + "px";
         parent.style.padding = P + "px";
@@ -67,9 +67,12 @@
       }
       rP.addEventListener("input", render);
       rPad.addEventListener("input", render);
-      same.addEventListener("click", function () {
-        same.setAttribute("aria-pressed", same.getAttribute("aria-pressed") === "true" ? "false" : "true");
-        render();
+      segBtns.forEach(function (b) {
+        b.addEventListener("click", function () {
+          forced = b.dataset.cc === "equal";
+          segBtns.forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+          render();
+        });
       });
       render();
     },
@@ -118,11 +121,11 @@
     /* 02 / section eyebrows: stack N sections, toggle eyebrows on/off. */
     "section-eyebrows": function (root) {
       var stage = $("#se-stage", root), count = $("#se-count", root),
-          eye = $("#se-eye", root), oC = $("#se-co", root), live = $(".live", root),
-          note = $("#se-note", root);
+          segBtns = root.querySelectorAll("[data-eye]"), oC = $("#se-co", root), live = $(".live", root),
+          note = $("#se-note", root), eyeOn = true;
       var titles = ["Features", "How it works", "Pricing", "Testimonials", "FAQ"];
       function render() {
-        var n = +count.value, on = eye.getAttribute("aria-pressed") === "true";
+        var n = +count.value, on = eyeOn;
         oC.textContent = n;
         stage.innerHTML = "";
         for (var i = 0; i < n; i++) {
@@ -143,9 +146,12 @@
             : 'No eyebrows, the headings alone carry the hierarchy. Cleanest default.');
       }
       count.addEventListener("input", render);
-      eye.addEventListener("click", function () {
-        eye.setAttribute("aria-pressed", eye.getAttribute("aria-pressed") === "true" ? "false" : "true");
-        render();
+      segBtns.forEach(function (b) {
+        b.addEventListener("click", function () {
+          eyeOn = b.dataset.eye === "on";
+          segBtns.forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+          render();
+        });
       });
       render();
     },
@@ -766,12 +772,16 @@
     /* 11 / accessibility: name + focus + target size on one icon button. */
     "accessibility": function (root) {
       var btn = $("#ax-btn", root), sr = $("#ax-sr", root), srtxt = $("#ax-sr-txt", root),
-          name = $("#ax-name", root), focus = $("#ax-focus", root), size = $("#ax-size", root),
-          oS = $("#ax-so", root), live = $(".live", root), note = $("#ax-note", root);
-      function toggle(b) { b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true"); }
+          nameBtns = root.querySelectorAll("[data-name]"), focusBtns = root.querySelectorAll("[data-focus]"),
+          size = $("#ax-size", root),
+          oS = $("#ax-so", root), live = $(".live", root), note = $("#ax-note", root),
+          named = true, foc = true;
+      function press(btns, key, on) {
+        btns.forEach(function (b) { b.setAttribute("aria-pressed", (b.dataset[key] === "on") === on ? "true" : "false"); });
+      }
       function render() {
-        var named = name.getAttribute("aria-pressed") === "true",
-            foc = focus.getAttribute("aria-pressed") === "true", s = +size.value;
+        var s = +size.value;
+        press(nameBtns, "name", named); press(focusBtns, "focus", foc);
         btn.style.width = btn.style.height = s + "px";
         btn.classList.toggle("show-focus", foc);
         sr.classList.toggle("unnamed", !named);
@@ -786,8 +796,8 @@
               ? 'Named and focusable, but the target is <b>' + s + 'px</b>, under the <b>44px</b> minimum. Grow it.'
               : 'Named, focusable, and ≥ <b>44px</b>. Usable by mouse, keyboard, and assistive tech.'));
       }
-      name.addEventListener("click", function () { toggle(name); render(); });
-      focus.addEventListener("click", function () { toggle(focus); render(); });
+      nameBtns.forEach(function (b) { b.addEventListener("click", function () { named = b.dataset.name === "on"; render(); }); });
+      focusBtns.forEach(function (b) { b.addEventListener("click", function () { foc = b.dataset.focus === "on"; render(); }); });
       size.addEventListener("input", render);
       render();
     },

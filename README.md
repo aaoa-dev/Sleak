@@ -98,5 +98,5 @@ Human readers can use the repo as-is, start at `SKILL.md` or jump to any `refere
 - **UX & states**, drafted, loading/empty/error states, forms, control mechanics ([ux.md](references/ux.md))
 - **Design system foundations**, drafted, tokens/lean sets/atomic composition/elevation ([design-systems.md](references/design-systems.md))
 - **Principles** (process layer), how to decide what to build, research/framing/iteration/feedback ([principles.md](references/principles.md))
-- **Reference library & credits**, Practical UI (base) + supplementary books ([sources.md](references/sources.md))
+- **Reference library & credits**, reference skills ([sources.md](references/sources.md))
 - **Landing demo** (open in a browser), [landing-before.html](examples/landing-before.html) + [landing-after.html](examples/landing-after.html)

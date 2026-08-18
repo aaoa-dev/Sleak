@@ -82,7 +82,7 @@
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · Names, focus, targets</span><span class="live"></span></div>
           <div class="demo-stage"><div class="ax-stage"><button class="ax-btn" id="ax-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button><div class="ax-sr" id="ax-sr"><span class="ax-sr-lbl">reads</span><span id="ax-sr-txt"></span></div></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Accessible name</label><div class="seg"><button type="button" id="ax-name" aria-pressed="true">aria-label</button></div></div><div class="ctl"><label>Visible focus</label><div class="seg"><button type="button" id="ax-focus" aria-pressed="true">focus ring</button></div></div><div class="ctl"><label>Target size <output id="ax-so"></output></label><input id="ax-size" type="range" min="24" max="56" value="44"></div></div>
+          <div class="demo-controls"><div class="ctl"><div class="seg"><button type="button" data-name="on" aria-pressed="true">aria-label</button><button type="button" data-name="off" aria-pressed="false">No label</button></div></div><div class="ctl"><div class="seg"><button type="button" data-focus="on" aria-pressed="true">Focus ring</button><button type="button" data-focus="off" aria-pressed="false">No ring</button></div></div><div class="ctl"><label>Target size <output id="ax-so"></output></label><input id="ax-size" type="range" min="24" max="56" value="44"></div></div>
         <div class="demo-note" id="ax-note"></div>
         </div>
       </div>
@@ -96,7 +96,7 @@
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · Never encode by colour alone</span><span class="live"></span></div>
           <div class="demo-stage"><div class="axc-form"><label class="axc-lbl" for="axc-in">Card number</label><input class="axc-in" id="axc-in" type="text" value="1234 5678 90"><div class="axc-err" id="axc-err"></div></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Error cue</label><div class="seg"><button type="button" data-mode="color" aria-pressed="true">Red border only</button><button type="button" data-mode="cue">Border + message + icon</button></div></div></div>
+          <div class="demo-controls"><div class="ctl"><div class="seg"><button type="button" data-mode="color" aria-pressed="true">Red border only</button><button type="button" data-mode="cue">Border + message + icon</button></div></div></div>
         <div class="demo-note" id="axc-note"></div>
         </div>
       </div>

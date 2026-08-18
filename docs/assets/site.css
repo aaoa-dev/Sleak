@@ -240,6 +240,8 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .seg { display: inline-flex; align-self: flex-start; width: fit-content; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
 .seg button { font: inherit; font-size: .82rem; font-weight: 600; cursor: pointer; border: 0; background: transparent; color: var(--muted); padding: .4rem .9rem; border-radius: 999px; transition: color 140ms var(--ease), background-color 140ms var(--ease); }
 .seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); }
+.ctl-btn { align-self: flex-start; font: inherit; font-size: .82rem; font-weight: 600; cursor: pointer; background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .4rem 1rem; transition: color 140ms var(--ease), background-color 140ms var(--ease), border-color 140ms var(--ease); }
+.ctl-btn:hover { color: var(--ink); border-color: var(--muted); }
 .demo select { font: inherit; font-size: .86rem; padding: .5rem .7rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
 .demo .play { align-self: flex-start; font: inherit; font-family: var(--mono); font-size: .78rem; font-weight: 600; cursor: pointer; color: #fff; background: var(--accent-btn); border: none; border-radius: 6px; padding: .55rem .9rem; }
 
