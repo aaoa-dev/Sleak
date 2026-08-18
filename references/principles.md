@@ -14,13 +14,13 @@ polishing the wrong thing, or hiding work until it's "done."
 
 ## Guess less, decide from evidence
 
-Assumptions are the expensive mistake. Work from a position of strength by talking to users and
-looking at data. Two kinds of research, used at different moments:
+Assumptions are the expensive mistake. Talk to users and look at data. Two kinds of research,
+used at different moments:
 
-- **Generative** (before you design): what do people actually need? Uncovers the real problem.
+- **Generative** (before you design): what do people need? Uncovers the real problem.
 - **Evaluative** (after you have something): does this work for them? Validates or kills it.
 
-The goal is simply to **guess less**, replace one assumption per round with a fact.
+The goal is to **guess less**, replace one assumption per round with a fact.
 
 ## Reframe the problem before solving it
 

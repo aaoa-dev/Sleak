@@ -21,7 +21,7 @@ This pairs with [color.md](color.md) (retinting hue to the accent should not low
 - WCAG **fails** some pairs that are genuinely readable (over-penalizes certain dark-mode text).
 - APCA models real perception but is **not** yet the conformance standard.
 
-Use WCAG for the compliance gate, APCA to tune what's actually legible. When they conflict, satisfy WCAG AA **and** treat a weak APCA score as a real readability problem to fix.
+Use WCAG for the compliance gate, APCA to tune what's legible. When they conflict, satisfy WCAG AA **and** treat a weak APCA score as a real readability problem to fix.
 
 ## Check the rendered pixels, not the tokens (mandatory)
 

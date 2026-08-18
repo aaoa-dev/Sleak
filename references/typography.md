@@ -144,7 +144,7 @@ otherwise. Example, 16px base × **1.250**: `16 → 20 → 25 → 31 → 39` (bo
 - **Large ratios** (≥1.4): simpler/marketing UI, big jumps, few levels.
 - **Responsive:** a large scale that fits desktop can wrap on mobile; drop to a smaller
   ratio at narrow widths.
-- Only create a step you actually use, every unused text style is noise.
+- Only create a step you use, every unused text style is noise.
 
 ## Typeface & weight discipline
 

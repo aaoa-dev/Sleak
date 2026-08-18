@@ -69,7 +69,7 @@
 <li>WCAG <strong>fails</strong> some pairs that are genuinely readable (over-penalizes certain dark-mode text).</li>
 <li>APCA models real perception but is <strong>not</strong> yet the conformance standard.</li>
 </ul>
-<p>Use WCAG for the compliance gate, APCA to tune what's actually legible. When they conflict, satisfy WCAG AA <strong>and</strong> treat a weak APCA score as a real readability problem to fix.</p>
+<p>Use WCAG for the compliance gate, APCA to tune what's legible. When they conflict, satisfy WCAG AA <strong>and</strong> treat a weak APCA score as a real readability problem to fix.</p>
 <h2>Check the rendered pixels, not the tokens (mandatory)</h2>
 <p><strong>Computing contrast from CSS variables or the palette table is not a contrast check.</strong> It tells you what a pair <em>should</em> be, not what the browser actually paints. The number that matters is the <strong>rendered foreground on the rendered background</strong>, after the cascade, inheritance, specificity, opacity, gradients, and overlays have all resolved.</p>
 <p>A pair verified in the abstract can still fail on screen when:</p>

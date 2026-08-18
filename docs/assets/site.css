@@ -3,6 +3,7 @@
 :root {
   --accent-h: 340;  /* raspberry, brand #f05 is hsl(340 100% 50%) */
   --paper:    hsl(var(--accent-h) 10% 96%);
+  --page-bg:  radial-gradient(circle 120vh at 50% top, hsl(var(--accent-h) 90% 95%) 0%, var(--paper) 96%);
   --surface:  hsl(var(--accent-h) 22% 100%);
   --surface-2:hsl(var(--accent-h) 14% 93%);
   --ink:      hsl(var(--accent-h) 20% 12%);
@@ -28,6 +29,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper:    hsl(var(--accent-h) 16% 8%);
+    --page-bg:  radial-gradient(circle 120vh at 50% top, #1F000A 0%, #090104 96%);
     --surface:  hsl(var(--accent-h) 13% 12%);
     --surface-2:hsl(var(--accent-h) 12% 15%);
     --ink:      hsl(var(--accent-h) 14% 93%);
@@ -41,6 +43,7 @@
 }
 :root[data-theme="dark"] {
   --paper:    hsl(var(--accent-h) 16% 8%);
+  --page-bg:  radial-gradient(circle 120vh at 50% top, #1F000A 0%, #090104 96%);
   --surface:  hsl(var(--accent-h) 13% 12%);
   --surface-2:hsl(var(--accent-h) 12% 15%);
   --ink:      hsl(var(--accent-h) 14% 93%);
@@ -57,7 +60,10 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; } }
 body {
   font-family: var(--sans);
-  background: var(--paper);
+  background: var(--page-bg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
   color: var(--ink);
   line-height: 1.54;
   -webkit-font-smoothing: antialiased;
