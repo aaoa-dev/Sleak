@@ -275,14 +275,6 @@ measured shift in fill/elevation is enough. (Motion between states → <a href="
   links and list items, whose tappable area is easy to forget. Never a bare icon with no
   invisible padding.</li>
 </ul>
-      <div class="demo" id="demo-components-target">
-        <div class="demo-inner">
-          <div class="demo-head"><span class="lbl">Try it · Targets ≥ 44px, gap ≥ 8px</span><span class="live"></span></div>
-          <div class="demo-stage"><div class="cpt-stage"><div class="cpt-row" id="cpt-row"><div class="cpt-btn" id="cpt-a"></div><div class="cpt-btn" id="cpt-b"></div></div><div class="cpt-guide" id="cpt-guide"></div></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Target size <output id="cpt-so"></output></label><input id="cpt-size" type="range" min="24" max="56" value="44"></div><div class="ctl"><label>Gap <output id="cpt-go"></output></label><input id="cpt-gap" type="range" min="0" max="28" value="8"></div></div>
-        <div class="demo-note" id="cpt-note"></div>
-        </div>
-      </div>
 <h3>Icon + text</h3>
 <ul>
 <li><strong>Lead with the icon</strong> when it aids scanning / communicates the action (icon before label,
@@ -359,9 +351,9 @@ one-offs, see <a href="design-systems.html">design-systems.md</a>.</p>
 </code></pre>
       <div class="demo" id="demo-components-button">
         <div class="demo-inner">
-          <div class="demo-head"><span class="lbl">Try it · Icon sits in a square</span><span class="live"></span></div>
-          <div class="demo-stage"><div class="cp-ui"><button id="cp-btn"></button><div class="cp-guide" id="cp-guide"></div></div></div>
-          <div class="demo-controls"><div class="ctl"><div class="seg"><button type="button" data-icon="left">Left</button><button type="button" data-icon="right">Right</button><button type="button" data-icon="none">None</button></div></div></div>
+          <div class="demo-head"><span class="lbl">Try it · Icon padding, hug vs fill</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="cp-ui"><div class="cp-box"><button id="cp-btn"></button></div><div class="cp-guide" id="cp-guide"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><div class="seg"><button type="button" data-icon="left">Icon left</button><button type="button" data-icon="right">Icon right</button><button type="button" data-icon="none">No icon</button></div></div><div class="ctl"><div class="seg"><button type="button" data-width="hug">Hug</button><button type="button" data-width="fill">Fill</button></div></div></div>
         <div class="demo-note" id="cp-note"></div>
         </div>
       </div>

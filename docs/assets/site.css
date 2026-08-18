@@ -10,8 +10,14 @@
   --muted:    hsl(var(--accent-h) 9% 38%);
   --faint:    hsl(var(--accent-h) 11% 45%);
   --line:     hsl(var(--accent-h) 16% 87%);
-  --accent:   hsl(var(--accent-h) 100% 50%);
-  --accent-btn: hsl(var(--accent-h) 100% 50%);
+  /* Accent is authored in OKLCH so lightness/chroma stay fixed while only the
+     hue rotates: contrast against white text holds as --accent-h moves, where
+     HSL would swing luminance (dark blue → washed-out yellow). The +35.46° maps
+     the HSL hue onto OKLCH so the default (340) lands exactly on #f05. */
+  --accent-ho: calc(var(--accent-h) + 35.46);   /* HSL hue → OKLCH hue */
+  --accent:   oklch(0.635 0.254 var(--accent-ho));   /* = #f05 at 340 */
+  --accent-btn: oklch(0.635 0.254 var(--accent-ho));
+  --accent-hover: oklch(0.557 0.222 var(--accent-ho));
   --accent-soft: hsl(var(--accent-h) 100% 55% / 0.12);
   --danger: hsl(352 70% 50%);       /* error semantic, hue stays near the raspberry accent family */
   --danger-soft: hsl(352 70% 50% / 0.13);
@@ -29,14 +35,14 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper:    hsl(var(--accent-h) 16% 8%);
-    --page-bg:  radial-gradient(circle 120vh at 50% top, #1F000A 0%, #090104 96%);
+    --page-bg:  radial-gradient(circle 120vh at 50% top, hsl(var(--accent-h) 100% 6%) 0%, hsl(var(--accent-h) 82% 2%) 96%);  /* = #1F000A → #090104 at 340°, now shifts with the hue */
     --surface:  hsl(var(--accent-h) 13% 12%);
     --surface-2:hsl(var(--accent-h) 12% 15%);
     --ink:      hsl(var(--accent-h) 14% 93%);
     --muted:    hsl(var(--accent-h) 9% 64%);
     --faint:    hsl(var(--accent-h) 9% 58%);
     --line:     hsl(var(--accent-h) 12% 22%);
-    --accent:   hsl(var(--accent-h) 100% 66%);
+    --accent:   oklch(0.716 0.191 var(--accent-ho));
     --accent-soft: hsl(var(--accent-h) 95% 62% / 0.16);
     --shadow: 0 1px 2px hsl(0 0% 0% / .3), 0 14px 34px hsl(0 0% 0% / .4);
   }
@@ -50,7 +56,7 @@
   --muted:    hsl(var(--accent-h) 9% 64%);
   --faint:    hsl(var(--accent-h) 9% 52%);
   --line:     hsl(var(--accent-h) 12% 22%);
-  --accent:   hsl(var(--accent-h) 80% 66%);
+  --accent:   oklch(0.716 0.16 var(--accent-ho));
   --accent-soft: hsl(var(--accent-h) 70% 60% / 0.14);
   --shadow: 0 1px 2px hsl(0 0% 0% / .3), 0 14px 34px hsl(0 0% 0% / .4);
 }
@@ -88,7 +94,7 @@ a { color: inherit; }
 .btn-primary { background: var(--accent-btn); color: #fff; padding-right: .75rem; }
 .btn-primary:active { transform: scale(.98); }
 .btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line); }
-@media (hover:hover) { .btn-ghost:hover { background: var(--surface-2); } .btn-primary:hover { background: hsl(var(--accent-h) 100% 42%); } }
+@media (hover:hover) { .btn-ghost:hover { background: var(--surface-2); } .btn-primary:hover { background: var(--accent-hover); } }
 
 /* Header */
 header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 82%, transparent); backdrop-filter: blur(14px) saturate(1.1); border-bottom: 1px solid var(--line); }
@@ -192,8 +198,7 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 #demo-layout-spacing-group                 { --sh: 280px; }
 #demo-components-cards                     { --sh: 300px; }
 #demo-components-weights                   { --sh: 130px; }
-#demo-components-target                    { --sh: 240px; }
-#demo-components-button                    { --sh: 170px; }
+#demo-components-button                    { --sh: 190px; }
 #demo-motion-frequency                     { --sh: 200px; }
 #demo-motion-vary                          { --sh: 210px; }
 #demo-motion                               { --sh: 160px; }
@@ -224,11 +229,18 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .demo-head .lbl { font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); }
 .demo-head .live { font-family: var(--mono); font-size: .78rem; color: var(--accent); font-variant-numeric: tabular-nums; }
 .demo-stage { padding: clamp(1.4rem, 4vw, 2.2rem); background: var(--surface-2); display: grid; place-items: center; gap: 1rem; min-height: var(--sh, 0px); }
-.demo-controls { padding: 1.1rem 1.3rem; display: flex; flex-wrap: wrap; gap: 1.1rem 1.6rem; }
-.demo-controls .ctl { display: flex; flex-direction: column; gap: .45rem; flex: 1 1 190px; min-width: 160px; }
+.demo-controls { padding: 1.1rem 1.3rem; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1.1rem 1.6rem; }
+/* Sliders take the flexible width and shrink to make room; a control that holds
+   a segmented toggle / button / select sizes to its content instead of stretching,
+   so the toggle labels never get squeezed into a wrap. */
+.demo-controls .ctl { display: flex; flex-direction: column; gap: .45rem; flex: 1 1 190px; min-width: 130px; }
+.demo-controls .ctl:has(.seg), .demo-controls .ctl:has(.ctl-btn), .demo-controls .ctl:has(.play), .demo-controls .ctl:has(select) { flex: 0 1 auto; min-width: 0; }
 .demo-controls .ctl > label { font-family: var(--mono); font-size: .72rem; letter-spacing: .03em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
 .demo-controls .ctl output, .demo-val { color: var(--accent); font-variant-numeric: tabular-nums; }
-.demo-note { margin: .9rem 1.2rem 1.05rem; font-size: .86rem; color: var(--muted); display: flex; align-items: center; gap: .6rem; min-height: 2.65rem; min-height: 2lh; }
+/* Plain text flow, NOT flex: a flex container turns each inline <b>/<span> run
+   into its own item (with the row gap between them), which mis-spaces and
+   mis-wraps the sentence. Block flow keeps the emphasis inline where it belongs. */
+.demo-note { margin: .9rem 1.2rem 1.05rem; font-size: .86rem; line-height: 1.5; color: var(--muted); text-wrap: pretty; min-height: 2.65rem; min-height: 2lh; }
 .demo-note b { color: var(--ink); font-weight: 650; }
 
 /* Buttons nested inside a demo card are concentric with it, not pills.
@@ -243,8 +255,8 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .demo input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 
 /* segmented / toggle control */
-.seg { display: inline-flex; align-self: flex-start; width: fit-content; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
-.seg button { font: inherit; font-size: .82rem; font-weight: 600; cursor: pointer; border: 0; background: transparent; color: var(--muted); padding: .4rem .9rem; border-radius: 999px; transition: color 140ms var(--ease), background-color 140ms var(--ease); }
+.seg { display: inline-flex; align-self: flex-start; width: fit-content; max-width: 100%; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
+.seg button { font: inherit; font-size: .82rem; font-weight: 600; white-space: nowrap; cursor: pointer; border: 0; background: transparent; color: var(--muted); padding: .4rem .9rem; border-radius: 999px; transition: color 140ms var(--ease), background-color 140ms var(--ease); }
 .seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); }
 .ctl-btn { align-self: flex-start; font: inherit; font-size: .82rem; font-weight: 600; cursor: pointer; background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .4rem 1rem; transition: color 140ms var(--ease), background-color 140ms var(--ease), border-color 140ms var(--ease); }
 .ctl-btn:hover { color: var(--ink); border-color: var(--muted); }
@@ -274,11 +286,18 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .ia-dot { width: 10px; height: 10px; border-radius: 999px; background: var(--line); }
 /* 04 accent-hue blacks, sample card recolors with the page */
 .ah-demo { width: min(380px, 100%); }
-.ah-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.3rem; box-shadow: var(--shadow); }
-.ah-ct { font-weight: 720; letter-spacing: -.01em; }
-.ah-cb { font-size: .86rem; color: var(--muted); margin: .4rem 0 1.1rem; }
-.ah-cta { height: 38px; padding: 0 1.2rem; border-radius: 6px; background: var(--accent-btn); color: #fff; font-weight: 600; font-size: .85rem; border: 0; cursor: default; }
+/* Concentric by construction: card r16 with 12px padding → the flush CTA child
+   is r4 (16 − 12), a single curve axis on the two bottom corners. */
+.ah-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px; box-shadow: var(--shadow); }
+.ah-ct { font-weight: 720; letter-spacing: -.01em; margin: .3rem .4rem 0; }
+.ah-cb { font-size: .86rem; color: var(--muted); margin: .35rem .4rem .8rem; }
+.ah-cta { display: block; width: 100%; height: 40px; border-radius: 4px; background: var(--accent-btn); color: #fff; font-weight: 600; font-size: .85rem; border: 0; cursor: default; }
 /* 06 typography */
+/* This demo needs to reach a 96ch measure, so it bleeds wider than the default
+   demo and trims its stage side-padding, giving the paragraph room to grow to
+   the widest (too-wide) setting instead of hitting the card edge around ~88ch. */
+.doc #demo-typography { width: min(calc(100% + 78%), calc(100vw - 2.5rem)); }
+#demo-typography .demo-stage { padding-left: clamp(1rem, 2.5vw, 1.4rem); padding-right: clamp(1rem, 2.5vw, 1.4rem); }
 #ty-para { color: var(--muted); font-size: 1rem; line-height: 1.6; transition: max-width 120ms var(--ease); }
 #ty-para b { color: var(--ink); }
 /* 07 layout spacing, landing-page SECTION separation */
@@ -293,9 +312,17 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 #ls-stage[data-sep="space"] { gap: var(--ls-gap, 28px); }
 #ls-stage[data-sep="space"] .ls-sec { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.2rem; }
 /* 08b components, buttons: the icon sits in a square, padding is uneven. */
-#cp-btn { display: inline-flex; align-items: center; gap: .6rem; height: 44px; border-radius: 6px; background: var(--accent-btn); color: #fff; font-weight: 600; font-size: .9rem; border: 0; cursor: pointer; }
-#cp-btn svg { width: 1.1em; height: 1.1em; }
-.cp-guide { margin-top: .8rem; font-family: var(--mono); font-size: .76rem; color: var(--muted); }
+/* Fixed-width dashed "container" so the button lives in a stable box: the box
+   never resizes, so toggling icon/padding/hug-fill never shifts the layout.
+   Hug = button sizes to content (centered, gaps on both sides); Fill = 100%. */
+.cp-ui { width: min(300px, 100%); display: flex; flex-direction: column; gap: .8rem; }
+.cp-box { border: 1px dashed var(--line); border-radius: 10px; padding: 12px; display: flex; justify-content: center; }
+#cp-btn { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; height: 44px; border-radius: 6px; background: var(--accent-btn); color: #fff; font-weight: 600; font-size: .9rem; border: 0; cursor: pointer; transition: padding 120ms var(--ease); }
+#cp-btn.fill { width: 100%; }
+#cp-btn svg { width: 1.1em; height: 1.1em; flex: none; }
+/* Reserve two full lines: the stage centers this block vertically, so if the
+   guide grew from one line to two it would shove the button up. Fixed at 2lh. */
+.cp-guide { font-family: var(--mono); font-size: .76rem; line-height: 1.5; color: var(--muted); text-align: center; min-height: 3em; min-height: 2lh; }
 /* 09 motion */
 #mo-track { width: min(320px,100%); height: 70px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; position: relative; overflow: hidden; }
 #mo-box { position: absolute; top: 12px; left: 16px; width: 46px; height: 46px; border-radius: 4px; background: var(--accent-btn); }
@@ -438,15 +465,27 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .tys-px { flex: none; width: 52px; font-family: var(--mono); font-size: .74rem; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
 .tys-sample { font-weight: 700; letter-spacing: -.01em; color: var(--ink); line-height: 1.1; }
 
-/* 06d typography, size follows viewing distance */
-.tyd { width: min(460px, 100%); display: flex; flex-direction: column; gap: .6rem; align-items: center; }
-.tyd-frame { width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.4rem 1.5rem; box-shadow: var(--shadow); transition: max-width 220ms var(--ease); }
-.tyd[data-dev="phone"] .tyd-frame { max-width: 230px; }
-.tyd[data-dev="laptop"] .tyd-frame { max-width: 400px; }
-.tyd[data-dev="tv"] .tyd-frame { max-width: 480px; }
-.tyd-body { color: var(--ink); font-weight: 500; transition: font-size 220ms var(--ease), line-height 220ms var(--ease); }
-.tyd-meta { color: var(--muted); margin-top: .5rem; font-family: var(--mono); transition: font-size 220ms var(--ease); }
-.tyd-tag { font-family: var(--mono); font-size: .72rem; color: var(--faint); text-transform: uppercase; letter-spacing: .04em; }
+/* 06d typography, size follows viewing distance — static three-up comparison.
+   Same UI on a phone, a laptop, and a TV, each with the body size that device's
+   viewing distance calls for. Device frames sit on one shelf; the captions align
+   underneath. No toggle: the point is the side-by-side jump 16 → 18 → 28px. */
+.tydv { width: 100%; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: center; gap: 1.4rem 2.2rem; }
+.tydv-dev { display: flex; flex-direction: column; align-items: center; }
+.tydv-screen { background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: center; gap: .35rem; box-shadow: var(--shadow); overflow: hidden; }
+.tydv-body { color: var(--ink); font-weight: 650; letter-spacing: -.01em; line-height: 1.2; }
+.tydv-meta { color: var(--muted); font-family: var(--mono); line-height: 1.2; }
+.tydv-cap { margin-top: .7rem; text-align: center; font-family: var(--mono); font-size: .68rem; line-height: 1.55; color: var(--faint); text-transform: uppercase; letter-spacing: .04em; }
+.tydv-cap b { color: var(--ink); font-weight: 700; }
+.tydv-cap .px { color: var(--accent); }
+/* phone: tall, narrow, rounded, with a speaker pill */
+.tydv-phone .tydv-screen { width: 136px; height: 186px; border-radius: 20px; padding: 1.1rem .95rem; position: relative; }
+.tydv-phone .tydv-screen::before { content: ""; position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 34px; height: 4px; border-radius: 999px; background: var(--line); }
+/* laptop: medium screen sitting on a wider base */
+.tydv-laptop .tydv-screen { width: 212px; height: 132px; border-radius: 10px 10px 0 0; padding: 1rem 1.15rem; }
+.tydv-laptop .tydv-base { width: 250px; height: 9px; margin-top: -1px; border-radius: 0 0 9px 9px; background: var(--surface-2); border: 1px solid var(--line); border-top: 0; }
+/* tv: widest screen on a small centered stand */
+.tydv-tv .tydv-screen { width: 248px; height: 146px; border-radius: 10px; padding: 1.15rem 1.35rem; }
+.tydv-tv .tydv-stand { width: 58px; height: 12px; margin-top: 7px; border-radius: 0 0 5px 5px; background: var(--surface-2); border: 1px solid var(--line); border-top: 0; }
 
 /* 07b layout spacing, base-4 scale */
 .lss { width: min(460px, 100%); display: flex; flex-direction: column; gap: .7rem; }
@@ -468,7 +507,10 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .lsg-form[data-model="even"] .lsg-helper { margin-top: 0; }
 
 /* 08a components, whole card is the hit target */
-.cpc-row { display: flex; gap: 1.4rem; align-items: center; width: min(460px, 100%); }
+/* Card on top, click-counter underneath: the counter text changes width as you
+   click, so keeping it beside the card would resize/shove the card (layout shift).
+   Stacked + centered + reserved height, the card never moves. */
+.cpc-row { display: flex; flex-direction: column; gap: .9rem; align-items: center; width: min(320px, 100%); }
 .cpc-card { width: min(300px, 100%); background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1rem; display: flex; flex-direction: column; gap: .5rem; box-shadow: var(--shadow); transition: transform 140ms var(--ease), box-shadow 140ms var(--ease); }
 .cpc-img { height: 64px; border-radius: 0; background: var(--surface-2); transition: background-color 160ms var(--ease); }
 .cpc-t { font-weight: 700; letter-spacing: -.01em; }
@@ -476,8 +518,8 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .cpc-btn { align-self: flex-start; margin-top: .3rem; height: 34px; padding: 0 .9rem; border-radius: 6px; background: var(--accent-btn); color: #fff; font-weight: 600; font-size: .8rem; border: 0; cursor: pointer; }
 .cpc-card[data-mode="card"] { cursor: pointer; }
 @media (hover:hover) { .cpc-card[data-mode="card"]:hover { box-shadow: 0 6px 22px hsl(var(--accent-h) 30% 20% / .16); transform: translateY(-1px); } }
-.cpc-card.nav .cpc-img { background: var(--accent-soft); }
-.cpc-meter { font-family: var(--mono); font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; flex: none; }
+.cpc-card.cpc-flash .cpc-img { background: var(--accent-soft); }
+.cpc-meter { font-family: var(--mono); font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; text-align: center; min-height: 1.4em; }
 .cpc-meter.dead { color: var(--danger); }
 
 /* 08c components, three weights, hierarchy beyond colour */
@@ -487,13 +529,6 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .cpw-s { background: transparent; color: var(--ink); border-color: var(--line); }
 .cpw-t { background: transparent; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
 .cpw-row[data-sec="greyfill"] .cpw-s { background: var(--surface-2); color: var(--faint); border-color: transparent; }
-
-/* 08d components, target size + gap */
-.cpt-stage { width: min(360px, 100%); display: flex; flex-direction: column; gap: .9rem; align-items: center; }
-.cpt-row { display: flex; align-items: center; gap: var(--cpt-gap, 8px); transition: gap 90ms var(--ease); }
-.cpt-btn { position: relative; border-radius: 10px; background: var(--accent-btn); transition: width 90ms var(--ease), height 90ms var(--ease); }
-.cpt-btn::after { content: ""; position: absolute; inset: 0; margin: auto; width: 16px; height: 16px; border-radius: 4px; background: #fff; }
-.cpt-guide { font-family: var(--mono); font-size: .76rem; color: var(--muted); }
 
 /* 09b motion, frequency gate */
 .mof { width: min(440px, 100%); display: flex; flex-direction: column; gap: 1rem; }

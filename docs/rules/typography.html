@@ -76,7 +76,7 @@
       <div class="demo" id="demo-typography">
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · Measure, 45–75ch</span><span class="live"></span></div>
-          <div class="demo-stage"><p id="ty-para"><b>Typography sets the measure.</b> Line length is characters per line; comfortable reading sits between forty-five and seventy-five, where the eye finds each new line without hunting for its start or snapping back too soon.</p></div>
+          <div class="demo-stage"><p id="ty-para"><b>Typography sets the measure.</b> Line length is characters per line; comfortable reading sits between forty-five and seventy-five, where the eye finds each new line without hunting for its start or snapping back too soon. Drag past that window and watch the return sweep get harder: too wide and the eye loses its place between lines, too narrow and it snaps back before the thought lands.</p></div>
           <div class="demo-controls"><div class="ctl"><label>Measure <output id="ty-co"></output></label><input id="ty-ch" type="range" min="24" max="96" value="58"></div></div>
         <div class="demo-note" id="ty-note"></div>
         </div>
@@ -166,10 +166,24 @@
 <p>Think in <strong>angular size</strong> (how large the letter subtends at the eye), not raw pixels. farther screen → larger type for the same legibility.</p>
       <div class="demo" id="demo-typography-distance">
         <div class="demo-inner">
-          <div class="demo-head"><span class="lbl">Try it · Size to viewing distance</span><span class="live"></span></div>
-          <div class="demo-stage"><div class="tyd" id="tyd"><div class="tyd-frame" id="tyd-frame"><div class="tyd-body" id="tyd-body">Body text sized for the screen in front of you, not for a thumbnail of it.</div><div class="tyd-meta" id="tyd-meta">secondary · 13px</div></div><div class="tyd-tag" id="tyd-tag">laptop · ~50–70cm</div></div></div>
-          <div class="demo-controls"><div class="ctl"><div class="seg"><button type="button" data-dev="phone" >Phone · ~35cm</button><button type="button" data-dev="laptop" aria-pressed="true">Laptop · ~60cm</button><button type="button" data-dev="tv">TV · ~2m</button></div></div></div>
-        <div class="demo-note" id="tyd-note"></div>
+          <div class="demo-head"><span class="lbl">Compare · same screen, three distances</span><span class="live">body 16px → 18px → 28px</span></div>
+          <div class="demo-stage"><div class="tydv">
+            <div class="tydv-dev tydv-phone">
+              <div class="tydv-screen"><div class="tydv-body" style="font-size:16px">Reset password</div><div class="tydv-meta" style="font-size:12px">Link sent to your inbox</div></div>
+              <div class="tydv-cap"><b>Phone</b><br>hand · ~35 cm<br><span class="px">body 16px</span></div>
+            </div>
+            <div class="tydv-dev tydv-laptop">
+              <div class="tydv-screen"><div class="tydv-body" style="font-size:18px">Reset password</div><div class="tydv-meta" style="font-size:13px">Link sent to your inbox</div></div>
+              <div class="tydv-base"></div>
+              <div class="tydv-cap"><b>Laptop</b><br>arm · ~60 cm<br><span class="px">body 18px</span></div>
+            </div>
+            <div class="tydv-dev tydv-tv">
+              <div class="tydv-screen"><div class="tydv-body" style="font-size:28px">Reset password</div><div class="tydv-meta" style="font-size:18px">Link sent to your inbox</div></div>
+              <div class="tydv-stand"></div>
+              <div class="tydv-cap"><b>TV</b><br>room · ~2 m<br><span class="px">body 28px</span></div>
+            </div>
+          </div></div>
+        <div class="demo-note" id="tyd-note">Same app, three viewing distances. The <b>same px is not the same visual size</b>: an arm-length laptop needs larger body text than a phone, and a TV across the room larger still. Size for <b>angular size</b> — how big the glyph lands on the eye — not for the raw pixel count.</div>
         </div>
       </div>
 <h3>Responsive scaling</h3>

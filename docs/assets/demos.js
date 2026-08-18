@@ -20,25 +20,29 @@
   }
   var mainTRC = 2.4, sRco = 0.2126729, sGco = 0.7151522, sBco = 0.0721750,
       normBG = 0.56, normTXT = 0.57, revTXT = 0.62, revBG = 0.65,
-      blkThrs = 0.022, scaleBoW = 1.14, scaleWoB = 1.14,
-      loBoWoffset = 0.027, loWoBoffset = 0.027, deltaYmin = 0.0005;
+      blkThrs = 0.022, blkClmp = 1.414, scaleBoW = 1.14, scaleWoB = 1.14,
+      loBoWoffset = 0.027, loWoBoffset = 0.027, loClip = 0.1, deltaYmin = 0.0005;
+  /* APCA uses a plain 2.4 power curve per channel (not the piecewise sRGB). */
   function sRGBtoY(rgb) {
-    var v = rgb.map(function (c) { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, mainTRC); });
-    return v[0] * sRco + v[1] * sGco + v[2] * sBco;
+    return sRco * Math.pow(rgb[0] / 255, mainTRC) + sGco * Math.pow(rgb[1] / 255, mainTRC) + sBco * Math.pow(rgb[2] / 255, mainTRC);
   }
-  function apcaLc(fg, bg) {
-    var Ytxt = sRGBtoY(fg) * normTXT, Ybg = sRGBtoY(bg) * normBG, SAPC = 0;
-    if (Ybg > Ytxt) {
-      SAPC = (Math.pow(Ybg, blkThrs) - Math.pow(Ytxt, blkThrs)) * scaleBoW;
-      if (SAPC < deltaYmin) return 0;
-      if (SAPC > 0.1) SAPC -= loBoWoffset; else SAPC -= loBoWoffset * 10;
-      return SAPC * 100;
+  /* APCA-W3 0.1.9 reference. normTXT/normBG/revTXT/revBG are EXPONENTS; the
+     black levels get a soft clamp; the low end is clipped then offset. Returns
+     signed Lc (negative = light-on-dark); callers take the absolute value. */
+  function apcaLc(txt, bg) {
+    var Ytxt = sRGBtoY(txt), Ybg = sRGBtoY(bg);
+    Ytxt = Ytxt > blkThrs ? Ytxt : Ytxt + Math.pow(blkThrs - Ytxt, blkClmp);
+    Ybg = Ybg > blkThrs ? Ybg : Ybg + Math.pow(blkThrs - Ybg, blkClmp);
+    if (Math.abs(Ybg - Ytxt) < deltaYmin) return 0;
+    var SAPC, Lc;
+    if (Ybg > Ytxt) {                                  // dark text on light bg
+      SAPC = (Math.pow(Ybg, normBG) - Math.pow(Ytxt, normTXT)) * scaleBoW;
+      Lc = SAPC < loClip ? 0 : SAPC - loBoWoffset;
+    } else {                                           // light text on dark bg
+      SAPC = (Math.pow(Ybg, revBG) - Math.pow(Ytxt, revTXT)) * scaleWoB;
+      Lc = SAPC > -loClip ? 0 : SAPC + loWoBoffset;
     }
-    SAPC = (Math.pow(Ybg, revBG) - Math.pow(Ytxt, revTXT)) * scaleWoB;
-    if (SAPC > -deltaYmin) return 0;
-    SAPC *= -1;
-    if (SAPC > 0.1) SAPC -= loWoBoffset; else SAPC -= loWoBoffset * 10;
-    return SAPC * 100;
+    return Lc * 100;
   }
 
   var DEMOS = {
@@ -214,7 +218,7 @@
         docEl.style.setProperty("--accent-h", h);
         oH.textContent = h + "°";
         live.textContent = "--accent-h: " + h + "°";
-        note.innerHTML = 'The accent <b>and</b> every neutral read from <span class="kbd">--accent-h</span>. Drag the hue and the whole page shifts together, the darks stay tinted toward the accent, so nothing clashes.';
+        note.innerHTML = 'The accent <b>and</b> every neutral read from <span class="kbd">--accent-h</span>. The accent is authored in <b>OKLCH</b> with fixed lightness, so as the hue rotates the white-on-accent contrast <b>holds</b> — in HSL the same drag would swing luminance and break it (dark blue, washed-out yellow). The whole page shifts together and the darks stay tinted toward the accent.';
       }
       hue.addEventListener("input", render);
       if (reset) reset.addEventListener("click", function () { hue.value = 340; render(); });
@@ -281,14 +285,14 @@
         card.style.color = "rgb(" + fg.join(",") + ")";
         oH.textContent = h + "°"; oL.textContent = l + "%";
         segBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.pol === pol ? "true" : "false"); });
-        var w = wcag(fg, bg), lc = apcaLc(fg, bg), lcAbs = Math.abs(lc);
-        var passW = w >= 4.5, passA = lcAbs >= 75;
+        var w = wcag(fg, bg), lcAbs = Math.abs(apcaLc(fg, bg)), lcR = Math.round(lcAbs);
+        var passW = w >= 4.5, passA = lcR >= 75;
         var agree = passW === passA;
-        live.textContent = "WCAG " + w.toFixed(1) + ":1 · APCA Lc " + Math.round(lcAbs)
+        live.textContent = "WCAG " + w.toFixed(1) + ":1 · APCA Lc " + lcR
           + " · " + (agree ? "agree" : "disagree");
         note.innerHTML = agree
           ? (passW
-            ? 'Both methods pass: <b>WCAG ' + w.toFixed(1) + ':1</b> ≥ 4.5 and <b>APCA Lc ' + Math.round(lcAbs) + '</b> ≥ 75 for body text.'
+            ? 'Both methods pass: <b>WCAG ' + w.toFixed(1) + ':1</b> ≥ 4.5 and <b>APCA Lc ' + lcR + '</b> ≥ 75 for body text.'
             : 'Both fail. Darken / lighten the background or resize the text to clear both floors.')
           : 'They <b>disagree</b>, WCAG says ' + (passW ? '<b>pass</b>' : '<b>fail</b>') + ', APCA says ' + (passA ? '<b>pass</b>' : '<b>fail</b>')
             + '. This is exactly why Sleak requires <b>both</b>: WCAG is the legal floor, APCA is whether a human can actually read it.';
@@ -327,7 +331,7 @@
           live = $(".live", root), note = $("#ty-note", root);
       function render() {
         var c = +ch.value;
-        para.style.maxWidth = c + "ch";
+        para.style.maxWidth = "min(" + c + "ch, 100%)";
         oC.textContent = c + "ch";
         live.textContent = c + "ch measure";
         var inRange = c >= 45 && c <= 75;
@@ -390,29 +394,8 @@
       render();
     },
 
-    /* 06d / typography: size follows viewing distance, not a global px. */
-    "typography-distance": function (root) {
-      var tyd = $("#tyd", root), body = $("#tyd-body", root), meta = $("#tyd-meta", root),
-          tag = $("#tyd-tag", root), live = $(".live", root), note = $("#tyd-note", root),
-          segBtns = root.querySelectorAll("[data-dev]");
-      var DEVS = {
-        phone: { body: "17px", meta: "12px", tag: "phone · hand length ~35cm", lh: 1.5 },
-        laptop: { body: "18px", meta: "13px", tag: "laptop · arm length ~60cm", lh: 1.55 },
-        tv: { body: "26px", meta: "18px", tag: "tv · ~2m away", lh: 1.45 }
-      };
-      function render(dev) {
-        var d = DEVS[dev];
-        tyd.setAttribute("data-dev", dev);
-        body.style.fontSize = d.body; body.style.lineHeight = d.lh;
-        meta.style.fontSize = d.meta;
-        tag.textContent = d.tag;
-        segBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.dev === dev ? "true" : "false"); });
-        live.textContent = "body " + d.body + " · " + d.tag;
-        note.innerHTML = 'Same app, three distances. The <b>same px is not the same visual size</b>, arm-length desktop body should be bigger than phone, and TV much bigger. Think angular size, not pixel size.';
-      }
-      segBtns.forEach(function (b) { b.addEventListener("click", function () { render(b.dataset.dev); }); });
-      render("laptop");
-    },
+    /* 06d / typography: size follows viewing distance — now a static three-up
+       comparison authored directly in typography.html (no JS state needed). */
 
     /* 07 / layout spacing: full-bleed section rules vs space + surface tier. */
     "layout-spacing": function (root) {
@@ -492,7 +475,7 @@
         total++;
         if (mode === "card" || isBtn) {
           land++;
-          card.classList.add("nav"); setTimeout(function () { card.classList.remove("nav"); }, 260);
+          card.classList.add("cpc-flash"); setTimeout(function () { card.classList.remove("cpc-flash"); }, 260);
           meter.classList.remove("dead");
         } else {
           meter.classList.add("dead");
@@ -503,36 +486,50 @@
       render();
     },
 
-    /* 08b / components, buttons: the icon sits in a square, padding is uneven. */
+    /* 08b / components, buttons: uneven icon-side padding is a HUGGING trick.
+       Toggle icon side (left/right/none) × width (hug/fill). Fill spans the
+       container, so its padding is symmetric — the ½-inset only applies to hug. */
     "components-button": function (root) {
       var btn = $("#cp-btn", root), guide = $("#cp-guide", root), live = $(".live", root),
-          note = $("#cp-note", root), segBtns = root.querySelectorAll("[data-icon]"),
-          mode = "right", TEXT = 24, HALF = 12;
+          note = $("#cp-note", root), iconBtns = root.querySelectorAll("[data-icon]"),
+          widthBtns = root.querySelectorAll("[data-width]"),
+          icon = "right", width = "hug", TEXT = 24, HALF = 12;
       var ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>';
       function render() {
         var lbl = '<span>Get the skill</span>';
-        if (mode === "left") {
-          btn.innerHTML = ICON + lbl;
-          btn.style.paddingLeft = HALF + "px"; btn.style.paddingRight = TEXT + "px";
-          live.textContent = "L " + HALF + " · R " + TEXT;
-          guide.textContent = "left = icon side (½) · right = text side";
-        } else if (mode === "right") {
-          btn.innerHTML = lbl + ICON;
-          btn.style.paddingLeft = TEXT + "px"; btn.style.paddingRight = HALF + "px";
-          live.textContent = "L " + TEXT + " · R " + HALF;
-          guide.textContent = "left = text side · right = icon side (½)";
-        } else {
-          btn.innerHTML = lbl;
+        var fill = width === "fill";
+        btn.classList.toggle("fill", fill);
+        btn.innerHTML = icon === "left" ? ICON + lbl : (icon === "right" ? lbl + ICON : lbl);
+        if (fill) {
+          // Container-width button: padding is symmetric, content centers.
           btn.style.paddingLeft = TEXT + "px"; btn.style.paddingRight = TEXT + "px";
-          live.textContent = "L " + TEXT + " · R " + TEXT;
-          guide.textContent = "no icon · symmetric padding";
+          live.textContent = "fill · L " + TEXT + " · R " + TEXT;
+          guide.textContent = icon === "none"
+            ? "fill · symmetric padding, label centered"
+            : "fill · full width · padding symmetric, content centered";
+        } else if (icon === "left") {
+          btn.style.paddingLeft = HALF + "px"; btn.style.paddingRight = TEXT + "px";
+          live.textContent = "hug · L " + HALF + " · R " + TEXT;
+          guide.textContent = "hug · left = icon side (½) · right = text side";
+        } else if (icon === "right") {
+          btn.style.paddingLeft = TEXT + "px"; btn.style.paddingRight = HALF + "px";
+          live.textContent = "hug · L " + TEXT + " · R " + HALF;
+          guide.textContent = "hug · left = text side · right = icon side (½)";
+        } else {
+          btn.style.paddingLeft = TEXT + "px"; btn.style.paddingRight = TEXT + "px";
+          live.textContent = "hug · L " + TEXT + " · R " + TEXT;
+          guide.textContent = "hug · no icon · symmetric padding";
         }
-        segBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.icon === mode ? "true" : "false"); });
-        note.innerHTML = mode === "none"
-          ? 'No icon → padding is <b>symmetric</b> and the label sits centered.'
-          : 'The icon side is inset about <b>half</b> the text side (' + HALF + ' ≈ ½ · ' + TEXT + '), so the icon sits in a visual square instead of drifting to the edge.';
+        iconBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.icon === icon ? "true" : "false"); });
+        widthBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.width === width ? "true" : "false"); });
+        note.innerHTML = fill
+          ? 'A <b>fill</b> button takes the container’s full width, so its padding is <b>symmetric</b> and the label (with any icon) sits centered. The uneven icon-side inset is a <b>hugging-button</b> trick — it doesn’t apply here.'
+          : (icon === "none"
+            ? 'No icon → padding is <b>symmetric</b> and the label sits centered.'
+            : 'On a <b>hugging</b> button the icon side is inset about <b>half</b> the text side (' + HALF + ' ≈ ½ · ' + TEXT + '), so the icon sits in a visual square instead of drifting to the edge.');
       }
-      segBtns.forEach(function (b) { b.addEventListener("click", function () { mode = b.dataset.icon; render(); }); });
+      iconBtns.forEach(function (b) { b.addEventListener("click", function () { icon = b.dataset.icon; render(); }); });
+      widthBtns.forEach(function (b) { b.addEventListener("click", function () { width = b.dataset.width; render(); }); });
       render();
     },
 
@@ -550,29 +547,6 @@
       }
       segBtns.forEach(function (b) { b.addEventListener("click", function () { render(b.dataset.sec); }); });
       render("outline");
-    },
-
-    /* 08d / components: targets ≥ 44px, adjacent gap ≥ 8px. */
-    "components-target": function (root) {
-      var a = $("#cpt-a", root), b = $("#cpt-b", root), row = $("#cpt-row", root),
-          guide = $("#cpt-guide", root), size = $("#cpt-size", root), gap = $("#cpt-gap", root),
-          oS = $("#cpt-so", root), oG = $("#cpt-go", root), live = $(".live", root),
-          note = $("#cpt-note", root);
-      function render() {
-        var s = +size.value, g = +gap.value;
-        [a, b].forEach(function (el) { el.style.width = el.style.height = s + "px"; });
-        row.style.setProperty("--cpt-gap", g + "px");
-        oS.textContent = s + "px"; oG.textContent = g + "px";
-        live.textContent = s + "px target · " + g + "px gap";
-        guide.textContent = s + "px hit area · " + g + "px between" + (s >= 44 ? " · ≥44 ✓" : " · <44 ✗");
-        note.innerHTML = (s < 44 || g < 8)
-          ? ((s < 44 ? 'Target is <b>' + s + 'px</b>, under the <b>44×44px</b> floor. ' : '')
-            + (g < 8 ? 'The <b>' + g + 'px</b> gap invites mis-taps, keep adjacent targets ≥ 8px apart.' : ''))
-          : 'Targets ≥ <b>44×44px</b> and ≥ <b>8px</b> between them: reliable to hit, touch and pointer alike. The hit area can extend past the glyph via padding.';
-      }
-      size.addEventListener("input", render);
-      gap.addEventListener("input", render);
-      render();
     },
 
     /* 09 / motion budget: duration + easing, play to preview, budget flag. */
