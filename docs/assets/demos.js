@@ -549,119 +549,65 @@
       render("outline");
     },
 
-    /* 09 / motion budget: duration + easing, play to preview, budget flag. */
+    /* 09 / motion budget: hover or click the track for a full-span sweep with
+       the chosen duration + easing; the slider/select retune the recipe live
+       and flag when it blows the 150ms budget. */
     "motion": function (root) {
-      var box = $("#mo-box", root), dur = $("#mo-dur", root), ease = $("#mo-ease", root),
-          play = $("#mo-play", root), oD = $("#mo-do", root), live = $(".live", root),
-          note = $("#mo-note", root), on = false;
+      var track = $("#mo-track", root), dot = $("#mo-box", root), live = $(".live", root),
+          dur = $("#mo-dur", root), ease = $("#mo-ease", root), oD = $("#mo-do", root);
+      if (reduced) root.setAttribute("data-reduced", "true");
       function render() {
         var d = +dur.value;
         oD.textContent = d + " ms";
-        live.textContent = d + "ms · " + ease.options[ease.selectedIndex].text;
-        var over = d > 150;
-        note.innerHTML = reduced
-          ? 'Your system requests <b>reduced motion</b>, a real build would cut this animation entirely.'
-          : (over
-            ? 'Over the <b>150ms</b> budget, UI motion this long starts to feel sluggish. Trim it.'
-            : 'Within the <b>≤150ms</b> budget, quick enough to feel responsive, not decorative.');
+        live.textContent = d + "ms · " + ease.options[ease.selectedIndex].text + (d > 150 ? " · over budget" : "");
+        track.classList.toggle("over", d > 150);
+        track.style.setProperty("--mo-dur", d + "ms");
+        track.style.setProperty("--mo-ease", ease.value);
       }
-      function animate() {
-        if (reduced) return;
-        var d = +dur.value;
-        box.style.transition = "none";
-        box.style.transform = "translateX(0)";
-        void box.offsetWidth;
-        box.style.transition = "transform " + d + "ms " + ease.value;
-        box.style.transform = "translateX(180px)";
-        setTimeout(function () {
-          box.style.transition = "transform " + d + "ms " + ease.value;
-          box.style.transform = "translateX(0)";
-        }, d + 120);
+      function setTravel() {
+        track.style.setProperty("--travel", Math.max(0, track.offsetWidth - dot.offsetWidth - 16) + "px");
       }
       dur.addEventListener("input", render);
       ease.addEventListener("change", render);
-      play.addEventListener("click", animate);
+      track.addEventListener("click", function () { track.classList.toggle("is-on"); });
+      window.addEventListener("resize", setTravel);
       render();
+      setTravel();
     },
 
-    /* 09b / motion: the frequency gate decides whether it animates at all. */
+    /* 09b / motion: frequency gate, three tiers as three tracks. The dot only
+       moves (or not) with the budget its tier allows, on hover or click. */
     "motion-frequency": function (root) {
-      var box = $("#mof-box", root), budget = $("#mof-budget", root), live = $(".live", root),
-          note = $("#mof-note", root), segBtns = root.querySelectorAll("[data-tier]"),
-          tier = "occ", timer = null;
-      var TIER = {
-        high: { label: "100+/day · instant", budget: "No animation. Ever.", note: 'Highest frequency, shortcuts, palette, every keystroke → <b>no animation, ever</b>. Instant beats laggy; an abrupt change is correct.' },
-        occ: { label: "tens/day · ≤150ms", budget: "Near-imperceptible: colour / opacity only.", note: 'Tens of times a day, row hover, list nav → <b>≤150ms colour/opacity</b>, or nothing. No springs.' },
-        rare: { label: "rare · delight budget", budget: "One expressive moment: spring, stagger.", note: 'Rare or first-time, empty-state reveal, success → <b>spend the delight budget</b>: stagger, spring, longer motion is OK. Once per view.' }
-      };
-      function play() {
-        if (timer) clearTimeout(timer);
-        if (reduced) return;
-        box.style.transition = "none"; box.style.transform = "none"; box.style.opacity = "1";
-        void box.offsetWidth;
-        if (tier === "high") {
-          box.style.transition = "none"; box.style.opacity = "0.3";
-          timer = setTimeout(function () { box.style.opacity = "1"; }, 80);
-        } else if (tier === "occ") {
-          box.style.transition = "opacity 120ms ease-out"; box.style.opacity = "0.35";
-          timer = setTimeout(function () { box.style.opacity = "1"; }, 180);
-        } else {
-          box.style.transition = "transform 260ms cubic-bezier(.22,1,.36,1), opacity 260ms ease-out";
-          box.style.transform = "translateX(120px) scale(1.06)";
-          timer = setTimeout(function () { box.style.transform = "translateX(0) scale(1)"; }, 420);
-        }
+      var rows = root.querySelectorAll(".mt"), live = $(".live", root);
+      if (reduced) root.setAttribute("data-reduced", "true");
+      function setTravel() {
+        rows.forEach(function (t) {
+          var d = t.querySelector(".mt-dot");
+          t.style.setProperty("--travel", Math.max(0, t.offsetWidth - d.offsetWidth - 16) + "px");
+        });
       }
-      function render() {
-        var t = TIER[tier];
-        segBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.tier === tier ? "true" : "false"); });
-        live.textContent = t.label;
-        budget.innerHTML = '<span class="mof-budget-lbl">budget</span> ' + t.budget;
-        note.innerHTML = t.note;
-        play();
-      }
-      segBtns.forEach(function (b) { b.addEventListener("click", function () { tier = b.dataset.tier; render(); }); });
-      box.addEventListener("click", play);
-      render();
+      live.textContent = "hover or click a track to preview its budget";
+      rows.forEach(function (t) { t.addEventListener("click", function () { t.classList.toggle("is-on"); }); });
+      window.addEventListener("resize", setTravel);
+      setTravel();
     },
 
-    /* 09c / motion: vary the recipe by role; don't copy one spring everywhere. */
-    "motion-vary": function (root) {
-      var grid = $("#mov-grid", root), live = $(".live", root), note = $("#mov-note", root),
-          segBtns = root.querySelectorAll("[data-mode]");
-      function render(mode) {
-        grid.setAttribute("data-mode", mode);
-        segBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.mode === mode ? "true" : "false"); });
-        live.textContent = mode === "vary" ? "one expressive hover max" : "same spring on every card";
-        note.innerHTML = mode === "vary"
-          ? 'Each element moves <b>by role</b>: the primary button presses, a hero card lifts subtly, the rest are static or colour-only. One expressive moment per view.'
-          : 'The <b>same spring on every card and button</b>, hover anywhere and everything bounces. When everything moves, nothing feels special. Pick one delight; keep the rest quiet.';
-      }
-      segBtns.forEach(function (b) { b.addEventListener("click", function () { render(b.dataset.mode); }); });
-      render("vary");
-    },
-
-    /* 09d / motion: animate transform + opacity, never width/left. */
+    /* 09d / motion: animate transform + opacity only, never width/left.
+       Same start and end, different property: transform glides, width
+       stretches by recomputing layout every frame. */
     "motion-props": function (root) {
-      var gpu = $("#mop-gpu", root), jank = $("#mop-jank", root), play = $("#mop-play", root),
-          live = $(".live", root), note = $("#mop-note", root), timer = null;
-      function animate() {
-        if (timer) clearTimeout(timer);
-        if (reduced) return;
-        gpu.style.transition = "none"; jank.style.transition = "none";
-        gpu.style.transform = "translateX(0)"; jank.style.left = "0px";
-        void gpu.offsetWidth;
-        gpu.style.transition = "transform 420ms cubic-bezier(.22,1,.36,1)";
-        jank.style.transition = "left 420ms cubic-bezier(.22,1,.36,1)";
-        gpu.style.transform = "translateX(176px)";
-        jank.style.left = "176px";
-        timer = setTimeout(function () {
-          gpu.style.transform = "translateX(0)"; jank.style.left = "0px";
-        }, 560);
+      var wrap = $(".mop", root), live = $(".live", root);
+      if (reduced) root.setAttribute("data-reduced", "true");
+      function setTravel() {
+        wrap.querySelectorAll(".mt").forEach(function (t) {
+          var d = t.querySelector(".mt-dot");
+          t.style.setProperty("--travel", Math.max(0, t.offsetWidth - d.offsetWidth - 16) + "px");
+        });
       }
-      play.addEventListener("click", animate);
-      animate();
-      live.textContent = "same distance, same easing";
-      note.innerHTML = 'Both travel 176px in 420ms with the same easing. <b>transform</b> runs on the compositor, smooth. <b>left</b> forces layout + repaint every frame, janky. Never animate width, height, margin, top, or left.';
+      live.textContent = "transform glides · width reflows layout each frame";
+      wrap.addEventListener("click", function () { wrap.classList.toggle("is-on"); });
+      window.addEventListener("resize", setTravel);
+      setTravel();
     },
 
     /* 10 / content & copy: fluff vs verb + object, toggle the same UI's labels. */

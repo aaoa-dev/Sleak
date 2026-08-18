@@ -111,9 +111,7 @@ transition</strong> over a hard cut.</p>
       <div class="demo" id="demo-motion-frequency">
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · Frequency gates motion</span><span class="live"></span></div>
-          <div class="demo-stage"><div class="mof"><div class="mof-demo" id="mof-demo"><div class="mof-box" id="mof-box"></div></div><div class="mof-budget" id="mof-budget"></div></div></div>
-          <div class="demo-controls"><div class="ctl"><div class="seg"><button type="button" data-tier="high">100+/day · shortcut, palette</button><button type="button" data-tier="occ" aria-pressed="true">Tens/day · row hover</button><button type="button" data-tier="rare">Rare · empty-state reveal</button></div></div></div>
-        <div class="demo-note" id="mof-note"></div>
+          <div class="demo-stage"><div class="mof"><div class="mof-row"><span class="mof-tag">100+/day<br>instant</span><div class="mt" data-tier="high"><div class="mt-dot"></div></div></div><div class="mof-row"><span class="mof-tag">tens/day<br>≤150ms</span><div class="mt" data-tier="occ"><div class="mt-dot"></div></div></div><div class="mof-row"><span class="mof-tag">rare<br>delight</span><div class="mt" data-tier="rare"><div class="mt-dot"></div></div></div></div></div>
         </div>
       </div>
 <h2>Step 2, Name the purpose</h2>
@@ -170,14 +168,6 @@ transition</strong> over a hard cut.</p>
 </tbody>
 </table></div>
 <p><strong>Rule of thumb:</strong> pick <strong>one</strong> element per view for expressive hover/spring. Everything else stays subtle or static.</p>
-      <div class="demo" id="demo-motion-vary">
-        <div class="demo-inner">
-          <div class="demo-head"><span class="lbl">Try it · Vary the recipe, don't copy it</span><span class="live"></span></div>
-          <div class="demo-stage"><div class="mov-grid" id="mov-grid"><button type="button" class="mov-btn" id="mov-btn">Primary</button><div class="mov-card" id="mov-c1"><div class="mov-cb"></div></div><div class="mov-card" id="mov-c2"><div class="mov-cb"></div></div><div class="mov-card" id="mov-c3"><div class="mov-cb"></div></div></div></div>
-          <div class="demo-controls"><div class="ctl"><div class="seg"><button type="button" data-mode="vary" aria-pressed="true">Vary by role</button><button type="button" data-mode="copy">Same spring everywhere</button></div></div></div>
-        <div class="demo-note" id="mov-note"></div>
-        </div>
-      </div>
 <h3>Springs, scarce</h3>
 <p>Springs feel alive but <strong>add up fast</strong>. Reserve for:</p>
 <ul>
@@ -261,9 +251,8 @@ transition</strong> over a hard cut.</p>
       <div class="demo" id="demo-motion">
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · Duration + easing within budget</span><span class="live"></span></div>
-          <div class="demo-stage"><div id="mo-track"><div id="mo-box"></div></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Duration <output id="mo-do"></output></label><input id="mo-dur" type="range" min="0" max="600" step="10" value="140"></div><div class="ctl"><label>Easing</label><select id="mo-ease"><option value="cubic-bezier(.22,1,.36,1)">ease-out (expressive)</option><option value="ease">ease</option><option value="linear">linear</option><option value="cubic-bezier(.34,1.56,.64,1)">overshoot</option></select></div><div class="ctl"><label>Preview</label><button type="button" class="play" id="mo-play">Play ▶</button></div></div>
-        <div class="demo-note" id="mo-note"></div>
+          <div class="demo-stage"><div class="mt" id="mo-track"><div class="mt-dot" id="mo-box"></div></div></div>
+          <div class="demo-controls"><div class="ctl"><label>Duration <output id="mo-do"></output></label><input id="mo-dur" type="range" min="0" max="400" step="10" value="150"></div><div class="ctl"><span class="sel"><select id="mo-ease"><option value="cubic-bezier(.22,1,.36,1)">ease-out (expressive)</option><option value="ease">ease</option><option value="linear">linear</option><option value="cubic-bezier(.34,1.56,.64,1)">overshoot</option></select><svg class="sel-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></div></div>
         </div>
       </div>
 <h2>Step 5, Properties and tools</h2>
@@ -278,9 +267,7 @@ transition</strong> over a hard cut.</p>
       <div class="demo" id="demo-motion-props">
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · Animate transform + opacity only</span><span class="live"></span></div>
-          <div class="demo-stage"><div class="mop"><div class="mop-track"><div class="mop-box" id="mop-gpu"></div></div><div class="mop-track"><div class="mop-box" id="mop-jank"></div></div><div class="mop-lbl"><span>transform / opacity</span><span>width / left</span></div></div></div>
-          <div class="demo-controls"><div class="ctl"><label>Preview</label><button type="button" class="play" id="mop-play">Play ▶</button></div></div>
-        <div class="demo-note" id="mop-note"></div>
+          <div class="demo-stage"><div class="mop"><div class="mt"><div class="mt-dot" id="mop-gpu"></div></div><div class="mt"><div class="mt-dot" id="mop-jank"></div></div><div class="mop-lbl"><span>transform · opacity</span><span>left · width</span></div></div></div>
         </div>
       </div>
 <h2>Stagger, infrequent only</h2>

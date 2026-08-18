@@ -200,7 +200,6 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 #demo-components-weights                   { --sh: 130px; }
 #demo-components-button                    { --sh: 190px; }
 #demo-motion-frequency                     { --sh: 200px; }
-#demo-motion-vary                          { --sh: 210px; }
 #demo-motion                               { --sh: 160px; }
 #demo-motion-props                         { --sh: 220px; }
 #demo-content-copy                         { --sh: 220px; }
@@ -260,8 +259,11 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); }
 .ctl-btn { align-self: flex-start; font: inherit; font-size: .82rem; font-weight: 600; cursor: pointer; background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .4rem 1rem; transition: color 140ms var(--ease), background-color 140ms var(--ease), border-color 140ms var(--ease); }
 .ctl-btn:hover { color: var(--ink); border-color: var(--muted); }
-.demo select { font: inherit; font-size: .86rem; padding: .5rem .7rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
-.demo .play { align-self: flex-start; font: inherit; font-family: var(--mono); font-size: .78rem; font-weight: 600; cursor: pointer; color: #fff; background: var(--accent-btn); border: none; border-radius: 6px; padding: .55rem .9rem; }
+.demo select { font: inherit; font-size: .86rem; padding: .5rem 2rem .5rem .7rem; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); -webkit-appearance: none; appearance: none; }
+.sel { position: relative; display: inline-block; align-self: flex-start; }
+.sel-arrow { position: absolute; right: .7rem; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: var(--muted); pointer-events: none; }
+.demo .play { align-self: flex-start; display: inline-flex; align-items: center; gap: .5rem; font: inherit; font-family: var(--mono); font-size: .78rem; font-weight: 600; line-height: 1; cursor: pointer; color: #fff; background: var(--accent-btn); border: none; border-radius: 6px; padding: .55rem .55rem .55rem 1.1rem; }
+.demo .play svg { flex: none; width: 1em; height: 1em; }
 
 /* ---------- Per-demo stage internals ---------- */
 /* 01 concentric */
@@ -324,8 +326,15 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
    guide grew from one line to two it would shove the button up. Fixed at 2lh. */
 .cp-guide { font-family: var(--mono); font-size: .76rem; line-height: 1.5; color: var(--muted); text-align: center; min-height: 3em; min-height: 2lh; }
 /* 09 motion */
-#mo-track { width: min(320px,100%); height: 70px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; position: relative; overflow: hidden; }
-#mo-box { position: absolute; top: 12px; left: 16px; width: 46px; height: 46px; border-radius: 4px; background: var(--accent-btn); }
+/* Shared track/dot stage: a pill track with a circular dot, even 8px insets.
+   Hovering (or clicking, via .is-on) sweeps the dot across the full track
+   with the recipe each demo teaches. --travel is set in px by demos.js. */
+.mt { height: 56px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; position: relative; overflow: hidden; }
+.mt-dot { position: absolute; top: 7px; left: 7px; width: 40px; height: 40px; border-radius: 999px; background: var(--accent-btn); }
+#mo-track { width: min(440px, 100%); }
+#mo-track .mt-dot { transition: transform var(--mo-dur, 150ms) var(--mo-ease, cubic-bezier(.22, 1, .36, 1)); }
+#mo-track:hover .mt-dot, #mo-track.is-on .mt-dot { transform: translateX(var(--travel)); }
+#mo-track.over { border-color: var(--danger); }
 /* 10 content copy */
 .co-ui { width: min(420px,100%); display: flex; flex-direction: column; gap: .7rem; }
 .co-h { font-weight: 720; font-size: 1.1rem; letter-spacing: -.02em; }
@@ -530,30 +539,27 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .cpw-t { background: transparent; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
 .cpw-row[data-sec="greyfill"] .cpw-s { background: var(--surface-2); color: var(--faint); border-color: transparent; }
 
-/* 09b motion, frequency gate */
-.mof { width: min(440px, 100%); display: flex; flex-direction: column; gap: 1rem; }
-.mof-demo { height: 74px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; display: flex; align-items: center; padding: 0 1rem; cursor: pointer; }
-.mof-box { width: 46px; height: 46px; border-radius: 6px; background: var(--accent-btn); }
-.mof-budget { font-family: var(--mono); font-size: .8rem; color: var(--ink); }
-.mof-budget-lbl { font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+/* 09b motion, frequency gate: three tiers as three tracks, hover/click to preview */
+.mof { width: min(560px, 100%); display: flex; flex-direction: column; gap: 1rem; }
+.mof-row { display: flex; align-items: center; gap: 1rem; }
+.mof-tag { flex: none; width: 116px; text-align: right; font-family: var(--mono); font-size: .7rem; line-height: 1.35; letter-spacing: .02em; color: var(--muted); }
+.mof .mt { flex: 1 1 auto; min-width: 0; }
+.mof .mt-dot { transition: opacity 120ms ease-out; }
+.mof .mt[data-tier="high"] .mt-dot { transition: none; }
+.mof .mt[data-tier="occ"]:hover .mt-dot, .mof .mt[data-tier="occ"].is-on .mt-dot { opacity: .3; }
+.mof .mt[data-tier="rare"] .mt-dot { transition: transform 260ms cubic-bezier(.34, 1.56, .64, 1); }
+.mof .mt[data-tier="rare"]:hover .mt-dot, .mof .mt[data-tier="rare"].is-on .mt-dot { transform: translateX(var(--travel)) scale(1.06); }
 
-/* 09c motion, vary the recipe */
-.mov-grid { width: min(440px, 100%); display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
-.mov-btn { grid-column: 1 / -1; height: 40px; border-radius: 6px; background: var(--accent-btn); color: #fff; font-weight: 600; font-size: .86rem; border: 0; cursor: pointer; }
-.mov-card { height: 64px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); display: grid; place-items: center; }
-.mov-cb { width: 26px; height: 26px; border-radius: 8px; background: var(--accent-soft); }
-.mov-grid[data-mode="vary"] .mov-card { transition: background-color 140ms var(--ease), border-color 140ms var(--ease); }
-@media (hover:hover) { .mov-grid[data-mode="vary"] .mov-card:hover { background: var(--surface-2); } }
-.mov-grid[data-mode="vary"] .mov-btn { transition: transform 100ms var(--ease); }
-.mov-grid[data-mode="vary"] .mov-btn:active { transform: scale(.97); }
-.mov-grid[data-mode="copy"] .mov-card, .mov-grid[data-mode="copy"] .mov-btn { transition: transform 220ms cubic-bezier(.34, 1.56, .64, 1); }
-@media (hover:hover) { .mov-grid[data-mode="copy"] .mov-card:hover, .mov-grid[data-mode="copy"] .mov-btn:hover { transform: scale(1.05); } }
-
-/* 09d motion, transform + opacity only */
+/* 09d motion, transform + opacity only: two tracks, same sweep, different property */
 .mop { width: min(440px, 100%); display: flex; flex-direction: column; gap: .6rem; }
-.mop-track { height: 44px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; position: relative; }
-.mop-box { position: absolute; top: 8px; left: 8px; width: 28px; height: 28px; border-radius: 5px; background: var(--accent-btn); }
+.mop .mt .mt-dot { transition: transform 420ms cubic-bezier(.22, 1, .36, 1); }
+.mop .mt + .mt .mt-dot { transition: width 420ms cubic-bezier(.22, 1, .36, 1); }
+.mop:hover .mt .mt-dot, .mop.is-on .mt .mt-dot { transform: translateX(var(--travel)); }
+.mop:hover .mt + .mt .mt-dot, .mop.is-on .mt + .mt .mt-dot { transform: none; width: calc(40px + var(--travel)); }
 .mop-lbl { display: flex; justify-content: space-between; font-family: var(--mono); font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+
+/* reduced motion: previews go static */
+.demo[data-reduced="true"] .mt-dot { transition: none !important; transform: none !important; opacity: 1 !important; left: 7px !important; width: 40px !important; }
 
 /* 10b content copy, fact + fix errors */
 .coe-msg { width: min(420px, 100%); display: flex; gap: .8rem; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem; box-shadow: var(--shadow); }
