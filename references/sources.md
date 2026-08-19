@@ -14,3 +14,13 @@ implementation depth: Sleak owns *when not to* and *avoiding repetition*; they o
   ([JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman)), action-first with no buried
   answers; drop filler, keep substance. Feed the anti-fluff logic in
   [`content-copy.md`](content-copy.md).
+- **unslop** (`cursor/plugins`, `pstack/skills/unslop`), catalogue of AI-tell prose patterns
+  (puffery, fancy synonyms for "is," forced triads, chatbot tics) and how to add voice back.
+  Adapted for docs/landing/marketing prose in [`content-copy.md`](content-copy.md#cut-ai-tell-prose-docs-landing-pages-marketing).
+- **technical-writing** (`cursor/plugins`, `pstack/skills/technical-writing`), a layered writing
+  standard (Diátaxis document modes, Google developer style, STE instruction rules, Global
+  English sentence clarity). Adapted for maintaining Sleak's own docs in
+  [`writing-docs.md`](writing-docs.md).
+- **grilling** (`mattpocock/skills`, `skills/productivity/grilling`), round-based interview
+  mechanic that maps a decision into a tree and works its frontier one round at a time. Adapted
+  as the brief step in [`principles.md`](principles.md#grill-the-brief-before-you-design).

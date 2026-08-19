@@ -115,6 +115,7 @@ See [references/content-copy.md](references/content-copy.md).
 - [ ] Time and limits are specific or omitted, not "quick" / "easy"
 - [ ] Visible lists capped at 5 or split into ranked groups
 - [ ] No generic marketing voice (seamless, empower, journey, etc.)
+- [ ] Surrounding prose (landing copy, docs, README) is free of AI-tell patterns: puffery, fancy "is" synonyms, forced triads, bold-label-as-fake-structure, chatbot tics
 - [ ] Title + primary button alone make the screen's purpose clear
 
 ## Accessibility

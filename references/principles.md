@@ -22,6 +22,28 @@ used at different moments:
 
 The goal is to **guess less**, replace one assumption per round with a fact.
 
+## Grill the brief before you design
+
+"Guess less" above is the principle; this is the mechanic. Before the first pixel, map the
+brief as a **decision tree**: every open question branches into the questions that hang off
+its answer. Adapted from [grilling](sources.md#external-craft-skills).
+
+Work it in **rounds**, not one long list:
+
+1. Find the **frontier**, every question whose prerequisites are already settled, the ones
+   answerable *now* without guessing at something not yet decided. A question that depends on
+   another still-open question waits for a later round.
+2. Ask the whole frontier at once. Number each question and give a recommended answer, so the
+   other person is reacting to a position, not staring at a blank field.
+3. Each answer reshapes the tree. Settled decisions push the frontier outward and unblock what
+   depended on them. Recompute, ask the next round.
+4. Stop when the frontier is empty, every branch visited, nothing silently assumed. Don't start
+   building until then.
+
+Finding **facts** (existing brand guidelines, the current component inventory, what the
+competitor actually does) is your job, look them up, don't spend a round asking for them. Put
+only real **decisions**, the calls only the stakeholder can make, in front of them.
+
 ## Reframe the problem before solving it
 
 The sharpest lever is the **problem statement**, not the solution. First empathize, collect
@@ -75,6 +97,7 @@ follow the craft rules.
 | Do | Don't |
 |----|-------|
 | Replace assumptions with research each round | Design from opinion and hope |
+| Grill the brief in rounds, one recommended answer each | Ask everything at once, or nothing, and assume the rest |
 | Reframe the problem before solving it | Jump straight to a solution |
 | Agree the story/North Star first | Start in the pixel editor |
 | Sketch many low-fi options | Polish one idea too early |
@@ -86,6 +109,6 @@ follow the craft rules.
 ## Notes
 
 - This is the one **process/methodology** layer in Sleak; it is deliberately distinct from the
-  visual-craft rules. Credits for the source books are in the Sources reference (`sources.md`).
+  visual-craft rules.
 - Not every project needs every step, treat these as the moves available when a decision is
   bigger than "what should this look like?"

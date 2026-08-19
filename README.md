@@ -25,7 +25,8 @@ Sleak/
 │   ├── section-eyebrows.md  # limit kickers / overlines (core)
 │   ├── sources.md           # reference library & credits
 │   ├── typography.md
-│   └── ux.md                # loading/empty/error states, forms
+│   ├── ux.md                # loading/empty/error states, forms
+│   └── writing-docs.md      # how Sleak's own docs get written (not a product rule)
 ├── examples/
 │   ├── before-after.md
 │   ├── landing-before.html   # natural default build (no skill applied)
@@ -98,5 +99,6 @@ Human readers can use the repo as-is, start at `SKILL.md` or jump to any `refere
 - **UX & states**, drafted, loading/empty/error states, forms, control mechanics ([ux.md](references/ux.md))
 - **Design system foundations**, drafted, tokens/lean sets/atomic composition/elevation ([design-systems.md](references/design-systems.md))
 - **Principles** (process layer), how to decide what to build, research/framing/iteration/feedback ([principles.md](references/principles.md))
+- **Writing Sleak's own docs** (meta, not a product rule), Diátaxis mode and sentence clarity for this repo's own material ([writing-docs.md](references/writing-docs.md))
 - **Reference library & credits**, reference skills ([sources.md](references/sources.md))
 - **Landing demo** (open in a browser), [landing-before.html](examples/landing-before.html) + [landing-after.html](examples/landing-after.html)

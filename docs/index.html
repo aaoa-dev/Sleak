@@ -12,8 +12,14 @@
     --muted:    hsl(var(--accent-h) 9% 38%);
     --faint:    hsl(var(--accent-h) 11% 45%);   /* WCAG AA on paper (4.8:1) */
     --line:     hsl(var(--accent-h) 16% 87%);
-    --accent:   hsl(var(--accent-h) 100% 50%);   /* #f05 raspberry (brand) */
-    --accent-btn: hsl(var(--accent-h) 100% 50%); /* #f05, brand color kept exact (white text ≈ 3.9:1, an intentional brand override of AA) */
+    /* Accent is authored in OKLCH so lightness/chroma stay fixed while only the
+       hue rotates: contrast against white text holds as --accent-h moves, where
+       HSL would swing luminance (dark blue → washed-out yellow). The +35.46° maps
+       the HSL hue onto OKLCH so the default (340) lands exactly on #f05. */
+    --accent-ho: calc(var(--accent-h) + 35.46);   /* HSL hue → OKLCH hue */
+    --accent:   oklch(0.635 0.254 var(--accent-ho));   /* = #f05 at 340 */
+    --accent-btn: oklch(0.635 0.254 var(--accent-ho));
+    --accent-hover: oklch(0.557 0.222 var(--accent-ho));
     --accent-soft: hsl(var(--accent-h) 100% 55% / 0.12);
     --shadow: 0 1px 2px hsl(var(--accent-h) 30% 20% / .05), 0 12px 30px hsl(var(--accent-h) 30% 20% / .08);
 
@@ -26,31 +32,36 @@
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, sans-serif;
     color-scheme: light dark;
   }
+  /* Dark-mode surface ramp preserves the light-mode luminance ranking rather
+     than reordering it: line (border) is dimmest in light mode and stays
+     dimmest in dark mode; surface (card) is brightest in light mode and stays
+     brightest in dark mode. Rank, darkest → lightest, both modes:
+     line < surface-2 < paper < surface. */
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --paper:    hsl(var(--accent-h) 16% 8%);
-      --page-bg:  radial-gradient(circle 120vh at 50% top, #1F000A 0%, #090104 96%);
-      --surface:  hsl(var(--accent-h) 13% 12%);
-      --surface-2:hsl(var(--accent-h) 12% 15%);
+      --paper:    hsl(var(--accent-h) 16% 12%);
+      --page-bg:  radial-gradient(circle 120vh at 50% top, hsl(var(--accent-h) 100% 6%) 0%, hsl(var(--accent-h) 82% 2%) 96%);
+      --surface:  hsl(var(--accent-h) 13% 15%);
+      --surface-2:hsl(var(--accent-h) 12% 9%);
       --ink:      hsl(var(--accent-h) 14% 93%);
       --muted:    hsl(var(--accent-h) 9% 64%);
       --faint:    hsl(var(--accent-h) 9% 58%);
-      --line:     hsl(var(--accent-h) 12% 22%);
-      --accent:   hsl(var(--accent-h) 100% 66%);
+      --line:     hsl(var(--accent-h) 12% 6%);
+      --accent:   oklch(0.716 0.191 var(--accent-ho));
       --accent-soft: hsl(var(--accent-h) 95% 62% / 0.16);
       --shadow: 0 1px 2px hsl(0 0% 0% / .3), 0 14px 34px hsl(0 0% 0% / .4);
     }
   }
   :root[data-theme="dark"] {
-    --paper:    hsl(var(--accent-h) 16% 8%);
-    --page-bg:  radial-gradient(circle 120vh at 50% top, #1F000A 0%, #090104 96%);
-    --surface:  hsl(var(--accent-h) 13% 12%);
-    --surface-2:hsl(var(--accent-h) 12% 15%);
+    --paper:    hsl(var(--accent-h) 16% 12%);
+    --page-bg:  radial-gradient(circle 120vh at 50% top, hsl(var(--accent-h) 100% 6%) 0%, hsl(var(--accent-h) 82% 2%) 96%);
+    --surface:  hsl(var(--accent-h) 13% 15%);
+    --surface-2:hsl(var(--accent-h) 12% 9%);
     --ink:      hsl(var(--accent-h) 14% 93%);
     --muted:    hsl(var(--accent-h) 9% 64%);
-    --faint:    hsl(var(--accent-h) 9% 52%);
-    --line:     hsl(var(--accent-h) 12% 22%);
-    --accent:   hsl(var(--accent-h) 80% 66%);
+    --faint:    hsl(var(--accent-h) 9% 58%);
+    --line:     hsl(var(--accent-h) 12% 6%);
+    --accent:   oklch(0.716 0.16 var(--accent-ho));
     --accent-soft: hsl(var(--accent-h) 70% 60% / 0.14);
     --shadow: 0 1px 2px hsl(0 0% 0% / .3), 0 14px 34px hsl(0 0% 0% / .4);
   }
@@ -90,7 +101,7 @@
   .btn-primary { background: var(--accent-btn); color: #fff; padding-right: .75rem; } /* trailing icon → icon side = vertical inset (square); text side stays ~2× */
   .btn-primary:active { transform: scale(.98); }
   .btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line); }
-  @media (hover:hover) { .btn-ghost:hover { background: var(--surface-2); } .btn-primary:hover { background: hsl(var(--accent-h) 100% 42%); } }
+  @media (hover:hover) { .btn-ghost:hover { background: var(--surface-2); } .btn-primary:hover { background: var(--accent-hover); } }
 
   /* Header */
   header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 82%, transparent); backdrop-filter: blur(14px) saturate(1.1); border-bottom: 1px solid transparent; }
@@ -159,7 +170,7 @@
   .rule .rn { position: absolute; left: -1rem; bottom: -2rem; z-index: -1; line-height: 1; font-family: var(--mono); font-weight: 950; font-size: 120px; color: var(--faint); opacity: .06; pointer-events: none; }
   .rule h3 { font-size: 1.04rem; letter-spacing: -.01em; }
   .rule p { font-size: .9rem; color: var(--muted); }
-  .rule .formula { margin-top: auto; font-family: var(--mono); font-size: .8rem; color: var(--accent); background: var(--accent-soft); border-radius: 8px; padding: .35rem .55rem; align-self: flex-start; }
+  .rule .formula { margin-top: auto; font-family: var(--mono); font-size: .8rem; color: var(--muted); background: var(--surface-2); border-radius: 8px; padding: .35rem .55rem; align-self: flex-start; }
 
   /* Process, real 4-step sequence, numbering earns its place */
   .steps { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); counter-reset: s; }
@@ -169,7 +180,7 @@
   .step p { font-size: .9rem; color: var(--muted); }
 
   /* Why, creator note, a contained quote card sized to its content (no empty half) */
-  .why { width: fit-content; max-width: 100%; margin-inline: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: clamp(1.8rem, 4vw, 3rem); box-shadow: var(--shadow); }
+  .why { width: fit-content; max-width: 100%; margin-inline: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); padding: clamp(1.8rem, 4vw, 3rem); box-shadow: var(--shadow); }
   .why blockquote { max-width: 42ch; font-size: clamp(1.25rem, .95rem + 1.1vw, 1.6rem); line-height: 1.42; letter-spacing: -.015em; font-weight: 500; }
   .why blockquote .em { color: var(--accent); }
   .why .sig { margin-top: 1.5rem; font-family: var(--mono); font-size: .8rem; color: var(--muted); }
@@ -181,7 +192,7 @@
   .install code { font-family: var(--mono); font-size: .84rem; color: hsl(var(--accent-h) 14% 93%); line-height: 1.5; }
   .install code .c { color: hsl(var(--accent-h) 9% 58%); }
   .copy { font: inherit; font-family: var(--mono); font-size: .78rem; font-weight: 600; cursor: pointer; color: #fff; background: var(--accent-btn); border: none; border-radius: 8px; padding: .5rem .8rem; transition: background-color 140ms var(--ease); white-space: nowrap; }
-  @media (hover:hover){ .copy:hover { background: hsl(var(--accent-h) 100% 42%); } }
+  @media (hover:hover){ .copy:hover { background: var(--accent-hover); } }
   .install-note { margin-top: 1rem; font-size: .88rem; color: var(--muted); }
 
   /* Footer */
@@ -214,8 +225,8 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <h1>Sleak <span class="em">Design</span> is easy</h1>
-        <p class="lede">A's design-decision skill: checkable rules that make a screen look intentional and consistent.</p>
+        <h1>Good <span class="em">design</span> has checkable rules</h1>
+        <p class="lede">A design-decision skill: 14 rules with a measurement attached to each, for AI agents, engineers, and designers.</p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#rules">Browse the rules
             <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
@@ -257,6 +268,7 @@
         <h2>Most UI fails on small decisions</h2>
         <p class="prose">A radius reused at every level. Accent on every icon. Text crowding a corner. A button whose label reads dark on its own fill. Invisible in the code, obvious on screen, and the reason a layout looks <strong>assembled from templates</strong>. Sleak names each one, attaches a number you check, and gives the smallest fix.</p>
       </div>
+    </div>
   </section>
 
   <section id="who">
@@ -314,7 +326,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2>How a pass runs</h2>
-        <p>A fixed order, the audit step is never skipped, and the verify step reads the rendered pixels, not the source.</p>
+        <p>Fixed order. The verify step reads rendered pixels, not source, contrast and geometry hide in that gap.</p>
       </div>
       <div class="steps">
         <div class="step"><h3>Context</h3><p>Pin the product, audience, and constraints. Match the existing system first.</p></div>
@@ -329,7 +341,7 @@
     <div class="wrap">
       <div class="why">
         <blockquote>“Good design decisions are usually <span class="em">invisible in the code and obvious on the screen.</span> I wrote Sleak to make them legible, name each rule, attach a number you can check, and let a person or a model apply it the same way every time.”</blockquote>
-        <div class="sig">,  why I built it</div>
+        <div class="sig">AAOA ✦ why I built it</div>
       </div>
     </div>
   </section>

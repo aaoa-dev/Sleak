@@ -207,7 +207,51 @@ Before shipping copy, verify:
 
 If the user reads **only the title and primary button**, they know what this screen is for.
 
+## Cut AI-tell prose (docs, landing pages, marketing)
+
+Everything above targets **UI strings**. This section targets the prose *around* the
+product, landing pages, READMEs, case studies, release notes, that AI-tell phrasing
+gives away even when the structure is otherwise sound. Adapted from
+[unslop](sources.md#external-craft-skills).
+
+**Patterns to cut:**
+
+- **Puffery.** "seamless experience," "elevate," "unlock," "empower," "cutting-edge,"
+  "game-changing," "pivotal moment." State what it does.
+- **Fancy ways to say "is."** "serves as," "stands as," "boasts," "features." Just say
+  "is" or "has."
+- **Forced triads.** Padding a list to exactly three items ("fast, reliable, and secure")
+  when the real count is two or four. Use the natural number.
+- **Superficial *-ing* clauses.** "delivering...," "ensuring...," "empowering..." with no
+  concrete follow-through. Delete or replace with the real mechanism.
+- **Vague attribution.** "users love it," "teams report," "studies show," with no source.
+  Name the source or delete the claim.
+- **Bold-label-as-fake-structure.** "**Fast:** loads quickly." reads as a list pretending
+  to be an argument. Write it as a sentence, or make it a real table row with real data.
+- **Chatbot tics leaking into written copy.** "Hope this helps," "Let us know if you need
+  anything," "Feel free to reach out." (Also banned in-product, see rule 5 above.)
+- **Decoration.** Emoji as section markers, Title Case Headings, curly quotes. Sentence
+  case, straight quotes, no decorative emoji.
+- **Em dash and colon overuse.** Em dashes as an all-purpose connector are a tell on their
+  own; use a period or a comma. A colon works before a list or an example, not as a
+  mid-sentence joiner ("The result: faster." → "The result is faster.").
+
+**Add the things AI writing skips:**
+
+- **Have a point of view.** In explanation prose (a rule's *why*, a design decision's
+  rationale), react to the trade-off instead of listing it neutrally.
+- **Vary rhythm.** Short sentences land a point. Longer ones carry a fact with its
+  condition. Don't clip every sentence to the same length.
+- **Be specific over sterile.** Not "the layout feels polished" but "the button sits flush
+  with the card's corner, no gutter." Concrete beats vibes, on the same logic as rule 7 above.
+
+**Self-audit before publishing:** read it back and ask "what makes this obviously
+AI-generated?" Fix what's left. The tell is rarely one bad sentence, it's the *absence* of
+anything a person would specifically notice or care about.
+
 ## Notes
 
 - **i18n:** Short English doesn't always shorten other languages; rules apply to structure (action first), not word count.
-- **Agent vs UI:** These rules target strings in the interface. Agent response style is out of scope unless the product IS a chat UI, then apply the same rules to bot messages.
+- **Agent vs UI:** The numbered rules target strings in the interface. Agent response style
+  is out of scope unless the product IS a chat UI, then apply the same rules to bot messages.
+  Docs, landing pages, and marketing prose are covered by the AI-tell section above instead.
