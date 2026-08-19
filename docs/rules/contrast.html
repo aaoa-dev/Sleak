@@ -27,9 +27,10 @@
   <section class="rule-hero">
     <div class="wrap">
       <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
-      <div class="rule-eyebrow"><span class="num">05</span><span>a11y</span></div>
-      <h1>Contrast</h1>
-      <span class="formula">WCAG 4.5 + APCA Lc 75</span>
+      <div class="rule-hero-content">
+        <h1>Contrast</h1>
+        <span class="formula">WCAG 4.5 + APCA Lc 75</span>
+      </div>
     </div>
   </section>
 
@@ -40,7 +41,7 @@
 <p>Text must be readable and UI elements must be visible against whatever sits behind them. Check contrast <strong>two ways</strong>, mathematical and perceptual, because each catches failures the other misses.</p>
 <h2>Purpose</h2>
 <p>Catch color pairs that look fine in a mockup but fail in use: mid-tone gray on white, tinted text on a tinted surface, low-contrast placeholder and disabled states, borders and icons that vanish, and focus rings you can't see. Applies to text <strong>and</strong> non-text UI (borders, icons, controls, focus indicators, chart marks).</p>
-<p>This pairs with <a href="intentional-accent.html">color.md</a> (retinting hue to the accent should not lower contrast, always re-check) and <a href="typography.html">typography.md</a> (smaller type needs more contrast).</p>
+<p>This pairs with <a href="accent-hue-blacks.html">accent-hue blacks</a> (retinting hue to the accent should not lower contrast, always re-check) and <a href="typography.html">typography.md</a> (smaller type needs more contrast).</p>
 <h2>Check both ways (core of this rule)</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -240,7 +241,7 @@ const Lc = APCAcontrast(sRGBtoY([124,58,237]), sRGBtoY([255,255,255]));
 <li><strong>List real pairs.</strong> For each text and meaningful non-text element, note foreground + the exact background behind it (resolve tints, overlays, gradients to concrete colors).</li>
 <li><strong>Run WCAG ratio.</strong> Fail AA → <strong>High</strong>, fix before ship.</li>
 <li><strong>Run APCA.</strong> Below the role's Lc target → readability issue even if WCAG passed; fix or bump size/weight.</li>
-<li><strong>Fix by lightness, not hue.</strong> Adjust <code>L</code> (lightness) to gain contrast; keep hue aligned to accent (see <a href="intentional-accent.html">color.md</a>). Don't desaturate to a clashing gray.</li>
+<li><strong>Fix by lightness, not hue.</strong> Adjust <code>L</code> (lightness) to gain contrast; keep hue aligned to accent (see <a href="accent-hue-blacks.html">accent-hue blacks</a>). Don't desaturate to a clashing gray.</li>
 <li><strong>Re-check every state and both themes.</strong> Hover, disabled, focus, dark mode.</li>
 <li><strong>Prefer size/weight when a brand color can't move.</strong> Larger or heavier text lowers the required ratio and Lc.</li>
 </ol>

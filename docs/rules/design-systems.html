@@ -27,9 +27,10 @@
   <section class="rule-hero">
     <div class="wrap">
       <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
-      <div class="rule-eyebrow"><span class="num">13</span><span>system</span></div>
-      <h1>Design system foundations</h1>
-      <span class="formula">tokens · lean sets · atomic</span>
+      <div class="rule-hero-content">
+        <h1>Design system foundations</h1>
+        <span class="formula">tokens · lean sets · atomic</span>
+      </div>
     </div>
   </section>
 
@@ -52,7 +53,7 @@ duration, is a <strong>named token</strong> (<code>name → value</code>), defin
 <li>Tokens are <strong>platform-agnostic</strong>, one definition compiles to a CSS variable, an iOS colour,
   an Android value.</li>
 <li><strong>Multi-brand / theming</strong> = swap token <em>values</em> on one shared base (light/dark is the same
-  move, see <a href="intentional-accent.html">color.md</a>); never fork the components.</li>
+  move, see <a href="accent-hue-blacks.html">accent-hue blacks</a>); never fork the components.</li>
 </ul>
 <pre><code>--space-4: 1rem;  --radius-2: 8px;  --color-primary: hsl(var(--accent-h) …);
 </code></pre>
@@ -68,7 +69,7 @@ duration, is a <strong>named token</strong> (<code>name → value</code>), defin
 <p>A <strong>small, predefined set</strong> per category beats unlimited choice. Too many colour steps, type
 sizes, or spacing values invites inconsistency and misuse. Start slim; add an option only when
 a real need appears. You can always add a step later, but removing one is painful.</p>
-<p>Ties to the lean scales in <a href="intentional-accent.html">color.md</a>, <a href="typography.html">typography.md</a> (type scale),
+<p>Ties to the lean scales in <a href="accent-hue-blacks.html">accent-hue blacks</a>, <a href="typography.html">typography.md</a> (type scale),
 and <a href="layout-spacing.html">layout-spacing.md</a> (spacing scale).</p>
 <h2>Components: modular, composable, generic, flexible</h2>
 <div class="table-wrap"><table>
@@ -117,7 +118,7 @@ canonical implementation, reused.</p>
 <h2>Elevation is a standardized scale</h2>
 <p>Depth comes from a <strong>defined set of z-index + shadow steps</strong>, not ad-hoc shadows per
 component. Surfaces closer to the user sit higher on the scale, and, in dark mode, get
-<em>lighter</em> (see the elevation/luminance rule in <a href="intentional-accent.html">color.md</a>).</p>
+<em>lighter</em> (see the elevation/luminance rule in <a href="accent-hue-blacks.html">accent-hue blacks</a>).</p>
       <div class="demo" id="demo-design-systems-elevation">
         <div class="demo-inner">
           <div class="demo-head"><span class="lbl">Try it · Elevation is a scale</span><span class="live"></span></div>

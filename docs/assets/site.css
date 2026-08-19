@@ -68,8 +68,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; } }
 body {
   font-family: var(--sans);
   background: var(--page-bg);
@@ -117,17 +116,23 @@ header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, v
 
 /* Rule page: hero */
 .rule-hero { padding: clamp(2.4rem, 5vw, 4rem) 0 clamp(1.6rem, 3vw, 2.4rem); }
+/* Crumb + rule tag share one row, not stacked as a kicker over the h1, see
+   references/section-eyebrows.md, a hero eyebrow is "almost never," and a badge
+   beats a category kicker even in the rare exception. This reads as page-nav
+   metadata beside the breadcrumb, not a heading kicker above it. */
 .crumb { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--mono); font-size: .78rem; color: var(--muted); text-decoration: none; margin-bottom: 1.4rem; }
 .crumb svg { width: 1em; height: 1em; }
 @media (hover:hover){ .crumb:hover { color: var(--ink); } }
-.rule-eyebrow { display: flex; align-items: baseline; gap: .8rem; font-family: var(--mono); font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; color: var(--faint); }
-.rule-eyebrow .num { color: var(--accent); font-weight: 700; }
-.rule-hero h1 { margin-top: .7rem; font-size: clamp(2rem, 1.2rem + 3vw, 3rem); line-height: 1.04; letter-spacing: -.03em; font-weight: 820; text-wrap: balance; }
-.rule-hero .formula { display: inline-block; margin-top: 1.2rem; font-family: var(--mono); font-size: .86rem; color: var(--accent); background: var(--accent-soft); border-radius: 8px; padding: .4rem .7rem; }
+/* Same measure and centering as .doc below, so the title's left edge lines up
+   with the article body it introduces. The crumb stays outside this wrapper,
+   pinned to the wrap's own edge, not indented with the title. */
+.rule-hero-content { max-width: 62ch; margin-inline: auto; margin-top: .7rem; }
+.rule-hero-content h1 { font-size: clamp(2rem, 1.2rem + 3vw, 3rem); line-height: 1.04; letter-spacing: -.03em; font-weight: 820; text-wrap: balance; }
+.rule-hero-content .formula { display: inline-block; margin-top: 1.2rem; font-family: var(--mono); font-size: .86rem; color: var(--accent); background: var(--accent-soft); border-radius: 8px; padding: .4rem .7rem; }
 
 /* Rule page: article body (rendered from the reference markdown) */
 .article { padding-bottom: clamp(2.5rem, 5vw, 4rem); }
-.doc { max-width: 68ch; margin-inline: auto; }
+.doc { max-width: 62ch; margin-inline: auto; }
 .doc > *:first-child { margin-top: 0; }
 .doc h1 { display: none; } /* the page hero already carries the title */
 .doc h2 { margin: 2.4rem 0 .9rem; font-size: 1.4rem; letter-spacing: -.02em; font-weight: 760; }
@@ -144,9 +149,9 @@ header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, v
 .doc code { font-family: var(--mono); font-size: .86em; background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; padding: .08em .38em; color: var(--ink); }
 .doc pre { margin: 1.1rem 0; background: hsl(var(--accent-h) 22% 10%); border-radius: var(--r-card); padding: 1.1rem 1.2rem; overflow-x: auto; }
 .doc pre code { font-size: .84rem; line-height: 1.55; background: none; border: 0; padding: 0; color: hsl(var(--accent-h) 14% 93%); }
-.doc .table-wrap { margin: 1.2rem 0; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-card); }
+.doc .table-wrap { margin: 1.2rem 0; overflow-x: auto; border: 1px solid color-mix(in srgb, var(--muted) 28%, transparent); border-radius: var(--r-card); }
 .doc table { border-collapse: collapse; width: 100%; font-size: .92rem; }
-.doc th, .doc td { text-align: left; padding: .6rem .85rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.doc th, .doc td { text-align: left; padding: .6rem .85rem; border-bottom: 1px solid color-mix(in srgb, var(--muted) 28%, transparent); vertical-align: top; }
 .doc thead th { font-family: var(--mono); font-size: .74rem; letter-spacing: .03em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); }
 .doc tbody tr:last-child td { border-bottom: 0; }
 .doc td { color: var(--muted); }
@@ -418,7 +423,7 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .crt-rmark { fill: var(--accent); font-family: var(--mono); }
 
 /* 02b section eyebrows, hero badge, not eyebrow */
-.seh-hero { width: min(420px, 100%); background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.6rem 1.7rem 1.3rem; text-align: center; transition: all 160ms var(--ease); }
+.seh-hero { width: min(420px, 100%); background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.6rem 1.7rem 1.3rem; text-align: center; }
 .seh-eyebrow { display: inline-block; font-family: var(--mono); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: .3em .75em; margin-bottom: .7rem; }
 .seh-h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -.02em; }
 .seh-em { color: var(--accent); }

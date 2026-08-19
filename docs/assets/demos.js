@@ -218,7 +218,7 @@
         docEl.style.setProperty("--accent-h", h);
         oH.textContent = h + "°";
         live.textContent = "--accent-h: " + h + "°";
-        note.innerHTML = 'The accent <b>and</b> every neutral read from <span class="kbd">--accent-h</span>. The accent is authored in <b>OKLCH</b> with fixed lightness, so as the hue rotates the white-on-accent contrast <b>holds</b> — in HSL the same drag would swing luminance and break it (dark blue, washed-out yellow). The whole page shifts together and the darks stay tinted toward the accent.';
+        note.innerHTML = 'The accent <b>and</b> every neutral read from <span class="kbd">--accent-h</span>. The accent is authored in <b>OKLCH</b> with fixed lightness, so as the hue rotates the white-on-accent contrast <b>holds</b>. In HSL the same drag would swing luminance and break it (dark blue, washed-out yellow). The whole page shifts together and the darks stay tinted toward the accent.';
       }
       hue.addEventListener("input", render);
       if (reset) reset.addEventListener("click", function () { hue.value = 340; render(); });
@@ -523,7 +523,7 @@
         iconBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.icon === icon ? "true" : "false"); });
         widthBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.width === width ? "true" : "false"); });
         note.innerHTML = fill
-          ? 'A <b>fill</b> button takes the container’s full width, so its padding is <b>symmetric</b> and the label (with any icon) sits centered. The uneven icon-side inset is a <b>hugging-button</b> trick — it doesn’t apply here.'
+          ? 'A <b>fill</b> button takes the container’s full width, so its padding is <b>symmetric</b> and the label (with any icon) sits centered. The uneven icon-side inset is a <b>hugging-button</b> trick, it doesn’t apply here.'
           : (icon === "none"
             ? 'No icon → padding is <b>symmetric</b> and the label sits centered.'
             : 'On a <b>hugging</b> button the icon side is inset about <b>half</b> the text side (' + HALF + ' ≈ ½ · ' + TEXT + '), so the icon sits in a visual square instead of drifting to the edge.');
@@ -744,7 +744,7 @@
         else if (m === "color" && v === "deutan")
           note.innerHTML = 'Under deuteranopia the whole card shifts hue and the red border muddies into the frame. <b>Colour alone doesn’t reach ~1 in 12 men</b>.';
         else if (m === "color" && v === "mono")
-          note.innerHTML = 'Under achromatopsia the whole card collapses to greys. The red border reads as just a darker frame — <b>no message, no icon, no error state</b>.';
+          note.innerHTML = 'Under achromatopsia the whole card collapses to greys. The red border reads as just a darker frame, <b>no message, no icon, no error state</b>.';
         else if (m === "cue" && v === "typical")
           note.innerHTML = 'The same error, now with <b>a message and an icon</b>. Colour points at it; text and icon carry the meaning. Never encode by hue alone.';
         else if (m === "cue" && v === "deutan")
@@ -820,7 +820,7 @@
       }
       function close() { open = false; confirm.innerHTML = ""; }
       del.addEventListener("click", function () {
-        if (mode === "none") { name.textContent = "— deleted (no undo)"; close(); return; }
+        if (mode === "none") { name.textContent = "Deleted (no undo)"; close(); return; }
         if (open) { close(); return; }
         open = true;
         var label = mode === "ok" ? "Delete item?" : "Delete “Draft report Q3”?";
@@ -829,7 +829,7 @@
           + '<div class="uxd-ca"><button type="button" class="uxd-c-yes">' + yes + '</button>'
           + '<button type="button" class="uxd-c-no">Cancel</button></div></div>';
         confirm.querySelector(".uxd-c-yes").addEventListener("click", function () {
-          name.textContent = "— deleted after confirm";
+          name.textContent = "Deleted after confirm";
           close();
         });
         confirm.querySelector(".uxd-c-no").addEventListener("click", close);
@@ -847,7 +847,7 @@
         segBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.mode === mode ? "true" : "false"); });
         live.textContent = mode === "whole" ? "text + box = one target" : "box is the only target";
         note.innerHTML = mode === "whole"
-          ? 'Click anywhere on the pill, <b>the whole control is interactive</b> — box, text, and the padding between. No dead zone.'
+          ? 'Click anywhere on the pill, <b>the whole control is interactive</b>, box, text, and the padding between. No dead zone.'
           : 'Only the tiny box toggles; clicking the text or padding does nothing. A dead zone, and a miss for every imprecise tap. Padding, not margin, should carry the hit area.';
       }
       function sync() {
@@ -860,7 +860,7 @@
           box.checked = !box.checked;
           sync();
         } else {
-          read.textContent = "you clicked the text — nothing happened";
+          read.textContent = "you clicked the text, nothing happened";
         }
       });
       segBtns.forEach(function (b) { b.addEventListener("click", function () { render(b.dataset.mode); sync(); }); });
