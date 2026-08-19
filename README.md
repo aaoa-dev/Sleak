@@ -2,6 +2,8 @@
 
 Design decision guide for interfaces that feel intentional, concentric radius, accent restraint, motion budget, and the other details that separate craft from template UI.
 
+**[View the site →](https://aaoa-dev.github.io/Sleak/)**
+
 For **designers** who want a checklist while reviewing. For **engineers** implementing screens. For **agents** assisting either, load as an agent skill (Claude Code, Cursor, or any `AGENTS.md`-aware tool, see [Install](#install-agents)), or read the reference files directly.
 
 ## Structure
