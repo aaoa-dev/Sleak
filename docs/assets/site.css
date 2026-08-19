@@ -110,6 +110,8 @@ header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, v
 .nav-links a:not(.btn) { font-size: .9rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 140ms var(--ease); }
 @media (hover:hover){ .nav-links a:not(.btn):hover { color: var(--ink); } }
 @media (max-width: 720px){ .nav-links a:not(.btn){ display: none; } }
+.nav-links a.repo { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); }
+@media (hover:hover){ .nav-links a.repo:hover { color: var(--ink); } }
 
 .theme-toggle { font: inherit; background: var(--surface); border: 1px solid var(--line); color: var(--muted); width: 34px; height: 34px; border-radius: 999px; cursor: pointer; display: grid; place-items: center; }
 @media (hover:hover){ .theme-toggle:hover { color: var(--ink); } }
