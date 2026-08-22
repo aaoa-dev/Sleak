@@ -131,8 +131,16 @@
   h1 { font-size: clamp(2.3rem, 1.2rem + 4vw, 3.9rem); line-height: 1.02; letter-spacing: -.035em; font-weight: 820; text-wrap: balance; }
   .lede { margin-top: 1.4rem; max-width: 40ch; font-size: 1.12rem; color: var(--muted); }
   .hero-cta { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
-  .hero-command { width: fit-content; max-width: 100%; margin-top: 1.25rem; padding: .62rem .8rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); font-family: var(--mono); font-size: clamp(.72rem, 2.7vw, .82rem); white-space: nowrap; overflow-x: auto; }
+  .hero-command { width: fit-content; max-width: 100%; margin-top: 1.25rem; padding: 4px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); display: flex; align-items: center; gap: .5rem; font: inherit; cursor: pointer; transition: border-color 140ms var(--ease), background-color 140ms var(--ease); }
+  .hero-command code { padding-left: .45rem; font-family: var(--mono); font-size: clamp(.72rem, 2.7vw, .82rem); white-space: nowrap; }
   .hero-command .prompt { color: var(--faint); user-select: none; }
+  .hero-command .copy-icon { flex: 0 0 30px; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 6px; background: var(--surface-2); color: var(--muted); }
+  .hero-command .copy-icon svg { width: 15px; height: 15px; }
+  .hero-command .copy-check { display: none; }
+  .hero-command.copied .copy-copy { display: none; }
+  .hero-command.copied .copy-check { display: block; }
+  @media (hover:hover){ .hero-command:hover { border-color: var(--muted); } .hero-command:hover .copy-icon { color: var(--ink); } }
+  .hero-command:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .hero-meta { margin-top: 1.6rem; font-family: var(--mono); font-size: .78rem; color: var(--faint); display: flex; gap: 1.2rem; flex-wrap: wrap; }
 
   /* Hero diagram, the annotated concentric corner (the page's thesis, drawn) */
@@ -247,7 +255,13 @@
           </a>
           <a class="btn btn-ghost" href="#how">How it works</a>
         </div>
-        <div class="hero-command"><span class="prompt" aria-hidden="true">$ </span><code>npx @aaoa/sleak install</code></div>
+        <button class="hero-command" id="hero-copy" type="button" data-copy="npx @aaoa/sleak install" aria-label="Copy npm install command">
+          <code><span class="prompt" aria-hidden="true">$ </span>npx @aaoa/sleak install</code>
+          <span class="copy-icon" aria-hidden="true">
+            <svg class="copy-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/></svg>
+            <svg class="copy-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+          </span>
+        </button>
         <div class="hero-meta">
           <span>14 rules</span><span>·</span><span>13 references</span><span>·</span><span>1 checklist</span>
         </div>
@@ -370,7 +384,7 @@
       <div class="install">
         <div class="install-in">
           <code id="cmd"><span class="c"># detects Codex, Claude Code, Cursor, and more</span><br>npx skills add aaoa-dev/Sleak</code>
-          <button class="copy" id="copy" type="button" aria-label="Copy install command">Copy command</button>
+          <button class="copy" id="copy" type="button" data-copy="npx skills add aaoa-dev/Sleak" aria-label="Copy install command">Copy command</button>
         </div>
       </div>
       <p class="install-note">Add <span class="kbd">--global</span> for an all-projects install, or choose an agent with <span class="kbd">--agent codex</span>. Humans can start at <span class="kbd">SKILL.md</span> or open any reference directly.</p>
@@ -412,25 +426,32 @@
       root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
     });
   })();
-  // Copy install line
+  // Copy install commands
   (function () {
-    var btn = document.getElementById('copy');
-    function confirmCopy() {
+    function confirmCopy(btn) {
+      if (btn.id === 'hero-copy') {
+        btn.classList.add('copied');
+        btn.setAttribute('aria-label', 'Copied npm install command');
+        setTimeout(function () { btn.classList.remove('copied'); btn.setAttribute('aria-label', 'Copy npm install command'); }, 1400);
+        return;
+      }
       var old = btn.textContent; btn.textContent = 'Copied';
       setTimeout(function () { btn.textContent = old; }, 1400);
     }
-    function fallbackCopy(text) {
+    function fallbackCopy(text, btn) {
       var field = document.createElement('textarea');
       field.value = text; field.setAttribute('readonly', '');
       field.style.position = 'fixed'; field.style.opacity = '0';
       document.body.appendChild(field); field.select();
       var copied = document.execCommand('copy'); field.remove();
-      if (copied) confirmCopy();
+      if (copied) confirmCopy(btn);
     }
-    btn.addEventListener('click', function () {
-      var text = 'npx skills add aaoa-dev/Sleak';
-      if (navigator.clipboard) navigator.clipboard.writeText(text).then(confirmCopy, function () { fallbackCopy(text); });
-      else fallbackCopy(text);
+    document.querySelectorAll('[data-copy]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var text = btn.getAttribute('data-copy');
+        if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { confirmCopy(btn); }, function () { fallbackCopy(text, btn); });
+        else fallbackCopy(text, btn);
+      });
     });
   })();
   // Live radius slider, R drives the card corner, the concentric media, the baseline, and the circle
