@@ -1,8 +1,8 @@
 {
   "name": "@aaoa/sleak",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Install the Sleak design-decision skill for AI coding agents.",
-  "license": "MIT",
+  "license": "ISC",
   "type": "module",
   "bin": {
     "sleak": "bin/sleak.mjs"
@@ -52,6 +52,5 @@
     "test": "test"
   },
   "devDependencies": {},
-  "author": "",
-  "license": "ISC"
+  "author": ""
 }
