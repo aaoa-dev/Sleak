@@ -4,6 +4,8 @@ Design decision guide for interfaces that feel intentional, concentric radius, a
 
 **[View the site →](https://aaoa-dev.github.io/Sleak/)**
 
+[![Install Sleak with skills.sh](https://skills.sh/b/aaoa-dev/Sleak)](https://skills.sh/aaoa-dev/Sleak)
+
 For **designers** who want a checklist while reviewing. For **engineers** implementing screens. For **agents** assisting either, load as an agent skill (Claude Code, Cursor, or any `AGENTS.md`-aware tool, see [Install](#install-agents)), or read the reference files directly.
 
 ## Structure
@@ -43,20 +45,52 @@ Browse the rules with a live, interactive demo on each: open `docs/index.html` i
 
 ## Install (agents)
 
-Two install styles depending on how your agent loads context.
+The `skills` CLI detects your coding agent and installs Sleak in the right location:
+
+```sh
+npx skills add aaoa-dev/Sleak
+```
+
+For a global Codex install without prompts:
+
+```sh
+npx skills add aaoa-dev/Sleak --skill sleak --agent codex --global --yes
+```
+
+Use `--agent claude-code`, `--agent cursor`, or another supported agent when you want to choose the target explicitly. Omit `--global` for a project-local install.
+
+### npm convenience CLI
+
+The repository also ships a scoped npm CLI. Run it directly with `npx`:
+
+```sh
+npx @aaoa/sleak install
+npx @aaoa/sleak install --global --agent codex
+```
+
+The package still installs a `sleak` executable, and delegates to the maintained `skills` CLI, so agent detection, global/project scope, updates, and supported-agent paths stay consistent with skills.sh.
+
+Maintainers: configure npm trusted publishing for `@aaoa/sleak`, repository `aaoa-dev/Sleak`, and `.github/workflows/publish.yml`; GitHub releases can then publish through short-lived OIDC credentials with provenance.
+
+### Manual installation
+
+Use one of the manual methods below when Node.js or `npx` is unavailable.
 
 ### Agents with a skills folder (Claude Code, Cursor)
 
-Symlink (or copy) this repo into the skills directory. **The installed folder must be named `sleak`** (lowercase, matching `name:` in `SKILL.md`) regardless of what the repo folder is called, these agents match skills by folder name.
+Symlink (or copy) this repo into the skills directory. **The installed folder must be named `sleak`** (lowercase, matching `name:` in `SKILL.md`) because these agents match skills by folder name.
 
 ```sh
-# Claude Code, personal (all projects) / project-local
+# Run these from the Sleak clone for a personal install.
+mkdir -p ~/.claude/skills ~/.cursor/skills
 ln -s "$(pwd)" ~/.claude/skills/sleak
-mkdir -p .claude/skills && ln -s "$(pwd)" .claude/skills/sleak
-
-# Cursor, personal / project-local
 ln -s "$(pwd)" ~/.cursor/skills/sleak
-mkdir -p .cursor/skills && ln -s "$(pwd)" .cursor/skills/sleak
+
+# For a project-local install, run this from the target project and use the
+# absolute path to your Sleak clone.
+mkdir -p .claude/skills .cursor/skills
+ln -s /absolute/path/to/Sleak .claude/skills/sleak
+ln -s /absolute/path/to/Sleak .cursor/skills/sleak
 ```
 
 Use `cp -r "$(pwd)" <dest>/sleak` instead of `ln -s` if you prefer a copy over a symlink.
@@ -77,7 +111,7 @@ Where the instructions file lives per agent:
 | OpenAI Codex     | `AGENTS.md` (repo root)          | `~/.codex/AGENTS.md`                 |
 | Kimi Code        | `AGENTS.md` (repo root)          | `~/.agents/AGENTS.md`, `~/.kimi-code/AGENTS.md` |
 | Gemini CLI       | `GEMINI.md` (repo root)          | `~/.gemini/GEMINI.md`                |
-| GitHub Copilot   | `.github/copilot-instructions.md`|,                                    |
+| GitHub Copilot   | `.github/copilot-instructions.md`| —                                    |
 | Any AGENTS.md-aware tool | `AGENTS.md` (repo root)   | `~/.agents/AGENTS.md`                |
 
 `AGENTS.md` is a shared cross-tool standard, so a single repo-root `AGENTS.md` pointer covers Codex, Kimi, and most other agents that adopt it. Keep the pointer short, the agent reads `SKILL.md` on demand rather than inlining the whole guide.

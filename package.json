@@ -1,0 +1,57 @@
+{
+  "name": "@aaoa/sleak",
+  "version": "0.1.0",
+  "description": "Install the Sleak design-decision skill for AI coding agents.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "sleak": "bin/sleak.mjs"
+  },
+  "files": [
+    "bin/",
+    "SKILL.md",
+    "AGENTS.md",
+    "checklist.md",
+    "references/",
+    "examples/"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "prepublishOnly": "npm test && npm run validate:skill",
+    "validate:skill": "node scripts/validate-skill.mjs"
+  },
+  "dependencies": {
+    "skills": "^1.5.23"
+  },
+  "engines": {
+    "node": ">=22.20.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaoa-dev/Sleak.git"
+  },
+  "homepage": "https://aaoa-dev.github.io/Sleak/",
+  "bugs": {
+    "url": "https://github.com/aaoa-dev/Sleak/issues"
+  },
+  "keywords": [
+    "agent-skill",
+    "codex",
+    "claude-code",
+    "cursor",
+    "design-system",
+    "ui"
+  ],
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "test"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
+}

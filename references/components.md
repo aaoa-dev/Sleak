@@ -156,8 +156,9 @@ measured shift in fill/elevation is enough. (Motion between states → [motion.m
 
 ### Target size & hit area
 
-- **Minimum 48×48px** (aligns to an 8pt grid; slightly above the WCAG **44×44** floor).
-  Desktop mouse targets can go to ~32–40px, but touch/primary stays ≥44.
+- **Desktop pointer:** minimum **24×24px**. A compact **32–40px** control is normal when a mouse or trackpad is the expected input.
+- **Touch or coarse pointer:** aim for **44×44px** or larger. A smaller visible icon may use a 44px invisible hit area when adjacent targets do not overlap.
+- Do not force a 44px `min-height` onto a padding-driven icon button. That adds unmatched vertical space and breaks the icon square. Increase the button's padding token on touch surfaces so the top, bottom, and icon-side insets grow together.
 - **Separate adjacent buttons by ≥ 8px** to prevent mis-taps.
 - **Extend the hit area beyond the visible glyph** with padding, especially for tertiary
   links and list items, whose tappable area is easy to forget. Never a bare icon with no

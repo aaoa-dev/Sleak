@@ -5,6 +5,7 @@
 <title>Sleak Buttons</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="Sleak rule 08: Cards & buttons. icon side ≈ ½ text side." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="../assets/site.css" />
 </head>
 <body>
@@ -270,8 +271,9 @@ the others, but don't overdo the change. Drastic per-state restyling is visual n
 measured shift in fill/elevation is enough. (Motion between states → <a href="motion.html">motion.md</a>.)</p>
 <h3>Target size &amp; hit area</h3>
 <ul>
-<li><strong>Minimum 48×48px</strong> (aligns to an 8pt grid; slightly above the WCAG <strong>44×44</strong> floor).
-  Desktop mouse targets can go to ~32–40px, but touch/primary stays ≥44.</li>
+<li><strong>Desktop pointer:</strong> minimum <strong>24×24px</strong>. A compact <strong>32–40px</strong> control is normal when a mouse or trackpad is the expected input.</li>
+<li><strong>Touch or coarse pointer:</strong> aim for <strong>44×44px</strong> or larger. A smaller visible icon may use a 44px invisible hit area when adjacent targets do not overlap.</li>
+<li>Do not force a 44px <code>min-height</code> onto a padding-driven icon button. That adds unmatched vertical space and breaks the icon square. Increase the button's padding token on touch surfaces so the top, bottom, and icon-side insets grow together.</li>
 <li><strong>Separate adjacent buttons by ≥ 8px</strong> to prevent mis-taps.</li>
 <li><strong>Extend the hit area beyond the visible glyph</strong> with padding, especially for tertiary
   links and list items, whose tappable area is easy to forget. Never a bare icon with no

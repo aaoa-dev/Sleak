@@ -34,11 +34,13 @@ Everything you can do with a mouse works from the keyboard.
 - Custom widgets (menus, tabs, dialogs) implement expected key handling (Esc, arrows, Enter/Space).
 - Prefer native elements (`<button>`, `<a>`, `<input>`) over `div`+`onClick`, which ship these behaviors for free.
 
-### 4. Touch / hit targets ≥ 44×44px
+### 4. Size targets for the input method
 
 Pointer and touch targets are large enough to hit reliably.
 
-- Minimum **44×44px** (WCAG 2.5.8 AA is 24px; 44px is the safer platform norm).
+- **Desktop pointer:** minimum **24×24px**. Compact controls around **32–40px** are normal when a precise mouse or trackpad is the primary input.
+- **Touch or coarse pointer:** aim for **44×44px** or larger. The visible control may stay smaller when its invisible hit area reaches 44px and does not overlap another target.
+- WCAG 2.2 target size minimum is **24×24 CSS px**, subject to its spacing and exception rules. Treat 44px as touch guidance, not a universal desktop floor.
 - Spacing between adjacent targets prevents mis-taps.
 - The clickable area can extend past the visible glyph via padding.
 
@@ -88,7 +90,7 @@ Screen readers navigate by structure.
 | `<div onClick>` acting as a button | Use `<button>` |
 | Placeholder used as the only label | Add a real `<label>` |
 | Error shown only as red border | Add text + icon |
-| Tap target < 44px | Grow via padding/min-size |
+| Touch target < 44px | Grow its hit area or add spacing; desktop pointer controls may be smaller |
 | Heading levels skip (h1 → h4) | Fix hierarchy |
 
 ## Do / Don't
@@ -99,11 +101,11 @@ Screen readers navigate by structure.
 | Keep a visible `:focus-visible` ring | `outline: none` globally |
 | Use native interactive elements | Rebuild buttons from `div`s |
 | Pair color with a second cue | Rely on hue alone |
-| Size targets ≥ 44px | Cram tiny tap targets together |
+| Use ≥24px for desktop pointer and aim for ≥44px on touch | Apply one minimum to every input method |
 
 ## Audit
 
-- **High**: unnamed control, no visible focus, keyboard-inoperable widget, meaning by color alone, target < 44px
+- **High**: unnamed control, no visible focus, keyboard-inoperable widget, meaning by color alone, target < 24px, or an unusably small/overlapping touch target
 - **Medium**: skipped heading levels, missing landmarks, no reduced-motion handling
 - **Low**: minor label wording, non-underlined body links
 

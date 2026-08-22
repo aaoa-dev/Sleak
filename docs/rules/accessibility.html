@@ -4,7 +4,8 @@
 <meta charset="utf-8" />
 <title>Sleak A11y</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="Sleak rule 11: Accessibility. names · focus · ≥ 44px." />
+<meta name="description" content="Sleak rule 11: Accessibility. Names, focus, keyboard, and target sizes for pointer and touch." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="../assets/site.css" />
 </head>
 <body>
@@ -30,7 +31,7 @@
       <a class="crumb" href="../index.html#rules"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg> All rules</a>
       <div class="rule-hero-content">
         <h1>Accessibility</h1>
-        <span class="formula">names · focus · ≥ 44px</span>
+        <span class="formula">≥ 24px pointer · 44px touch</span>
       </div>
     </div>
   </section>
@@ -73,10 +74,12 @@
         <div class="demo-note" id="axk-note"></div>
         </div>
       </div>
-<h3>4. Touch / hit targets ≥ 44×44px</h3>
+<h3>4. Size targets for the input method</h3>
 <p>Pointer and touch targets are large enough to hit reliably.</p>
 <ul>
-<li>Minimum <strong>44×44px</strong> (WCAG 2.5.8 AA is 24px; 44px is the safer platform norm).</li>
+<li><strong>Desktop pointer:</strong> minimum <strong>24×24px</strong>. Compact controls around <strong>32–40px</strong> are normal when a precise mouse or trackpad is the primary input.</li>
+<li><strong>Touch or coarse pointer:</strong> aim for <strong>44×44px</strong> or larger. The visible control may stay smaller when its invisible hit area reaches 44px and does not overlap another target.</li>
+<li>WCAG 2.2 target size minimum is <strong>24×24 CSS px</strong>, subject to its spacing and exception rules. Treat 44px as touch guidance, not a universal desktop floor.</li>
 <li>Spacing between adjacent targets prevents mis-taps.</li>
 <li>The clickable area can extend past the visible glyph via padding.</li>
 </ul>
@@ -163,8 +166,8 @@
 <td>Add text + icon</td>
 </tr>
 <tr>
-<td>Tap target &lt; 44px</td>
-<td>Grow via padding/min-size</td>
+<td>Touch target &lt; 44px</td>
+<td>Grow its hit area or add spacing; desktop pointer controls may be smaller</td>
 </tr>
 <tr>
 <td>Heading levels skip (h1 → h4)</td>
@@ -198,14 +201,14 @@
 <td>Rely on hue alone</td>
 </tr>
 <tr>
-<td>Size targets ≥ 44px</td>
-<td>Cram tiny tap targets together</td>
+<td>Use ≥24px for desktop pointer and aim for ≥44px on touch</td>
+<td>Apply one minimum to every input method</td>
 </tr>
 </tbody>
 </table></div>
 <h2>Audit</h2>
 <ul>
-<li><strong>High</strong>: unnamed control, no visible focus, keyboard-inoperable widget, meaning by color alone, target &lt; 44px</li>
+<li><strong>High</strong>: unnamed control, no visible focus, keyboard-inoperable widget, meaning by color alone, target &lt; 24px, or an unusably small/overlapping touch target</li>
 <li><strong>Medium</strong>: skipped heading levels, missing landmarks, no reduced-motion handling</li>
 <li><strong>Low</strong>: minor label wording, non-underlined body links</li>
 </ul>

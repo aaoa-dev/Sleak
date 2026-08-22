@@ -7,3 +7,7 @@
 # Python bytecode (from scripts/)
 __pycache__/
 *.pyc
+
+# npm dependencies and local package artifacts
+node_modules/
+*.tgz

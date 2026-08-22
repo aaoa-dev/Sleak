@@ -127,7 +127,7 @@ See [references/accessibility.md](references/accessibility.md). Contrast is cove
 - [ ] Visible `:focus-visible` indicator on all focusable elements (no bare `outline: none`)
 - [ ] Fully keyboard-operable: logical tab order, no traps, custom widgets handle Esc/arrows/Enter
 - [ ] Interactive uses native elements (`<button>`, `<a>`, `<input>`) rather than `div` + `onClick`
-- [ ] Touch/hit targets ≥ 44×44px with spacing to avoid mis-taps
+- [ ] Desktop pointer targets are ≥24×24px; touch/coarse-pointer targets aim for ≥44×44px with spacing to avoid mis-taps
 - [ ] No meaning encoded by color alone (paired with text, icon, or shape)
 - [ ] One `<h1>`, heading levels don't skip, landmarks present; layout survives 200% zoom
 

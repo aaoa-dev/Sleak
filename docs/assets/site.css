@@ -105,8 +105,12 @@ a { color: inherit; }
 header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 82%, transparent); backdrop-filter: blur(14px) saturate(1.1); border-bottom: 1px solid var(--line); }
 .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
 .brand { display: flex; align-items: center; gap: .55rem; font-family: var(--mono); font-weight: 700; font-size: 1.05rem; letter-spacing: -.01em; text-decoration: none; color: var(--ink); }
-.brand .dot { width: 12px; height: 12px; border-radius: 999px; background: var(--accent-btn); box-shadow: 0 0 0 4px var(--accent-soft); }
+.brand .dot { width: 12px; height: 12px; border-radius: 999px; background: var(--muted); }
 .nav-links { display: flex; align-items: center; gap: 1.6rem; }
+/* Header CTA aligns to the 34px icon controls. Shrink vertical and icon-side
+   padding together so the trailing icon keeps an equal square inset. */
+.nav .btn { padding: .5rem 1rem; }
+.nav .btn-primary { padding-right: .5rem; }
 .nav-links a:not(.btn) { font-size: .9rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 140ms var(--ease); }
 @media (hover:hover){ .nav-links a:not(.btn):hover { color: var(--ink); } }
 @media (max-width: 720px){ .nav-links a:not(.btn){ display: none; } }
@@ -188,7 +192,7 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  width: min(calc(100% + 40%), calc(100vw - 2.5rem));
+  width: min(calc(100% + 40%), calc(100vw - 2.75rem));
 }
 .demo-inner { display: contents; }
 /* Each demo reserves the stage height it needs (measured natural height + a

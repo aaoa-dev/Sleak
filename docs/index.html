@@ -1,5 +1,11 @@
-<title>Sleak</title>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Sleak — Checkable rules for intentional product UI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Fourteen checkable design rules for agents, engineers, and designers building intentional product UI." />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <style>
   :root {
     --accent-h: 340;  /* raspberry, brand #f05 is hsl(340 100% 50%) */
@@ -106,8 +112,12 @@
   header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 82%, transparent); backdrop-filter: blur(14px) saturate(1.1); border-bottom: 1px solid transparent; }
   .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
   .brand { display: flex; align-items: center; gap: .55rem; font-family: var(--mono); font-weight: 700; font-size: 1.05rem; letter-spacing: -.01em; text-decoration: none; color: var(--ink); }
-  .brand .dot { width: 12px; height: 12px; border-radius: 999px; background: var(--accent-btn); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .brand .dot { width: 12px; height: 12px; border-radius: 999px; background: var(--muted); }
   .nav-links { display: flex; align-items: center; gap: 1.6rem; }
+  /* Header CTA aligns to the 34px icon controls. Shrink vertical and icon-side
+     padding together so the trailing icon keeps an equal square inset. */
+  .nav .btn { padding: .5rem 1rem; }
+  .nav .btn-primary { padding-right: .5rem; }
   .nav-links a:not(.btn) { font-size: .9rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 140ms var(--ease); }
   @media (hover:hover){ .nav-links a:not(.btn):hover { color: var(--ink); } }
   @media (max-width: 720px){ .nav-links a:not(.btn){ display: none; } }
@@ -119,7 +129,6 @@
   .hero-grid { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
   @media (min-width: 900px){ .hero-grid { grid-template-columns: 1.05fr .95fr; } }
   h1 { font-size: clamp(2.3rem, 1.2rem + 4vw, 3.9rem); line-height: 1.02; letter-spacing: -.035em; font-weight: 820; text-wrap: balance; }
-  h1 .em { color: var(--accent); }
   .lede { margin-top: 1.4rem; max-width: 40ch; font-size: 1.12rem; color: var(--muted); }
   .hero-cta { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
   .hero-meta { margin-top: 1.6rem; font-family: var(--mono); font-size: .78rem; color: var(--faint); display: flex; gap: 1.2rem; flex-wrap: wrap; }
@@ -183,7 +192,6 @@
   /* Why, creator note, a contained quote card sized to its content (no empty half) */
   .why { width: fit-content; max-width: 100%; margin-inline: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); padding: clamp(1.8rem, 4vw, 3rem); box-shadow: var(--shadow); }
   .why blockquote { max-width: 42ch; font-size: clamp(1.25rem, .95rem + 1.1vw, 1.6rem); line-height: 1.42; letter-spacing: -.015em; font-weight: 500; }
-  .why blockquote .em { color: var(--accent); }
   .why .sig { margin-top: 1.5rem; font-family: var(--mono); font-size: .8rem; color: var(--muted); }
 
   /* Install, concentric: outer card, inner code surface */
@@ -204,6 +212,8 @@
   .theme-toggle { font: inherit; background: var(--surface); border: 1px solid var(--line); color: var(--muted); width: 34px; height: 34px; border-radius: 999px; cursor: pointer; display: grid; place-items: center; }
   @media (hover:hover){ .theme-toggle:hover { color: var(--ink); } }
 </style>
+</head>
+<body>
 
 <header>
   <div class="wrap nav">
@@ -228,7 +238,7 @@
     <div class="wrap hero-grid">
       <div>
         <h1>Good <span class="em">design</span> has checkable rules</h1>
-        <p class="lede">A design-decision skill: 14 rules with a measurement attached to each, for AI agents, engineers, and designers.</p>
+        <p class="lede">Fourteen design rules with measurements you can check. Built for agents, engineers, and designers.</p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#rules">Browse the rules
             <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
@@ -268,7 +278,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2>Most UI fails on small decisions</h2>
-        <p class="prose">A radius reused at every level. Accent on every icon. Text crowding a corner. A button whose label reads dark on its own fill. Invisible in the code, obvious on screen, and the reason a layout looks <strong>assembled from templates</strong>. Sleak names each one, attaches a number you check, and gives the smallest fix.</p>
+        <p class="prose">Repeated radii. Accent on every icon. Text crowding a corner. Dark text on a bright button. These mistakes hide in code but stand out on screen. Sleak names each one, gives you a number to check, and shows the smallest fix.</p>
       </div>
     </div>
   </section>
@@ -277,23 +287,23 @@
     <div class="wrap">
       <div class="sec-head">
         <h2>For models, designers, and engineers</h2>
-        <p>The rules are craft, not tooling. One guide, whoever holds the pixels.</p>
+        <p>The rules work with any tool. Use the same guide whether a person or an agent writes the interface.</p>
       </div>
       <div class="aud">
         <article class="aud-card">
           <div class="who">AI models &amp; agents</div>
           <h3>Applied while it builds</h3>
-          <p>Load it as a skill. Claude Code, Cursor, Codex, Kimi, any <span class="kbd">AGENTS.md</span> tool reads the rules and applies them as it builds. Generated UI stops looking generated.</p>
+          <p>Point Claude Code, Cursor, Codex, Kimi, or any <span class="kbd">AGENTS.md</span> tool at the skill. It applies the rules while it builds.</p>
         </article>
         <article class="aud-card">
           <div class="who">New designers</div>
           <h3>The details seniors apply by reflex</h3>
-          <p>Concentric radius, accent restraint, line length, contrast, each a short reference with the reasoning and a before/after. The judgment becomes learnable, not osmosis.</p>
+          <p>Each short reference explains one decision with a measurement, the reasoning behind it, and a before-and-after example.</p>
         </article>
         <article class="aud-card">
           <div class="who">Engineers</div>
           <h3>Ship screens without a designer on call</h3>
-          <p>Checkable items and paste-ready CSS. Run the audit, fix by category, ship. The build reads as crafted, not defaulted.</p>
+          <p>Run the checklist, fix issues by category, and use the included CSS without waiting for a design review.</p>
         </article>
       </div>
     </div>
@@ -316,7 +326,7 @@
         <a class="rule" href="rules/components.html"><span class="rn">08</span><h3>Cards &amp; buttons</h3><p>Whole cards click; icons sit in a square with uneven horizontal padding.</p><span class="formula">icon side ≈ ½ text side</span></a>
         <a class="rule" href="rules/motion.html"><span class="rn">09</span><h3>Motion budget</h3><p>Prefer subtle over none; one expressive moment; vary the recipe.</p><span class="formula">≤ 150ms · ease-out</span></a>
         <a class="rule" href="rules/content-copy.html"><span class="rn">10</span><h3>Content &amp; copy</h3><p>Lead with the action; drop the fluff; be specific.</p><span class="formula">verb + object</span></a>
-        <a class="rule" href="rules/accessibility.html"><span class="rn">11</span><h3>Accessibility</h3><p>Names, focus, keyboard, targets, and cues beyond colour.</p><span class="formula">names · focus · ≥ 44px</span></a>
+        <a class="rule" href="rules/accessibility.html"><span class="rn">11</span><h3>Accessibility</h3><p>Names, focus, keyboard, targets, and cues beyond colour.</p><span class="formula">≥ 24px pointer · 44px touch</span></a>
         <a class="rule" href="rules/ux.html"><span class="rn">12</span><h3>UX &amp; states</h3><p>Design every state and use real elements, not the happy path alone.</p><span class="formula">every state · real elements</span></a>
         <a class="rule" href="rules/design-systems.html"><span class="rn">13</span><h3>Design system foundations</h3><p>Tokens as one source of truth, lean sets, atomic components.</p><span class="formula">tokens · lean sets · atomic</span></a>
         <a class="rule" href="rules/principles.html"><span class="rn">14</span><h3>Principles</h3><p>How to decide what to build: research, framing, low-fi iteration, feedback.</p><span class="formula">guess less · story first · test early</span></a>
@@ -328,7 +338,7 @@
     <div class="wrap">
       <div class="sec-head">
         <h2>How a pass runs</h2>
-        <p>Fixed order. The verify step reads rendered pixels, not source, contrast and geometry hide in that gap.</p>
+        <p>Use the steps in order. Verify the rendered pixels because source code can hide contrast and geometry problems.</p>
       </div>
       <div class="steps">
         <div class="step"><h3>Context</h3><p>Pin the product, audience, and constraints. Match the existing system first.</p></div>
@@ -342,7 +352,7 @@
   <section id="why">
     <div class="wrap">
       <div class="why">
-        <blockquote>“Good design decisions are usually <span class="em">invisible in the code and obvious on the screen.</span> I wrote Sleak to make them legible, name each rule, attach a number you can check, and let a person or a model apply it the same way every time.”</blockquote>
+        <blockquote>“Good design decisions are often invisible in code and obvious on screen. I wrote Sleak to name those decisions, attach a number you can check, and help people and agents apply them the same way.”</blockquote>
         <div class="sig">AAOA ✦ why I built it</div>
       </div>
     </div>
@@ -356,11 +366,11 @@
       </div>
       <div class="install">
         <div class="install-in">
-          <code id="cmd"><span class="c"># any AGENTS.md-aware agent (Codex, Kimi, …)</span><br>echo "Follow the Sleak design guide at ./sleak/SKILL.md" &gt;&gt; AGENTS.md</code>
-          <button class="copy" id="copy" type="button">Copy</button>
+          <code id="cmd"><span class="c"># detects Codex, Claude Code, Cursor, and more</span><br>npx skills add aaoa-dev/Sleak</code>
+          <button class="copy" id="copy" type="button" aria-label="Copy install command">Copy command</button>
         </div>
       </div>
-      <p class="install-note">Skills-folder agents (Claude Code, Cursor): symlink the repo into <span class="kbd">~/.claude/skills/sleak</span> or <span class="kbd">.cursor/skills/sleak</span>. Humans: start at <span class="kbd">SKILL.md</span> or open any reference directly.</p>
+      <p class="install-note">Add <span class="kbd">--global</span> for an all-projects install, or choose an agent with <span class="kbd">--agent codex</span>. Humans can start at <span class="kbd">SKILL.md</span> or open any reference directly.</p>
     </div>
   </section>
 </main>
@@ -402,11 +412,22 @@
   // Copy install line
   (function () {
     var btn = document.getElementById('copy');
+    function confirmCopy() {
+      var old = btn.textContent; btn.textContent = 'Copied';
+      setTimeout(function () { btn.textContent = old; }, 1400);
+    }
+    function fallbackCopy(text) {
+      var field = document.createElement('textarea');
+      field.value = text; field.setAttribute('readonly', '');
+      field.style.position = 'fixed'; field.style.opacity = '0';
+      document.body.appendChild(field); field.select();
+      var copied = document.execCommand('copy'); field.remove();
+      if (copied) confirmCopy();
+    }
     btn.addEventListener('click', function () {
-      var text = 'echo "Follow the Sleak design guide at ./sleak/SKILL.md" >> AGENTS.md';
-      navigator.clipboard && navigator.clipboard.writeText(text).then(function () {
-        var old = btn.textContent; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = old; }, 1400);
-      });
+      var text = 'npx skills add aaoa-dev/Sleak';
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(confirmCopy, function () { fallbackCopy(text); });
+      else fallbackCopy(text);
     });
   })();
   // Live radius slider, R drives the card corner, the concentric media, the baseline, and the circle
@@ -438,3 +459,5 @@
     set(+range.value); // sync on load
   })();
 </script>
+</body>
+</html>
