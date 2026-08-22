@@ -131,6 +131,8 @@
   h1 { font-size: clamp(2.3rem, 1.2rem + 4vw, 3.9rem); line-height: 1.02; letter-spacing: -.035em; font-weight: 820; text-wrap: balance; }
   .lede { margin-top: 1.4rem; max-width: 40ch; font-size: 1.12rem; color: var(--muted); }
   .hero-cta { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+  .hero-command { width: fit-content; max-width: 100%; margin-top: 1.25rem; padding: .62rem .8rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); font-family: var(--mono); font-size: clamp(.72rem, 2.7vw, .82rem); white-space: nowrap; overflow-x: auto; }
+  .hero-command .prompt { color: var(--faint); user-select: none; }
   .hero-meta { margin-top: 1.6rem; font-family: var(--mono); font-size: .78rem; color: var(--faint); display: flex; gap: 1.2rem; flex-wrap: wrap; }
 
   /* Hero diagram, the annotated concentric corner (the page's thesis, drawn) */
@@ -245,6 +247,7 @@
           </a>
           <a class="btn btn-ghost" href="#how">How it works</a>
         </div>
+        <div class="hero-command"><span class="prompt" aria-hidden="true">$ </span><code>npx @aaoa/sleak install</code></div>
         <div class="hero-meta">
           <span>14 rules</span><span>·</span><span>13 references</span><span>·</span><span>1 checklist</span>
         </div>
