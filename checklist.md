@@ -12,12 +12,12 @@ See [concentric-radius.md](references/concentric-radius.md), [section-eyebrows.m
 - [ ] Parent and child do not share the same radius when padding between them is > 0
 - [ ] Child radius clamped to 0 when `parent − padding` would be negative
 - [ ] Per-corner radii computed independently when corners differ
-- [ ] Text in a rounded card sits **concentric to the corner**: the last line's baseline start lands on the corner arc center, `R` from the side edge **and** `R` above the bottom edge (both axes), measured on the render
+- [ ] Rounded-card text is optically balanced against the corner and does not crowd or float from the curve; use the arc-center alignment technique as a heuristic when it suits the composition
 
 ### Section eyebrows
 
 - [ ] Hero has no eyebrow (or at most one factual release badge, not a category kicker)
-- [ ] Page has ≤ 1 section eyebrow total (zero is the default)
+- [ ] Repeated section eyebrows have a content or navigation purpose; otherwise use ≤1 per page as the strong default
 - [ ] No eyebrow duplicates nav labels or section names ("Features", "Pricing", "Testimonials")
 - [ ] Section hierarchy uses headings and spacing, not repeated kickers on every block
 
@@ -46,7 +46,7 @@ See [references/contrast.md](references/contrast.md). Check **both** methods, ma
 
 - [ ] Checked on the **rendered page** (screenshot + sampled pixels), not from CSS tokens, the cascade, specificity, and inheritance can override the intended color
 - [ ] Body text clears **WCAG 4.5:1** (large text / bold ≥ 3:1) against its real background
-- [ ] Same text also clears its **APCA** target (Lc ≥ 75 body, ≥ 45 large/bold); fix even if WCAG passed
+- [ ] APCA checked as a supplemental perceptual diagnostic (aim for Lc ≥75 body and ≥45 large/bold); investigate weak results even when WCAG passes
 - [ ] Meaningful non-text (icons, input borders, dividers, focus rings, chart marks) ≥ **3:1**
 - [ ] Focus indicator visible ≥ 3:1 against **both** the component and the page
 - [ ] Contrast tested against the **resolved** background (tints, gradients, overlays, images at worst point)
@@ -146,5 +146,7 @@ See [references/ux.md](references/ux.md).
 ## Cross-cutting
 
 - [ ] Matches existing brand or design system (if applicable)
+- [ ] Existing native elements, project components, primitives, and semantic tokens were reused before adding custom equivalents
+- [ ] Non-trivial code changes pass the relevant build/typecheck/tests and were viewed at desktop and mobile widths
 - [ ] No decorative change reduced clarity or accessibility
 - [ ] Result does not read as generic template UI

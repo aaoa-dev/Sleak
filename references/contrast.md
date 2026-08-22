@@ -8,20 +8,23 @@ Catch color pairs that look fine in a mockup but fail in use: mid-tone gray on w
 
 This pairs with [color.md](color.md) (retinting hue to the accent should not lower contrast, always re-check) and [typography.md](typography.md) (smaller type needs more contrast).
 
-## Check both ways (core of this rule)
+## Compliance first, perception second
 
 | Method | What it is | Catches |
 |--------|-----------|---------|
 | **Mathematical (WCAG 2.x)** | Luminance-ratio, `(L1 + 0.05) / (L2 + 0.05)`. The compliance floor. | Objective, legally referenced pass/fail; required for a11y conformance |
 | **Perceptual (APCA)** | Lightness-contrast (Lc) from WCAG 3 draft; accounts for **polarity**, font size, and weight | Readability the ratio misses, dark mode, thin fonts, mid-tones, light-on-dark |
 
-**Rule:** a pair **passes only when it clears the WCAG AA floor _and_ the APCA target for its role.** WCAG is the legal minimum; APCA is whether a human can actually read it. They disagree often enough that one alone is not enough:
+**Rule:** WCAG AA is the conformance gate. APCA is a supplemental perceptual diagnostic, not a
+second compliance standard. They disagree often enough that checking both improves judgment:
 
 - WCAG **passes** pairs that read poorly (many light-on-dark and saturated combinations).
 - WCAG **fails** some pairs that are genuinely readable (over-penalizes certain dark-mode text).
 - APCA models real perception but is **not** yet the conformance standard.
 
-Use WCAG for the compliance gate, APCA to tune what's legible. When they conflict, satisfy WCAG AA **and** treat a weak APCA score as a real readability problem to fix.
+Use WCAG for the compliance gate and APCA to tune legibility. When they conflict, satisfy WCAG
+AA, inspect the rendered context, and treat a weak APCA result as evidence to investigate rather
+than an automatic compliance failure.
 
 ## Check the rendered pixels, not the tokens (mandatory)
 
@@ -114,7 +117,8 @@ Purely decorative shapes with no informational role are exempt, but confirm they
 1. **Render and screenshot first.** Open the built page in a real browser; sample the **actual painted** foreground/background pixels (see "Check the rendered pixels" above). Token math alone is not a check.
 2. **List real pairs.** For each text and meaningful non-text element, note foreground + the exact background behind it (resolve tints, overlays, gradients to concrete colors).
 3. **Run WCAG ratio.** Fail AA → **High**, fix before ship.
-4. **Run APCA.** Below the role's Lc target → readability issue even if WCAG passed; fix or bump size/weight.
+4. **Run APCA.** Below the role's Lc target → inspect readability even if WCAG passed; adjust
+   lightness, size, or weight when the rendered result confirms a problem.
 5. **Fix by lightness, not hue.** Adjust `L` (lightness) to gain contrast; keep hue aligned to accent (see [color.md](color.md)). Don't desaturate to a clashing gray.
 6. **Re-check every state and both themes.** Hover, disabled, focus, dark mode.
 7. **Prefer size/weight when a brand color can't move.** Larger or heavier text lowers the required ratio and Lc.
@@ -125,7 +129,7 @@ Purely decorative shapes with no informational role are exempt, but confirm they
 |--------|----------|
 | Contrast signed off from CSS tokens without rendering the page | **High**, not a check; render and re-verify |
 | Rendered text color ≠ the token you measured (cascade/specificity override) | **High** |
-| Body text below WCAG 4.5:1 (or APCA Lc 75) | **High** |
+| Body text below WCAG 4.5:1 | **High** |
 | Meaningful icon / border / focus ring below 3:1 | **High** |
 | Passes WCAG but APCA under target (reads poorly, common in dark mode / mid-tones) | **Medium**, fix readability |
 | Placeholder used as the only label, low contrast | **Medium** |
@@ -148,7 +152,7 @@ Purely decorative shapes with no informational role are exempt, but confirm they
 
 | Do | Don't |
 |----|-------|
-| Gate on WCAG AA **and** APCA Lc for the role | Ship on one method alone |
+| Gate compliance on WCAG AA; use APCA as a perceptual diagnostic | Present APCA as a conformance standard |
 | Test against the real resolved background | Assume the base surface color |
 | Gain contrast via lightness, keep accent hue | Desaturate into a clashing neutral |
 | Give focus rings and borders their own 3:1 | Rely on a faint 1px line no one can see |

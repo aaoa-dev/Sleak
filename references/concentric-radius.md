@@ -137,7 +137,12 @@ Flag as **High** when parent and child radii are equal with visible padding betw
 - **Circles / pills**: When parent is `9999px` and child is a pill, padding still subtracts, inner pill radius = outer − padding.
 - **Design tools**: In Figma, set outer radius first, then inner = outer − padding. Auto-layout padding is the gap value.
 
-## Text sits concentric to the corner radius
+## Optional optical alignment for text
+
+This section is a **contextual heuristic**, not a geometric invariant or universal audit
+failure. Use it when a sparse rounded card ends in text and the composition benefits from a
+strong relationship between copy and curve. Dense cards, variable content, established spacing
+systems, localization, and responsive wrapping may require different padding.
 
 When a card ends with text, anchor the text **concentric to the corner**: the **start of the last line's baseline lands on the center of the corner's radius circle**, the same circle whose quarter-arc rounds that corner. The text therefore takes **both** a horizontal and a vertical inset equal to the radius `R`.
 
@@ -176,4 +181,7 @@ Both insets equal the radius, so the corner curve and the text's bottom-leading 
 
 If the card already carries a base padding `P`, the text's **extra** inset is `R − P` on each axis (it stacks on the existing padding to total `R` from the card edge). Where `text-box-trim` is unavailable, approximate the vertical with `calc(var(--r) - (1lh - 1cap) / 2)`. Either way **verify on the rendered pixels**, measure the last-baseline start to the corner: `R` from the side, `R` from the bottom. This offset is invisible in the source.
 
-**Audit:** for a rounded card whose last element is text, the last baseline's leading end should sit at the corner arc center, `R` from the side edge and `R` above the bottom edge. Text crowding the curve, or floating far from it, or inset on only one axis → **Medium**.
+**Audit:** first judge whether the text crowds the curve or floats arbitrarily from it on the
+rendered result. Where arc-center alignment supports the composition, use `R` as a tuning target,
+not a mandatory pixel-perfect condition. Flag visible imbalance as **Low/Medium**; do not flag a
+different established spacing rule merely because it does not use this construction.

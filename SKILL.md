@@ -1,10 +1,10 @@
 ---
 name: sleak
 description: >-
-  Craft guide for intentional product UI. Teaches concentric nested radius, scarce accent
-  color, motion restraint, action-first copy, and related layout and color decisions.
-  Use when designing, reviewing, or implementing screens, auditing before ship, or when
-  work feels generic, visually noisy, or missing a clear primary action.
+  Design-decision guide for intentional product UI and marketing surfaces. Use when creating,
+  reviewing, or refining interface hierarchy and craft, especially when a screen feels generic,
+  noisy, inconsistent, or lacks a clear primary action. Routes to focused references by task;
+  use the full checklist only for broad or pre-ship audits.
 ---
 
 # Sleak
@@ -48,6 +48,20 @@ Small kickers above section headings ("Features", "About", pills, overlines). Fi
 
 → Full tiers, tokens, and audit: [references/color.md](references/color.md#intentional-accent-use-core-rule)
 
+## Strength of guidance
+
+Read every Sleak rule at the right strength:
+
+- **Invariant**: correctness, accessibility, semantics, or broken geometry. Do not violate it
+  without a concrete platform constraint.
+- **Strong default**: Sleak's opinionated starting point. Depart when the product, content, or
+  established system gives a better reason, and preserve the intent behind the rule.
+- **Contextual heuristic**: a diagnostic, not a pass/fail law. Verify it on the rendered result.
+
+The three core principles are **strong defaults**. Accessibility requirements and native
+interaction semantics are **invariants**. Measurements involving typography, optical balance,
+or content density are usually **contextual heuristics**.
+
 ## When to apply
 
 Load this skill when:
@@ -58,6 +72,23 @@ Load this skill when:
 - An interface feels generic, template-like, or visually noisy but the fixes aren't obvious
 
 
+
+## Route the task first
+
+Load the smallest useful context. The three core principles above are always in scope; then
+choose references by the surface and request:
+
+| Request | Read |
+|---|---|
+| Product UI, dashboard, settings, tool | `components`, `ux`, `design-systems`; add visual categories implicated by the screen |
+| Marketing or landing page | `typography`, `layout-spacing`, `color`, `content-copy`, `motion` as needed |
+| Component-level change | Only the component's category plus `accessibility` when interactive |
+| Accessibility or interaction audit | `accessibility`, `contrast`, `ux`; add `components` for compound controls |
+| Visual polish / generic-feeling UI | The implicated visual categories; add `principles` when direction itself is weak |
+| Broad redesign or pre-ship review | Full [checklist](checklist.md) and every reference for a failed category |
+
+Do not load every reference for a narrow task. Do not run the full checklist by default when
+the request concerns one component or one category.
 
 ## Workflow
 
@@ -81,12 +112,20 @@ Before changing visuals, confirm:
 - **Audience**, who uses it, and what do they expect?
 - **Constraints**, existing brand, design system, platform, or codebase patterns
 - **Scope**, full screen, component, or copy-only pass
+- **Surface**, product interface or marketing/brand surface
+- **Single job**, the one verb the person must accomplish here
 
 Match the project's existing system when one exists. Do not impose a new aesthetic for its own sake.
 
+For greenfield work or a generic-feeling direction, read
+[principles.md](references/principles.md#derive-the-direction-from-the-domain) and derive the
+visual direction from the product's real domain before choosing palette, type, layout, or a
+signature element.
+
 ### 2. Audit
 
-Run the [checklist](checklist.md). Flag issues by category:
+For a broad or pre-ship review, run the [checklist](checklist.md). For a narrow request, inspect
+only the routed categories and apply their relevant audit items. Flag issues by category:
 
 
 | Category                        | Reference                                                          |
@@ -117,14 +156,30 @@ For each flagged issue:
 
 Prefer one strong decision over many small decorative tweaks.
 
+Before adding UI code, inspect what the project already provides. Prefer, in order:
+
+1. Native semantic HTML where it supplies the required behavior
+2. The project's existing component or design-system primitive
+3. An established accessible primitive for complex behavior
+4. A custom implementation only when the first three do not fit
+
+Follow the repository's existing styling and token conventions. Do not introduce a second
+primitive system, one-off token vocabulary, or hand-built keyboard/focus behavior without a
+specific reason. Read [design-systems.md](references/design-systems.md#use-what-exists-before-adding) for implementation rules.
+
 ### 4. Verify
 
-Re-run [checklist.md](checklist.md). Confirm:
+Re-run the applicable audit items; for broad or pre-ship work, re-run the full
+[checklist.md](checklist.md). Confirm:
 
 - No category still has unresolved high-severity issues
 - Changes are consistent with project constraints
 - The result still reads clearly at a glance
 - **Render the actual output and look at it** (screenshot the built UI), don't sign off from source alone. Contrast especially must be checked on rendered pixels, not CSS tokens, the cascade can paint a color the token math never predicted (see [contrast.md](references/contrast.md)).
+
+For non-trivial UI, verify desktop and mobile widths, keyboard operation, every implemented
+theme, and loading/empty/error/populated states that are in scope. Run the repository's relevant
+build, typecheck, and tests when code changed.
 
 
 
@@ -180,4 +235,3 @@ When reviewing or proposing changes, use:
 - [references/principles.md](references/principles.md), the process layer, how to decide what to build (research, framing, low-fi iteration, feedback), upstream of the craft rules
 - [references/writing-docs.md](references/writing-docs.md), how Sleak's own docs are written (Diátaxis mode, sentence clarity), not a product-UI rule
 - [references/sources.md](references/sources.md), the reference library
-

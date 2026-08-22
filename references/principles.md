@@ -12,6 +12,22 @@ once you're shaping the actual interface.
 Catch the process failures that no amount of visual polish fixes: designing from assumptions,
 polishing the wrong thing, or hiding work until it's "done."
 
+## Derive the direction from the domain
+
+When the visual direction is open or the interface feels generic, ground it in the subject
+instead of selecting a familiar SaaS aesthetic. Write a compact direction before polishing:
+
+- **Human and job:** the concrete person, their context, and the single verb they came to do
+- **Domain cues:** at least three materials, tools, environments, artifacts, or visual conventions
+  that genuinely belong to this product's world
+- **Color and type rationale:** choices connected to those cues and the required density or tone
+- **Signature:** one useful, repeatable element the product can be remembered by
+- **Rejected default:** name the template-like direction you are deliberately avoiding and why
+
+This is a contextual exploration, not permission to override an established brand or design
+system. For a small change inside a mature product, use the existing direction rather than
+inventing a new signature.
+
 ## Guess less, decide from evidence
 
 Assumptions are the expensive mistake. Talk to users and look at data. Two kinds of research,

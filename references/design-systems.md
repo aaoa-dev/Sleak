@@ -9,6 +9,25 @@ screen, one product, or one person.
 Catch the failure mode where every screen re-invents its colours, sizes, and components;
 drift, inconsistency, and design debt. A system makes the right decision the easy one.
 
+## Use what exists before adding
+
+Inspect the repository before creating a control, token, component, or styling convention.
+Use this order:
+
+1. **Native element** when HTML or the platform already supplies the semantics and behavior.
+2. **Existing project component** and its supported variants.
+3. **One established accessible primitive system** for stateful controls such as dialogs,
+   comboboxes, menus, popovers, and tabs.
+4. **Custom behavior** only when none fits; then implement the complete keyboard, focus, ARIA,
+   dismissal, and state contract.
+
+Match the codebase's current styling method. Do not mix primitive libraries within one
+interaction surface or add a new token vocabulary beside an existing one. Bind reusable styles
+to semantic tokens; reserve raw values and inline utilities for genuine one-offs.
+
+Extract a reusable component after a second real use demonstrates the shared pattern. Do not
+abstract a speculative first instance, but do not copy the same long style recipe across the UI.
+
 ## Design tokens are the single source of truth
 
 Every reusable design decision, colour, type size, spacing step, radius, shadow, motion
@@ -90,6 +109,8 @@ Clear, predictable names for components, variants, and utilities. Namespace shar
 | Standardize elevation as a scale | Sprinkle one-off shadows |
 | Bake a11y into shared components | Retrofit accessibility per feature |
 | Let elements flow; size by content | Pin fixed widths/heights everywhere |
+| Reuse native and existing primitives first | Rebuild keyboard/focus behavior in styled containers |
+| Bind reusable styles to semantic tokens | Scatter literals or create a parallel token language |
 
 ## Notes
 
