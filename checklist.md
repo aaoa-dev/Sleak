@@ -39,6 +39,8 @@ See [references/typography.md](references/typography.md).
 - [ ] Desktop reading text ≥14px body (16–18px preferred); no 8px readable copy on desktop
 - [ ] Mobile body ≥16px on web; tiny sizes only for brief labels with strong contrast
 - [ ] Type uses `rem` / semantic scales so user zoom and platform text settings still work
+- [ ] Comparable quantities share an end edge and use tabular lining figures; numeric headers match their column alignment
+- [ ] Numeric identifiers stay start-aligned unless their magnitude is actually being compared
 
 ## Contrast
 
@@ -63,6 +65,8 @@ See [references/layout-spacing.md](references/layout-spacing.md).
 - [ ] Separation uses spacing, surface tiers, or inset rules, not stacked `<hr>` / `border-b`
 - [ ] Any line dividers align to content inset (padding column), not viewport or card outer edge
 - [ ] List/table row separators inset within their container when lines are used
+- [ ] Equivalent content in repeated cards, rows, forms, and panels shares stable start/end rails
+- [ ] Wrapped or variable content does not unpredictably move the next key value, status, or action
 
 ## Color
 
@@ -117,6 +121,7 @@ See [references/content-copy.md](references/content-copy.md).
 - [ ] No generic marketing voice (seamless, empower, journey, etc.)
 - [ ] Surrounding prose (landing copy, docs, README) is free of AI-tell patterns: puffery, fancy "is" synonyms, forced triads, bold-label-as-fake-structure, chatbot tics
 - [ ] Title + primary button alone make the screen's purpose clear
+- [ ] Peer values use one date style, unit placement, abbreviation, and precision unless a difference carries meaning
 
 ## Accessibility
 

@@ -122,6 +122,49 @@ things, drop the box, it simplifies the design without losing the grouping.
 **Form fields:** keep each **label close to its field** (and closer to its own field than to
 the next), so it's unambiguous which label belongs to which input, and the eye focuses once.
 
+## Keep repeated content on stable rails
+
+**Same role, same anchor.** In a repeated set, place equivalent information on shared visual
+lines so the eye can scan without searching again in every item. A title starts from the same
+inset in every card. A price, count, status, or action occupies the same lane in every peer.
+
+Variable content may wrap, but it must not move the next comparison point unpredictably. In a
+same-height card row, pin the title to the start and the primary value or action to the end:
+
+```css
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.5rem;
+}
+
+.card__value,
+.card__action {
+  margin-block-start: auto;
+}
+```
+
+This creates two dependable rails even when one title wraps: titles begin together and key
+values end together. Use a reserved title row or CSS subgrid when intermediate fields also need
+to align. Do not force unrelated content into equal slots or truncate meaningful copy only to
+make boxes match.
+
+Apply the same rule across repeated rows, forms, comparison panels, timelines, and settings:
+
+- labels share one start edge
+- controls and values share another edge
+- repeated metadata appears in the same order
+- writing direction decides `start` and `end`; do not hard-code left and right
+
+**Audit:** Trace a vertical or horizontal line through each repeated role. If the eye must zigzag
+to find the next title, value, status, or action, the set has lost its scan path.
+
 ## Common mistakes
 
 | Tell | Fix |
@@ -130,6 +173,8 @@ the next), so it's unambiguous which label belongs to which input, and the eye f
 | List row hairline bleeding past the list's content box | Inset the row `border-b` to the list padding (a line between rows is fine) |
 | Divider + eyebrow + heading | Drop divider and eyebrow; keep spacing + H2 |
 | Lines at viewport width inside max-width layout | Inset to `max-width` content column |
+| Card values move when titles wrap | Pin peer values to one end rail; reserve shared rows when needed |
+| Form labels and controls zigzag | Give each role a consistent start/end column |
 
 ## Fixes
 
@@ -146,6 +191,7 @@ the next), so it's unambiguous which label belongs to which input, and the eye f
 | Inset dividers to content padding | Span lines corner to corner |
 | Let card gaps and backgrounds define groups | Grid of boxes + full-width rules |
 | Match divider inset to text alignment | Bleed dividers through rounded parents |
+| Keep equivalent content on shared rails | Let wrapping move every field below it |
 
 ## Notes
 

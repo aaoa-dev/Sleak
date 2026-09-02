@@ -168,6 +168,31 @@ otherwise. Example, 16px base × **1.250**: `16 → 20 → 25 → 31 → 39` (bo
   at ~90% opacity fading to 0 halfway up) or a semi-transparent overlay, plus a text shadow,
   so the text clears WCAG against the *worst* pixel behind it (see [contrast.md](contrast.md)).
 
+## Align comparable numbers by place value
+
+Numbers that users compare need a stable edge and stable digit widths.
+
+- Right-align quantities in tables, ledgers, scoreboards, and metric lists. Match the numeric
+  column header to the same alignment.
+- Use tabular lining figures for changing or stacked values. Tabular figures give every digit
+  the same width without turning the whole interface into monospace.
+- Keep decimal precision and unit formatting consistent within one comparison set. When decimal
+  points are the comparison anchor, align the decimal column explicitly.
+- Keep identifiers such as phone, account, and card numbers start-aligned unless users compare
+  their magnitude. An identifier contains digits, but it is not a quantity.
+
+```css
+.numeric {
+  text-align: end;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+```
+
+Use a monospace face only when the content itself calls for one, such as code, logs, or fixed-width
+identifiers. Prefer `font-variant-numeric: tabular-nums` for product data so the surrounding
+typeface and hierarchy remain intact. Pair this with the shared layout rails in
+[layout-spacing.md](layout-spacing.md#keep-repeated-content-on-stable-rails).
+
 ## Accessibility
 
 - Meet **WCAG contrast** for every size you use; smaller type needs stricter pairing.
@@ -186,6 +211,8 @@ otherwise. Example, 16px base × **1.250**: `16 → 20 → 25 → 31 → 39` (bo
 | 8px helper text on desktop forms | ≥12–14px or demote to icon + tooltip |
 | Same font-size token on phone and TV | Breakpoint or context-specific scale |
 | Long lines in cards in a grid | Cap card text width; align start |
+| Proportional, centered table values | Tabular figures; align quantities to the end edge |
+| Every numeric string treated as a quantity | Start-align identifiers; end-align comparable amounts |
 
 ## Audit
 
@@ -194,6 +221,7 @@ otherwise. Example, 16px base × **1.250**: `16 → 20 → 25 → 31 → 39` (bo
 3. **Center width:** centered text near full container width? → **Medium**.
 4. **Desktop size:** any reading text <14px on desktop? → **High** (except deliberate dense UI with strong contrast and short strings).
 5. **Distance fit:** phone layout on desktop without larger type? → **Medium** when readability suffers.
+6. **Numeric scan:** do comparable values share an end edge and tabular figures? If not → **Medium**.
 
 ## Do / Don't
 
@@ -205,6 +233,7 @@ otherwise. Example, 16px base × **1.250**: `16 → 20 → 25 → 31 → 39` (bo
 | 16px+ body on phone web | 8px body anywhere |
 | Larger type for TV / far viewing | Desktop sizes on a 2 m display |
 | `rem` + user scaling | Fixed px that breaks zoom |
+| End-align quantities with tabular figures | Center or proportionally space values users compare |
 
 ## Notes
 

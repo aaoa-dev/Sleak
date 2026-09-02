@@ -133,9 +133,9 @@ only the routed categories and apply their relevant audit items. Flag issues by 
 | **Concentric radius**           | [references/concentric-radius.md](references/concentric-radius.md) |
 | **Section eyebrows**            | [references/section-eyebrows.md](references/section-eyebrows.md)   |
 | **Color** (accent intent + hue) | [references/color.md](references/color.md)                         |
-| Typography                      | [references/typography.md](references/typography.md)               |
+| Typography (including numeric alignment) | [references/typography.md](references/typography.md)       |
 | **Contrast** (WCAG + APCA)      | [references/contrast.md](references/contrast.md)                   |
-| Layout & spacing                | [references/layout-spacing.md](references/layout-spacing.md)       |
+| Layout & spacing (including stable scan rails) | [references/layout-spacing.md](references/layout-spacing.md) |
 | Components                      | [references/components.md](references/components.md)               |
 | Motion                          | [references/motion.md](references/motion.md)                       |
 | Content & copy                  | [references/content-copy.md](references/content-copy.md)           |
@@ -225,9 +225,9 @@ When reviewing or proposing changes, use:
 - [references/color.md](references/color.md), intentional accent + accent-hue blacks (core)
 - [references/motion.md](references/motion.md), motion budget, vary animations
 - [references/content-copy.md](references/content-copy.md), action-first UI copy
-- [references/typography.md](references/typography.md), line length, alignment, size by distance
+- [references/typography.md](references/typography.md), line length, numeric alignment, size by distance
 - [references/contrast.md](references/contrast.md), readability via WCAG (mathematical) + APCA (perceptual)
-- [references/layout-spacing.md](references/layout-spacing.md), spacing over dividers
+- [references/layout-spacing.md](references/layout-spacing.md), spacing over dividers, stable scan rails
 - [references/components.md](references/components.md), clickable cards and interaction patterns
 - [references/accessibility.md](references/accessibility.md), names, focus, keyboard, targets, non-color cues (contrast lives in contrast.md)
 - [references/ux.md](references/ux.md), loading/empty/error states, destructive confirms, form and control mechanics

@@ -344,6 +344,35 @@ otherwise. Example, 16px base × <strong>1.250</strong>: <code>16 → 20 → 25 
   at ~90% opacity fading to 0 halfway up) or a semi-transparent overlay, plus a text shadow,
   so the text clears WCAG against the <em>worst</em> pixel behind it (see <a href="contrast.html">contrast.md</a>).</li>
 </ul>
+<h2>Align comparable numbers by place value</h2>
+<p>Numbers that users compare need a stable edge and stable digit widths.</p>
+<ul>
+<li>Right-align quantities in tables, ledgers, scoreboards, and metric lists. Match the numeric
+  column header to the same alignment.</li>
+<li>Use tabular lining figures for changing or stacked values. Tabular figures give every digit
+  the same width without turning the whole interface into monospace.</li>
+<li>Keep decimal precision and unit formatting consistent within one comparison set. When decimal
+  points are the comparison anchor, align the decimal column explicitly.</li>
+<li>Keep identifiers such as phone, account, and card numbers start-aligned unless users compare
+  their magnitude. An identifier contains digits, but it is not a quantity.</li>
+</ul>
+<pre><code class="language-css">.numeric {
+  text-align: end;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+</code></pre>
+<p>Use a monospace face only when the content itself calls for one, such as code, logs, or fixed-width
+identifiers. Prefer <code>font-variant-numeric: tabular-nums</code> for product data so the surrounding
+typeface and hierarchy remain intact. Pair this with the shared layout rails in
+<a href="layout-spacing.html">layout-spacing.md</a>.</p>
+      <div class="demo" id="demo-typography-numbers">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Compare down one edge</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="tyn-table" id="tyn-table"><div class="tyn-row tyn-head"><span>Channel</span><span>Revenue</span><span>Change</span></div><div class="tyn-row"><span>Direct</span><span class="tyn-num">$9,842.10</span><span class="tyn-num">+8.4%</span></div><div class="tyn-row"><span>Search</span><span class="tyn-num">$742.90</span><span class="tyn-num">−1.2%</span></div><div class="tyn-row"><span>Referral</span><span class="tyn-num">$12.00</span><span class="tyn-num">+0.7%</span></div></div></div>
+          <div class="demo-controls"><div class="ctl"><div class="seg"><button type="button" data-mode="aligned" aria-pressed="true">Aligned quantities</button><button type="button" data-mode="loose">Loose numbers</button></div></div></div>
+        <div class="demo-note" id="tyn-note"></div>
+        </div>
+      </div>
 <h2>Accessibility</h2>
 <ul>
 <li>Meet <strong>WCAG contrast</strong> for every size you use; smaller type needs stricter pairing.</li>
@@ -388,6 +417,14 @@ otherwise. Example, 16px base × <strong>1.250</strong>: <code>16 → 20 → 25 
 <td>Long lines in cards in a grid</td>
 <td>Cap card text width; align start</td>
 </tr>
+<tr>
+<td>Proportional, centered table values</td>
+<td>Tabular figures; align quantities to the end edge</td>
+</tr>
+<tr>
+<td>Every numeric string treated as a quantity</td>
+<td>Start-align identifiers; end-align comparable amounts</td>
+</tr>
 </tbody>
 </table></div>
 <h2>Audit</h2>
@@ -397,6 +434,7 @@ otherwise. Example, 16px base × <strong>1.250</strong>: <code>16 → 20 → 25 
 <li><strong>Center width:</strong> centered text near full container width? → <strong>Medium</strong>.</li>
 <li><strong>Desktop size:</strong> any reading text &lt;14px on desktop? → <strong>High</strong> (except deliberate dense UI with strong contrast and short strings).</li>
 <li><strong>Distance fit:</strong> phone layout on desktop without larger type? → <strong>Medium</strong> when readability suffers.</li>
+<li><strong>Numeric scan:</strong> do comparable values share an end edge and tabular figures? If not → <strong>Medium</strong>.</li>
 </ol>
 <h2>Do / Don't</h2>
 <div class="table-wrap"><table>
@@ -430,6 +468,10 @@ otherwise. Example, 16px base × <strong>1.250</strong>: <code>16 → 20 → 25 
 <tr>
 <td><code>rem</code> + user scaling</td>
 <td>Fixed px that breaks zoom</td>
+</tr>
+<tr>
+<td>End-align quantities with tabular figures</td>
+<td>Center or proportionally space values users compare</td>
 </tr>
 </tbody>
 </table></div>

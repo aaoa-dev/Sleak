@@ -1023,6 +1023,55 @@
       render();
     },
 
+    /* 07d / layout: repeated semantic roles stay on shared rails. */
+    "layout-spacing-rails": function (root) {
+      var cards = $("#lsr-cards", root), live = $(".live", root), note = $("#lsr-note", root),
+          segBtns = root.querySelectorAll("[data-mode]");
+      function render(mode) {
+        cards.setAttribute("data-mode", mode);
+        segBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.mode === mode ? "true" : "false"); });
+        live.textContent = mode === "rails" ? "2 dependable rails" : "values drift";
+        note.innerHTML = mode === "rails"
+          ? 'Titles begin together and every value lands on the same baseline. <b>The eye knows where to look next.</b>'
+          : 'Natural flow makes each wrapped title push its value to a new position. <b>The eye zigzags to compare.</b>';
+      }
+      segBtns.forEach(function (b) { b.addEventListener("click", function () { render(b.dataset.mode); }); });
+      render("rails");
+    },
+
+    /* 06e / typography: comparable quantities share widths and an end edge. */
+    "typography-numbers": function (root) {
+      var table = $("#tyn-table", root), live = $(".live", root), note = $("#tyn-note", root),
+          segBtns = root.querySelectorAll("[data-mode]");
+      function render(mode) {
+        table.setAttribute("data-mode", mode);
+        segBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.mode === mode ? "true" : "false"); });
+        live.textContent = mode === "aligned" ? "shared place-value edge" : "moving edges";
+        note.innerHTML = mode === "aligned"
+          ? 'End alignment and <b>tabular figures</b> turn each quantity column into one comparison track.'
+          : 'Centered proportional figures change width and edge position. <b>Every row must be parsed again.</b>';
+      }
+      segBtns.forEach(function (b) { b.addEventListener("click", function () { render(b.dataset.mode); }); });
+      render("aligned");
+    },
+
+    /* 10e / content: peer data uses one unit and precision convention. */
+    "content-copy-format": function (root) {
+      var values = root.querySelectorAll(".cof-row strong"), live = $(".live", root), note = $("#cof-note", root),
+          segBtns = root.querySelectorAll("[data-mode]");
+      var sets = { consistent: ["4.5 kg", "8.0 kg", "10.0 kg"], mixed: ["4.5kg", "8 kilograms", "10.00 kg"] };
+      function render(mode) {
+        values.forEach(function (value, i) { value.textContent = sets[mode][i]; });
+        segBtns.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.mode === mode ? "true" : "false"); });
+        live.textContent = mode === "consistent" ? "one convention" : "three conventions";
+        note.innerHTML = mode === "consistent"
+          ? 'One unit, placement, and precision makes the values <b>immediately comparable</b>.'
+          : 'Mixed abbreviation, spacing, and precision adds decoding work before <b>comparison can begin</b>.';
+      }
+      segBtns.forEach(function (b) { b.addEventListener("click", function () { render(b.dataset.mode); }); });
+      render("consistent");
+    },
+
     /* 14c / principles: sharing low-fi work invites critique that hi-fi suppresses. */
     "principles-share": function (root) {
       var sketch = $("#prs-sketch", root), fb = $("#prs-fb", root), live = $(".live", root),

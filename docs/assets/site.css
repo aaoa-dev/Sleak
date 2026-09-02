@@ -210,9 +210,11 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 #demo-typography-center                    { --sh: 220px; }
 #demo-typography-distance                  { --sh: 320px; }
 #demo-typography-scale                     { --sh: 350px; }
+#demo-typography-numbers                   { --sh: 260px; }
 #demo-layout-spacing                       { --sh: 460px; }
 #demo-layout-spacing-scale                 { --sh: 180px; }
 #demo-layout-spacing-group                 { --sh: 280px; }
+#demo-layout-spacing-rails                 { --sh: 280px; }
 #demo-components-cards                     { --sh: 300px; }
 #demo-components-weights                   { --sh: 130px; }
 #demo-components-button                    { --sh: 190px; }
@@ -223,6 +225,7 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 #demo-content-copy-error                   { --sh: 210px; }
 #demo-content-copy-specific                { --sh: 210px; }
 #demo-content-copy-list                    { --sh: 380px; }
+#demo-content-copy-format                  { --sh: 240px; }
 #demo-contrast-render                      { --sh: 170px; }
 #demo-contrast-dual                        { --sh: 210px; }
 #demo-contrast                             { --sh: 200px; }
@@ -531,6 +534,33 @@ footer { padding: 3rem 0 3.5rem; margin-top: 2rem; border-top: 1px solid var(--l
 .lsg-helper { font-size: .76rem; color: var(--faint); }
 .lsg-form[data-model="prox"] .lsg-helper { margin-top: -11px; }
 .lsg-form[data-model="even"] .lsg-helper { margin-top: 0; }
+
+/* 07d layout spacing, repeated roles stay on stable scan rails. The cards keep
+   one fixed frame while only the value anchor changes, so the demo itself does
+   not jump when the user compares the two modes. */
+.lsr-cards { width: min(620px, 100%); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+.lsr-card { min-height: 150px; display: flex; flex-direction: column; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1rem; box-shadow: var(--shadow); }
+.lsr-title { font-size: .84rem; line-height: 1.35; color: var(--muted); }
+.lsr-value { margin-top: .8rem; font-size: clamp(1.2rem, 3vw, 1.7rem); line-height: 1; font-weight: 760; letter-spacing: -.03em; font-variant-numeric: tabular-nums lining-nums; }
+.lsr-cards[data-mode="rails"] .lsr-value { margin-top: auto; }
+@media (max-width: 560px) { .lsr-cards { grid-template-columns: 1fr; } .lsr-card { min-height: 112px; } }
+
+/* 06e typography, numeric columns compare down a shared end edge. */
+.tyn-table { width: min(480px, 100%); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.tyn-row { display: grid; grid-template-columns: minmax(90px, 1fr) minmax(100px, .8fr) minmax(72px, .55fr); align-items: baseline; gap: .8rem; padding: .6rem .9rem; border-bottom: 1px solid var(--line); font-size: .86rem; }
+.tyn-row:last-child { border-bottom: 0; }
+.tyn-head { background: var(--surface-2); font-family: var(--mono); font-size: .68rem; letter-spacing: .03em; text-transform: uppercase; color: var(--muted); }
+.tyn-num { white-space: nowrap; }
+.tyn-table[data-mode="aligned"] .tyn-row > :nth-child(n + 2) { text-align: end; }
+.tyn-table[data-mode="aligned"] .tyn-num { font-variant-numeric: tabular-nums lining-nums; }
+.tyn-table[data-mode="loose"] .tyn-row > :nth-child(n + 2) { text-align: center; }
+.tyn-table[data-mode="loose"] .tyn-num { font-family: Georgia, serif; font-variant-numeric: proportional-nums oldstyle-nums; }
+
+/* 10e content copy, peer values keep one unit and precision convention. */
+.cof-list { width: min(390px, 100%); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.cof-row { min-height: 44px; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: .65rem .9rem; border-bottom: 1px solid var(--line); font-size: .86rem; color: var(--muted); }
+.cof-row:last-child { border-bottom: 0; }
+.cof-row strong { color: var(--ink); font-weight: 680; font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; }
 
 /* 08a components, whole card is the hit target */
 /* Card on top, click-counter underneath: the counter text changes width as you

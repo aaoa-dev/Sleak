@@ -186,6 +186,50 @@ the next), so it's unambiguous which label belongs to which input, and the eye f
         <div class="demo-note" id="lsg-note"></div>
         </div>
       </div>
+<h2>Keep repeated content on stable rails</h2>
+<p><strong>Same role, same anchor.</strong> In a repeated set, place equivalent information on shared visual
+lines so the eye can scan without searching again in every item. A title starts from the same
+inset in every card. A price, count, status, or action occupies the same lane in every peer.</p>
+<p>Variable content may wrap, but it must not move the next comparison point unpredictably. In a
+same-height card row, pin the title to the start and the primary value or action to the end:</p>
+<pre><code class="language-css">.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.5rem;
+}
+
+.card__value,
+.card__action {
+  margin-block-start: auto;
+}
+</code></pre>
+<p>This creates two dependable rails even when one title wraps: titles begin together and key
+values end together. Use a reserved title row or CSS subgrid when intermediate fields also need
+to align. Do not force unrelated content into equal slots or truncate meaningful copy only to
+make boxes match.</p>
+<p>Apply the same rule across repeated rows, forms, comparison panels, timelines, and settings:</p>
+<ul>
+<li>labels share one start edge</li>
+<li>controls and values share another edge</li>
+<li>repeated metadata appears in the same order</li>
+<li>writing direction decides <code>start</code> and <code>end</code>; do not hard-code left and right</li>
+</ul>
+<p><strong>Audit:</strong> Trace a vertical or horizontal line through each repeated role. If the eye must zigzag
+to find the next title, value, status, or action, the set has lost its scan path.</p>
+      <div class="demo" id="demo-layout-spacing-rails">
+        <div class="demo-inner">
+          <div class="demo-head"><span class="lbl">Try it · Same role, same anchor</span><span class="live"></span></div>
+          <div class="demo-stage"><div class="lsr-cards" id="lsr-cards"><div class="lsr-card"><div class="lsr-title">Activation rate</div><div class="lsr-value">88.8%</div></div><div class="lsr-card"><div class="lsr-title">Qualified leads generated this month</div><div class="lsr-value">142</div></div><div class="lsr-card"><div class="lsr-title">Revenue</div><div class="lsr-value">$24.8k</div></div></div></div>
+          <div class="demo-controls"><div class="ctl"><div class="seg"><button type="button" data-mode="rails" aria-pressed="true">Stable rails</button><button type="button" data-mode="flow">Natural flow</button></div></div></div>
+        <div class="demo-note" id="lsr-note"></div>
+        </div>
+      </div>
 <h2>Common mistakes</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -210,6 +254,14 @@ the next), so it's unambiguous which label belongs to which input, and the eye f
 <tr>
 <td>Lines at viewport width inside max-width layout</td>
 <td>Inset to <code>max-width</code> content column</td>
+</tr>
+<tr>
+<td>Card values move when titles wrap</td>
+<td>Pin peer values to one end rail; reserve shared rows when needed</td>
+</tr>
+<tr>
+<td>Form labels and controls zigzag</td>
+<td>Give each role a consistent start/end column</td>
 </tr>
 </tbody>
 </table></div>
@@ -244,6 +296,10 @@ the next), so it's unambiguous which label belongs to which input, and the eye f
 <tr>
 <td>Match divider inset to text alignment</td>
 <td>Bleed dividers through rounded parents</td>
+</tr>
+<tr>
+<td>Keep equivalent content on shared rails</td>
+<td>Let wrapping move every field below it</td>
 </tr>
 </tbody>
 </table></div>

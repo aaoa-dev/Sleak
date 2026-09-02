@@ -1,6 +1,6 @@
 {
   "name": "@aaoa/sleak",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Install the Sleak design-decision skill for AI coding agents.",
   "license": "ISC",
   "type": "module",

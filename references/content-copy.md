@@ -143,6 +143,9 @@ mechanics Sleak keeps:
   items). Keep them in multi-sentence body copy.
 - **Parallel elements, parallel length.** Keep copy roughly the same length across items that
   sit together (nav links, card titles, feature bullets) so the layout stays even.
+- **Comparable data, consistent format.** Within one table, card set, or metric group, keep the
+  date convention, unit placement, abbreviation, and decimal precision consistent unless the
+  difference itself carries meaning. Write `4.5 kg` and `8.0 kg`, not `4.5kg` and `8 kilograms`.
 - **Break long content** with descriptive sub-headings and bullets; front-load each with the
   key word (inverted pyramid, most important first).
 
@@ -164,6 +167,7 @@ love it. Keep it within brand, never at the expense of clarity on functional/cri
 | Lorem-adjacent | Generic benefit copy with no product facts | Name real limits, steps, or outcomes |
 | Apologetic errors | Oops / Something went wrong | **What failed** + **what to do** |
 | Permission theater | "Would you like to…?" for required flows | Direct: **Allow notifications** + Skip |
+| Mixed peer formats | `4.5kg` · `8 kilograms` · `10.00 kg` | One unit, placement, and precision per comparison set |
 
 ## Fixes (quick pass)
 
@@ -186,6 +190,7 @@ love it. Keep it within brand, never at the expense of clarity on functional/cri
 | Errors: fact + fix | Errors: apology + mystery |
 | Match existing brand voice | Default SaaS landing-page tone |
 | Preserve legal and a11y requirements | Compress away required warnings |
+| Format peer values consistently | Mix units, date styles, or precision in one set |
 
 ## When to break the rules
 
